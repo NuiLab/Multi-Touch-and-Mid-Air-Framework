@@ -2,4 +2,6 @@ bin/
 data/
 libs/
 obj/
+debug/
+release/
 *.*sdf*

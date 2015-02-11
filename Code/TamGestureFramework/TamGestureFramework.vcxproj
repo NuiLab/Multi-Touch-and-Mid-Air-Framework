@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4099;4005</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>include\;include\core</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include\;include\core;include\math</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,7 +128,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\core\data.h" />
     <ClInclude Include="include\core\device.h" />
+    <ClInclude Include="include\math\vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
