@@ -1,0 +1,11 @@
+﻿Build started 2/11/2015 2:12:14 PM.
+     1>Project "C:\Users\Anthony\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TAMGestureFramework\TAMGestureFramework.vcxproj" on node 2 (ClCompile target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c1xx : fatal error C1083: Cannot open source file: 'main.cpp': No such file or directory
+     1>Done Building Project "C:\Users\Anthony\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TAMGestureFramework\TAMGestureFramework.vcxproj" (ClCompile target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.86
