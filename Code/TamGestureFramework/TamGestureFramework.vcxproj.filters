@@ -30,6 +30,12 @@
     <ClInclude Include="include\math\vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\core\resolutionFn.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\Domain.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

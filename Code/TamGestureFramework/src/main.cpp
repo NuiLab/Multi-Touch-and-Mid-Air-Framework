@@ -1,7 +1,12 @@
 #include <iostream>
-#include <data.h>
 #include <vector.h> 
 #include <memory>
+#include <functional> 
+
+//tam
+#include <data.h>
+#include <domain.h> 
+#include <resolutionFn.h>
 using namespace std;
 int main(int argc, const char * argv[]) {
 	// insert code here...
@@ -15,6 +20,23 @@ int main(int argc, const char * argv[]) {
 	//float * f2 = new float(10); //in c will malloc 
 	d.setData(10.0f);
 
+	//TAM::Domain<int> mydomain(-1, 1); 
+
+	auto mylambda = [](TAM::Data<int> val) { return 2*val.getData(); };
+
+	using MYFUNC = function < int(TAM::Data<int>)>;
+	TAM::ResolutionFunction<MYFUNC> ResFn(mylambda); 
+
+	auto f = ResFn.getFunction();
+	TAM::Data<int> dx; 
+	dx.setData(1); 
+	int x = f(dx);
+	cout << "X is equal to " << x << endl; 
 	cout << "TAM GESTURE FRAMEWORK!\n";
+	cout << "Press Ctrl + c to exit" << endl;
+	while(true);
+
+		
+	
 	return 0;
 }

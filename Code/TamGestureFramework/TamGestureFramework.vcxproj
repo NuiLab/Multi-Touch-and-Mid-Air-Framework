@@ -130,6 +130,8 @@
   <ItemGroup>
     <ClInclude Include="include\core\data.h" />
     <ClInclude Include="include\core\device.h" />
+    <ClInclude Include="include\core\Domain.h" />
+    <ClInclude Include="include\core\resolutionFn.h" />
     <ClInclude Include="include\math\vector.h" />
   </ItemGroup>
   <ItemGroup>
