@@ -62,8 +62,10 @@ void ReplayArea::clearImage()
 void ReplayArea::play()
 {
 	for (int x = 0; x < theCoords.size(); ++x) {
-		for (int y = 0; y < theCoords[x].size(); ++y){
-			QRectF rect = QRect(theCoords[x][y], theCoords[x][y], 50, 50);
+		int y = 0;
+			//qDebug() << "The vector is : " << x << ", " << y;
+			//qDebug() << "The Coords are: " << theCoords[x][y] << ", " << theCoords[x][y+1];
+			QRectF rect = QRect(theCoords[x][y], theCoords[x][y+1], 50, 50);
 			if (rect.isEmpty()) {
 				qreal diameter = qreal(50) * 1;
 				rect.setSize(QSizeF(diameter, diameter));
@@ -71,14 +73,13 @@ void ReplayArea::play()
 
 			QPainter painter(&image);
 			painter.setPen(Qt::NoPen);
-			painter.setBrush(myPenColors.at(x % myPenColors.count()));
+			painter.setBrush(myPenColors.at(9 % myPenColors.count()));
 			painter.drawEllipse(rect);
 			painter.end();
 
 			modified = true;
 			int rad = 2;
 			update(rect.toRect().adjusted(-rad, -rad, +rad, +rad));
-		}
 	}
 }
 
