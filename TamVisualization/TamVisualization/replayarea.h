@@ -5,6 +5,9 @@
 #include <qimage.h>
 #include <qpoint.h>
 #include <qwidget.h>
+#include <cstdlib>
+
+using namespace std;
 
 class ReplayArea : public QWidget
 {
@@ -17,7 +20,7 @@ public:
 	bool saveImage(const QString &filename, const char *fileFormat);
 
 	bool isModified() const { return modified; }
-
+	vector<vector <int>> theCoords;
 	public slots:
 	void clearImage();
 	void print();
@@ -34,6 +37,7 @@ private:
 	bool modified;
 	QList<QColor> myPenColors;
 	QImage image;
+	
 };
 
 #endif

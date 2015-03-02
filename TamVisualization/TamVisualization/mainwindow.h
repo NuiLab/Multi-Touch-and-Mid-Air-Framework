@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	MainWindow(vector <vector <int> > *cords);
+	MainWindow(vector <vector <int> > *coords);
 
 
 protected:
@@ -26,13 +26,13 @@ protected:
 	void about();
 
 private:
-	void CreateActions();
-	void CreateMenus();
+	void createActions();
+	void createMenus();
 	bool maybeSave();
 	bool saveFile(const QByteArray &fileFormat);
 
 
-	ReplayArea *replayarea;
+	ReplayArea *replayArea;
 
 	QMenu *saveAsMenu;
 	QMenu *fileMenu;
@@ -40,10 +40,12 @@ private:
 	QMenu *helpMenu;
 
 	QAction *openAct;
-	QList<QAction *> saveAct;
+	QList<QAction *> saveAsActs;
 	QAction *exitAct;
 	QAction *printAct;
 	QAction *clearScreenAct;
+	QAction *playAct;
+	QAction *aboutAct;
 
 
 };

@@ -7,19 +7,19 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
-	vector < vector <int> > grid1(2, vector<int>(4));
+	vector < vector <int> > grid1(4, vector<int>(2));
 
-	grid1[0][0] = 10;
-	grid1[0][1] = 10;
+	grid1[0][0] = 100;
+	grid1[0][1] = 100;
 
-	grid1[1][0] = 20;
-	grid1[1][1] = 20;
+	grid1[1][0] = 200;
+	grid1[1][1] = 200;
 
-	grid1[2][0] = 30;
-	grid1[2][1] = 30;
+	grid1[2][0] = 300;
+	grid1[2][1] = 300;
 
-	grid1[3][0] = 40;
-	grid1[3][1] = 40;
+	grid1[3][0] = 400;
+	grid1[3][1] = 400;
 
 	MainWindow window(&grid1);
 	window.showMaximized();
