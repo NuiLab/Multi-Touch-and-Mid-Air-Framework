@@ -53,7 +53,7 @@ void MainWindow::save()
 
 void MainWindow::about()
 {
-	QMessageBox::about(this, tr("About TamVisualizer"), tr("<p>This are <b>words</b> and i expect them to</p> <p>be formatted correctly</p>"));
+	QMessageBox::about(this, tr("About TamVisualizer"), tr("<p>Touch and Air-Motion Visualizer</p><p>Built upon Fingerpaint application by Digia Plc and/or its subsidiary(-ies)</p>"));
 }
 
 void MainWindow::createActions()

@@ -1,5 +1,5 @@
 #include <QtGui>
-
+#include <qthread.h>
 #include "qprinter"
 #include "replayarea.h"
 #include "qprintdialog"
@@ -76,7 +76,11 @@ void ReplayArea::play()
 			painter.setBrush(myPenColors.at(9 % myPenColors.count()));
 			painter.drawEllipse(rect);
 			painter.end();
-
+			QThread::yieldCurrentThread();
+			qApp->processEvents();
+			
+			QThread::msleep(100);
+			bool b = this->updatesEnabled();
 			modified = true;
 			int rad = 2;
 			update(rect.toRect().adjusted(-rad, -rad, +rad, +rad));

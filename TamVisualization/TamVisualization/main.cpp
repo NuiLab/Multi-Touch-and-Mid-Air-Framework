@@ -162,6 +162,16 @@ int main(int argc, char *argv[])
 	grid1[47][0] = 650;
 	grid1[47][1] = 500;
 
+	//L 1 Bottom
+	grid1[57][0] = 700;
+	grid1[57][1] = 500;
+
+	grid1[58][0] = 750;
+	grid1[58][1] = 500;
+
+	grid1[59][0] = 800;
+	grid1[59][1] = 500;
+
 	//L 2
 	grid1[48][0] = 900;
 	grid1[48][1] = 100;
@@ -190,15 +200,6 @@ int main(int argc, char *argv[])
 	grid1[56][0] = 900;
 	grid1[56][1] = 500;
 
-	//L 1 Bottom
-	grid1[57][0] = 700;
-	grid1[57][1] = 500;
-
-	grid1[58][0] = 750;
-	grid1[58][1] = 500;
-
-	grid1[59][0] = 800;
-	grid1[59][1] = 500;
 
 	//L 2 Bottom
 	grid1[60][0] = 950;
