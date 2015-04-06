@@ -12,15 +12,15 @@ public:
 	MainWindow(DrawArea::touchData data);
 
 protected:
+	public slots:
 	void resizeBrush();
+	bool saveGesture();
 	void recognizer();
-	void saveGesture();
 
 private:
 	DrawArea *drawArea;
 	void loadActions();
 	void loadMenus();
-	void doResizeBrush(int i);
 
 	QMenu *sizeMenu;
 	QMenu *recognizerMenu;
@@ -29,6 +29,7 @@ private:
 	QList<QAction *> recognizerActions;
 	QAction *playbackAction;
 	QAction *saveAction;
+	QAction *clearScreenAction;
 };
 
 #endif // MAINWINDOW_H

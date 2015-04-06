@@ -20,13 +20,28 @@ public:
 			long long x;
 			long long y;
 			int id;
-			long long realX;
-			long long realY;
 			double timeStamp;
 		};
-protected:
 
-private:
+	void doResizeBrush(int i);
+	void doRecognize(int recognizer);
+	bool doSaveGesture(QString fileName);
+
+	public slots:
+	void playback();
+	void clearScreen();
+
+protected:
+	bool event(QEvent *event);
+	void paintEvent(QPaintEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	QList<QColor> idColors;
 	
+private:
+	int brushSize = 5;
+	QImage image;
+	void resizeImage(QImage *image, const QSize &newSize);
+	QList<touchData> thePoints;
+	void printthedata();
 };
 #endif

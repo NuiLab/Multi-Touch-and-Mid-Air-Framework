@@ -27,19 +27,29 @@ void MainWindow::resizeBrush()
 {
 	QAction *action = qobject_cast<QAction *>(sender());
 	int size = action->data().toInt();
-	qDebug() << "Here";
-	qDebug() << size;
-	doResizeBrush(size);
+	drawArea->doResizeBrush(size);
 }
 void MainWindow::recognizer()
 {
-	//TODO
+	QAction *action = qobject_cast<QAction *>(sender());
+	int recognizer = action->data().toInt();
+	drawArea->doRecognize(recognizer);
 }
-void MainWindow::saveGesture()
+bool MainWindow::saveGesture()
 {
-	QMessageBox::about(this, tr("About TAM"), tr("things"));
-	qDebug() << "saveGesture";
+	QString path = QDir::currentPath() + "/untitled." + "csv";
+
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
+		path,
+		tr("%1 Files (*.%2);; All Files(*)").arg("CSV").arg("csv"));
+	if (fileName.isEmpty()) {
+		return false;
+	}
+	else {
+		return drawArea->doSaveGesture(fileName);
+	}
 }
+
 
 void MainWindow::loadActions()
 {
@@ -58,6 +68,7 @@ void MainWindow::loadActions()
 		string sizes = to_string(i);
 		char const *pchar = sizes.c_str();
 		QAction *action = new QAction(tr("Recognizer %1").arg(pchar) , this);
+		action->setData(i);
 		connect(action, SIGNAL(triggered()), this, SLOT(recognizer()));
 		recognizerActions.append(action);
 	}
@@ -66,8 +77,11 @@ void MainWindow::loadActions()
 	connect(playbackAction, SIGNAL(triggered()), drawArea, SLOT(playback()));
 
 	saveAction = new QAction(tr("&Save"), this);
-	qDebug() << "Here???";
 	connect(saveAction, SIGNAL(triggered()), this, SLOT(saveGesture()));
+
+	clearScreenAction = new QAction(tr("&ClearScreen"), this);
+	clearScreenAction->setShortcut(tr("Ctrl+L"));
+	connect(clearScreenAction, SIGNAL(triggered()), drawArea, SLOT(clearScreen()));
 }
 
 void MainWindow::loadMenus()
@@ -84,9 +98,6 @@ void MainWindow::loadMenus()
 	menuBar()->addMenu(recognizerMenu);
 	menuBar()->addAction(playbackAction);
 	menuBar()->addAction(saveAction);
+	menuBar()->addAction(clearScreenAction);
 }
 
-void MainWindow::doResizeBrush(int i)
-{
-	qDebug() << i;
-}

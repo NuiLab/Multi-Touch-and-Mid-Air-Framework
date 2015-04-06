@@ -14,11 +14,9 @@ int main(int argc, char *argv[])
 	data.id = 0;
 	data.x = 50;
 	data.y = 50;
-	data.realX = 50;
-	data.realY = 50;
 	data.timeStamp = time(0);
 
 	MainWindow w(data);
-	w.show();
+	w.showMaximized();
 	return a.exec();
 }
