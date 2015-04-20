@@ -58,7 +58,10 @@ bool DrawArea::doSaveGesture(QString fileName)
 {
 	ofstream file;
 	file.open(fileName.toStdString());
-	file << "test" << endl;
+	foreach(touchData data, thePoints)
+	{
+		file << data.x << "," << data.y << "," << data.id << "," <<data.timeStamp <<endl;
+	}
 	//DO THE SAVE
 	return true;
 }
@@ -82,7 +85,7 @@ void DrawArea::playback()
 		QThread::yieldCurrentThread();
 		qApp->processEvents();
 
-		QThread::msleep(10);
+		QThread::msleep(5);
 		bool b = this->updatesEnabled();
 		int rad = 2;
 		update(rect.toRect().adjusted(-rad, -rad, +rad, +rad));
