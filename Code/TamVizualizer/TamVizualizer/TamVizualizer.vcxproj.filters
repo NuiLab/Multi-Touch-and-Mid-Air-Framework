@@ -56,6 +56,15 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_drawArea.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_debug.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_debug.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -68,6 +77,9 @@
       <Filter>Resource Files</Filter>
     </CustomBuild>
     <CustomBuild Include="drawArea.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="debug.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

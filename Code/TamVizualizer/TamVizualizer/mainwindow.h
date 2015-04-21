@@ -9,13 +9,14 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	MainWindow(DrawArea::touchData data);
+	MainWindow();
 
 protected:
 	public slots:
 	void resizeBrush();
 	bool saveGesture();
-	void recognizer();
+	bool openGesture();
+	void map();
 
 private:
 	DrawArea *drawArea;
@@ -23,12 +24,13 @@ private:
 	void loadMenus();
 
 	QMenu *sizeMenu;
-	QMenu *recognizerMenu;
+	QMenu *mapMenu;
 
 	QList<QAction *> sizeActions;
-	QList<QAction *> recognizerActions;
+	QList<QAction *> mapActions;
 	QAction *playbackAction;
 	QAction *saveAction;
+	QAction *openAction;
 	QAction *clearScreenAction;
 };
 

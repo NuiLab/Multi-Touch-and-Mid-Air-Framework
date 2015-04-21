@@ -9,9 +9,10 @@
 #include "qmessagebox"
 #include "qmenu"
 #include "qmenubar"
+#include "debug.h"
 
 
-MainWindow::MainWindow(DrawArea::touchData data)
+MainWindow::MainWindow()
 {
 	drawArea = new DrawArea();
 	setCentralWidget(drawArea);
@@ -20,6 +21,7 @@ MainWindow::MainWindow(DrawArea::touchData data)
 
 	setWindowTitle(tr("TamVisualizer"));
 	resize(500, 500);
+
 }
 
 
@@ -29,11 +31,11 @@ void MainWindow::resizeBrush()
 	int size = action->data().toInt();
 	drawArea->doResizeBrush(size);
 }
-void MainWindow::recognizer()
+void MainWindow::map()
 {
 	QAction *action = qobject_cast<QAction *>(sender());
-	int recognizer = action->data().toInt();
-	drawArea->doRecognize(recognizer);
+	int map = action->data().toInt();
+	drawArea->doMap(map);
 }
 bool MainWindow::saveGesture()
 {
@@ -47,6 +49,18 @@ bool MainWindow::saveGesture()
 	}
 	else {
 		return drawArea->doSaveGesture(fileName);
+	}
+}
+
+bool MainWindow::openGesture()
+{
+	QString path = QDir::currentPath();
+	QString fileName = QFileDialog::getOpenFileName(this);
+	if (fileName.isEmpty()) {
+		return false;
+	}
+	else {
+		return drawArea->doOpenGesture(fileName);
 	}
 }
 
@@ -67,10 +81,10 @@ void MainWindow::loadActions()
 	{
 		string sizes = to_string(i);
 		char const *pchar = sizes.c_str();
-		QAction *action = new QAction(tr("Recognizer %1").arg(pchar) , this);
+		QAction *action = new QAction(tr("Map %1").arg(pchar) , this);
 		action->setData(i);
-		connect(action, SIGNAL(triggered()), this, SLOT(recognizer()));
-		recognizerActions.append(action);
+		connect(action, SIGNAL(triggered()), this, SLOT(map()));
+		mapActions.append(action);
 	}
 
 	playbackAction = new QAction(tr("&PlayBack"), this);
@@ -78,6 +92,9 @@ void MainWindow::loadActions()
 
 	saveAction = new QAction(tr("&Save"), this);
 	connect(saveAction, SIGNAL(triggered()), this, SLOT(saveGesture()));
+
+	openAction = new QAction(tr("&Open"), this);
+	connect(openAction, SIGNAL(triggered()), this, SLOT(openGesture()));
 
 	clearScreenAction = new QAction(tr("&ClearScreen"), this);
 	clearScreenAction->setShortcut(tr("Ctrl+L"));
@@ -90,14 +107,15 @@ void MainWindow::loadMenus()
 	foreach(QAction *action, sizeActions)
 		sizeMenu->addAction(action);
 
-	recognizerMenu = new QMenu(tr("&Recognizer"), this);
-	foreach(QAction *action, recognizerActions)
-		recognizerMenu->addAction(action);
+	mapMenu = new QMenu(tr("&Map"), this);
+	foreach(QAction *action, mapActions)
+		mapMenu->addAction(action);
 
 	menuBar()->addMenu(sizeMenu);
-	menuBar()->addMenu(recognizerMenu);
+	menuBar()->addMenu(mapMenu);
 	menuBar()->addAction(playbackAction);
 	menuBar()->addAction(saveAction);
 	menuBar()->addAction(clearScreenAction);
+	menuBar()->addAction(openAction);
 }
 

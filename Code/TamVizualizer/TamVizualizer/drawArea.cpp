@@ -3,25 +3,16 @@
 #include "qprinter.h"
 #include "drawArea.h"
 #include "qprintdialog.h"
+#include <sstream>
 #include <fstream>
 #include <iostream>
 #include <cstring>
 #include <string>
 #include <Windows.h>
 #include <ctime>
+#include <iomanip>
 
 using namespace std;
-
-void DrawArea::printthedata()
-{
-	foreach(touchData data, thePoints)
-	{
-		qDebug() << data.x;
-		qDebug() << data.y;
-		qDebug() << data.id;
-		qDebug() << data.timeStamp;
-	}
-}
 
 DrawArea::DrawArea(QWidget *parent)
 	: QWidget(parent)
@@ -42,32 +33,88 @@ DrawArea::DrawArea(QWidget *parent)
 		<< QColor("black");
 }
 
+void DrawArea::printthedata()
+{
+	foreach(touchData data, thePoints)
+	{
+		qDebug() << "POINT: \n";
+		qDebug() << "X: " << data.x;
+		qDebug() << "Y: " << data.y;
+		qDebug() << "ID: " << data.id;
+		qDebug() << "TIME STAMP: " << ctime(&data.timeStamp);
+	}
+}
+
 void DrawArea::doResizeBrush(int i)
 {
 	brushSize = i;
-	qDebug() << i;
+	qDebug() << "BRUSH SIZE: " << i;
 }
 
-void DrawArea::doRecognize(int recognizer)
+void DrawArea::doMap(int map)
 {
-	printthedata();
-	qDebug() << recognizer;
+	switch (map)
+	{
+	case 1:
+		mapping = 1;
+		qDebug() << "MAPPING FUNCTION SELECTED IS 1";
+		break;
+	case 2:
+		mapping = 2;
+		qDebug() << "MAPPING FUNCTION SELECTED IS 2";
+		break;
+	case 3:
+		mapping = 0.5;
+		qDebug() << "MAPPING FUNCTION SELECTED IS 1/2";
+		break;
+	default: 
+		mapping = 1;
+	}
 }
 
 bool DrawArea::doSaveGesture(QString fileName)
 {
+	qDebug() << "SAVING THE FILE";
 	ofstream file;
 	file.open(fileName.toStdString());
 	foreach(touchData data, thePoints)
 	{
 		file << data.x << "," << data.y << "," << data.id << "," <<data.timeStamp <<endl;
 	}
-	//DO THE SAVE
+	return true;
+}
+
+bool DrawArea::doOpenGesture(QString fileName)
+{
+	qDebug() << "OPPENING A FILE";
+	thePoints.clear();
+	
+	ifstream file;
+	file.open(fileName.toStdString());
+	string line;
+
+	while (getline(file,line))
+	{
+		touchData data;
+		istringstream s(line);
+		string field;
+		getline(s, field, ',');
+		data.x = stoi(field);
+		getline(s, field, ',');
+		data.y = stoi(field);
+		getline(s, field, ',');
+		data.id = stoi(field);
+		getline(s, field, ',');
+		data.timeStamp = stoi(field);
+		thePoints.append(data);
+		
+	}playback();
 	return true;
 }
 
 void DrawArea::playback()
 {
+	qDebug() << "ON PLAYBACK";
 	clearScreen();
 	foreach(touchData data, thePoints)
 	{
@@ -89,13 +136,13 @@ void DrawArea::playback()
 		bool b = this->updatesEnabled();
 		int rad = 2;
 		update(rect.toRect().adjusted(-rad, -rad, +rad, +rad));
-	}thePoints.clear();
-	qDebug() << "In Playback";
-	//TODO
+	}
+	thePoints.clear();
 }
 
 void DrawArea::clearScreen()
 {
+	qDebug() << "CLEARING THE SCREEN";
 	image.fill(qRgb(255, 255, 255));
 	update();
 }
@@ -142,25 +189,28 @@ bool DrawArea::event(QEvent *event)
 			QList<QTouchEvent::TouchPoint> touchPoints = static_cast<QTouchEvent *>(event)->touchPoints();
 			foreach(const QTouchEvent::TouchPoint &touchPoint, touchPoints)
 			{
-				qDebug() << "Per point loop";
 				switch (touchPoint.state())
 				{
 				case Qt::TouchPointStationary:
-					qDebug() << "At stationary";
 					continue;
 				default:
 				{
-					QRectF rect = touchPoint.rect();
+					QRectF rect = QRect(touchPoint.pos().rx() * mapping, touchPoint.pos().ry() * mapping, brushSize, brushSize);
 					if (rect.isEmpty())
 					{
 						qreal diameter = qreal(brushSize);
 						rect.setSize(QSize(diameter, diameter));
 					}
 					touchData data;
-					data.x = touchPoint.pos().rx();
-					data.y = touchPoint.pos().ry();
+					data.x = touchPoint.pos().rx() * mapping;
+					data.y = touchPoint.pos().ry() * mapping;
 					data.id = touchPoint.id();
-					data.timeStamp = time(0);
+					data.timeStamp = time(NULL);
+					qDebug() << "POINT: \n";
+					qDebug() << "X: " << data.x;
+					qDebug() << "Y: " << data.y;
+					qDebug() << "ID: " << data.id;
+					qDebug() << "TIME STAMP: " << ctime(&data.timeStamp);
 					thePoints << data;
 					QPainter painter(&image);
 					painter.setPen(Qt::NoPen);

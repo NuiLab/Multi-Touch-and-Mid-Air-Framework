@@ -6,6 +6,7 @@
 #include <qimage.h>
 #include <qpoint.h>
 #include <qwidget.h>
+#include "debug.h"
 
 using namespace std;
 
@@ -20,12 +21,13 @@ public:
 			long long x;
 			long long y;
 			int id;
-			double timeStamp;
+			time_t timeStamp;
 		};
 
 	void doResizeBrush(int i);
-	void doRecognize(int recognizer);
+	void doMap(int map);
 	bool doSaveGesture(QString fileName);
+	bool doOpenGesture(QString fileName);
 
 	public slots:
 	void playback();
@@ -39,6 +41,7 @@ protected:
 	
 private:
 	int brushSize = 5;
+	double mapping = 1;
 	QImage image;
 	void resizeImage(QImage *image, const QSize &newSize);
 	QList<touchData> thePoints;

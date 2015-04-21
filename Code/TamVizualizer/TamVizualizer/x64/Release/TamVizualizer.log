@@ -1,0 +1,19 @@
+﻿Build started 4/20/2015 6:29:21 PM.
+     1>Project "C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Release\\TamVizualizer.exe" /NOLOGO /LIBPATH:C:\Qt\5.4\msvc2013_64\lib qtmain.lib Qt5Core.lib Qt5Gui.lib Qt5Test.lib Qt5OpenGL.lib opengl32.lib glu32.lib Qt5PrintSupport.lib Qt5Widgets.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Release\TamVizualizer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Release\TamVizualizer.lib" /MACHINE:X64 x64\Release\debug.obj
+         x64\Release\drawArea.obj
+         x64\Release\qrc_mainwindow.obj
+         x64\Release\moc_debug.obj
+         x64\Release\moc_mainwindow.obj
+         x64\Release\main.obj
+         x64\Release\mainwindow.obj
+     1>drawArea.obj : error LNK2001: unresolved external symbol "public: virtual struct QMetaObject const * __cdecl DrawArea::metaObject(void)const " (?metaObject@DrawArea@@UEBAPEBUQMetaObject@@XZ)
+     1>drawArea.obj : error LNK2001: unresolved external symbol "public: virtual void * __cdecl DrawArea::qt_metacast(char const *)" (?qt_metacast@DrawArea@@UEAAPEAXPEBD@Z)
+     1>drawArea.obj : error LNK2001: unresolved external symbol "public: virtual int __cdecl DrawArea::qt_metacall(enum QMetaObject::Call,int,void * *)" (?qt_metacall@DrawArea@@UEAAHW4Call@QMetaObject@@HPEAPEAX@Z)
+     1>C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Release\\TamVizualizer.exe : fatal error LNK1120: 3 unresolved externals
+     1>Done Building Project "C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.91
