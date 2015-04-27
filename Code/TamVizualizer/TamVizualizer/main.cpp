@@ -13,10 +13,11 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 
-	MainWindow w;
-	w.showMaximized();
 	Debug d ;
 	d.showWin32Console();
 	AllocConsole();
+	MainWindow w;
+	w.showMaximized();
+	
 	return a.exec();
 }

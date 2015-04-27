@@ -40,7 +40,7 @@ protected:
 	QList<QColor> idColors;
 	
 private:
-	int brushSize = 5;
+	int brushSize = 20;
 	double mapping = 1;
 	QImage image;
 	void resizeImage(QImage *image, const QSize &newSize);

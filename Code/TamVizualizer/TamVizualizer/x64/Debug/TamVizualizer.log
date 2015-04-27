@@ -1,6 +1,23 @@
-﻿Build started 4/20/2015 6:29:35 PM.
+﻿Build started 4/25/2015 1:06:14 PM.
      1>Project "C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
+     1>CustomBuild:
+         Moc'ing mainwindow.h...
+         Uic'ing mainwindow.ui...
+         Moc'ing drawArea.h...
+         Moc'ing debug.h...
+         Rcc'ing mainwindow.qrc...
+     1>RCC : warning : No resources in 'C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\mainwindow.qrc'.
+         
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.4\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.4\msvc2013_64\include\QtCore /IC:\Qt\5.4\msvc2013_64\include\QtGui /IC:\Qt\5.4\msvc2013_64\include\QtTest /IC:\Qt\5.4\msvc2013_64\include\QtOpenGL /IC:\Qt\5.4\msvc2013_64\include\QtPrintSupport /IC:\Qt\5.4\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_TESTLIB_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt debug.cpp drawArea.cpp GeneratedFiles\Debug\moc_debug.cpp GeneratedFiles\Debug\moc_drawArea.cpp GeneratedFiles\Debug\moc_mainwindow.cpp main.cpp mainwindow.cpp
+         debug.cpp
+         drawArea.cpp
+         moc_debug.cpp
+         moc_drawArea.cpp
+         moc_mainwindow.cpp
+         main.cpp
+         mainwindow.cpp
+         Generating Code...
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.4\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.4\msvc2013_64\include\QtCore /IC:\Qt\5.4\msvc2013_64\include\QtGui /IC:\Qt\5.4\msvc2013_64\include\QtTest /IC:\Qt\5.4\msvc2013_64\include\QtOpenGL /IC:\Qt\5.4\msvc2013_64\include\QtPrintSupport /IC:\Qt\5.4\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_TESTLIB_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt GeneratedFiles\qrc_mainwindow.cpp
          qrc_mainwindow.cpp
        Link:
@@ -17,4 +34,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.18
+Time Elapsed 00:00:10.60

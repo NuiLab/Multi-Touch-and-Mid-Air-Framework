@@ -111,11 +111,12 @@ void MainWindow::loadMenus()
 	foreach(QAction *action, mapActions)
 		mapMenu->addAction(action);
 
+	menuBar()->addAction(openAction);
+	menuBar()->addAction(saveAction);
 	menuBar()->addMenu(sizeMenu);
 	menuBar()->addMenu(mapMenu);
 	menuBar()->addAction(playbackAction);
-	menuBar()->addAction(saveAction);
 	menuBar()->addAction(clearScreenAction);
-	menuBar()->addAction(openAction);
+	
 }
 

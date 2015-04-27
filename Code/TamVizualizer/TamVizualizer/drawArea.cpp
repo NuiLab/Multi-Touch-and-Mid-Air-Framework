@@ -19,7 +19,6 @@ DrawArea::DrawArea(QWidget *parent)
 {
 	setAttribute(Qt::WA_AcceptTouchEvents);
 	setAttribute(Qt::WA_StaticContents);
-	
 	idColors
 		<< QColor("red")
 		<< QColor("yellow")
