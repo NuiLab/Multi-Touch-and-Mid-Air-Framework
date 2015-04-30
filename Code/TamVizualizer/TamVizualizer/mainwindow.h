@@ -11,6 +11,7 @@ class MainWindow : public QMainWindow
 public:
 	MainWindow();
 
+	/*slots for the communication between MainWindow and DrawArea*/
 protected:
 	public slots:
 	void resizeBrush();
@@ -20,12 +21,15 @@ protected:
 
 private:
 	DrawArea *drawArea;
+	/*Functions to itialize the Menus and Actions*/
 	void loadActions();
 	void loadMenus();
 
+	/*Menus for the GUI*/
 	QMenu *sizeMenu;
 	QMenu *mapMenu;
 
+	/*Actions or Buttons for the GUI*/
 	QList<QAction *> sizeActions;
 	QList<QAction *> mapActions;
 	QAction *playbackAction;

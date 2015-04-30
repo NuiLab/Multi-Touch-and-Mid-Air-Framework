@@ -14,6 +14,10 @@
 
 using namespace std;
 
+/*Main constructor for the DrawArea object
+Sets upt the windows touch event connection and 
+the click event connections also initializes a list
+of ten colors*/
 DrawArea::DrawArea(QWidget *parent)
 	: QWidget(parent)
 {
@@ -32,6 +36,8 @@ DrawArea::DrawArea(QWidget *parent)
 		<< QColor("black");
 }
 
+/*Supplementary function to display th elist of touch points
+into the debug monitor*/
 void DrawArea::printthedata()
 {
 	foreach(touchData data, thePoints)
@@ -44,12 +50,14 @@ void DrawArea::printthedata()
 	}
 }
 
+/*Changes the global brushSize variable to the selected size i*/
 void DrawArea::doResizeBrush(int i)
 {
 	brushSize = i;
 	qDebug() << "BRUSH SIZE: " << i;
 }
 
+/*Changes the global map variable to the selected map fuunction*/
 void DrawArea::doMap(int map)
 {
 	switch (map)
@@ -71,6 +79,8 @@ void DrawArea::doMap(int map)
 	}
 }
 
+/*Opens a file stream to save the touch points into
+goes trough the list of touch points and writes them in order*/
 bool DrawArea::doSaveGesture(QString fileName)
 {
 	qDebug() << "SAVING THE FILE";
@@ -83,6 +93,10 @@ bool DrawArea::doSaveGesture(QString fileName)
 	return true;
 }
 
+/*Opens a file stream to read the touchpoints, 
+reads the data one line at a time and then
+reads the four elements contained on the line
+while adding this touch pounts objects into the touchpoint list*/
 bool DrawArea::doOpenGesture(QString fileName)
 {
 	qDebug() << "OPPENING A FILE";
@@ -111,6 +125,9 @@ bool DrawArea::doOpenGesture(QString fileName)
 	return true;
 }
 
+/*Goes trough the touchPoint list and extracts the X and Y axis
+and the id then draws a rectangle the size of the brush size
+until the list is empty*/
 void DrawArea::playback()
 {
 	qDebug() << "ON PLAYBACK";
@@ -139,6 +156,8 @@ void DrawArea::playback()
 	thePoints.clear();
 }
 
+/*Draws a clear immage the size of the draw area
+effectively clearing the screen*/
 void DrawArea::clearScreen()
 {
 	qDebug() << "CLEARING THE SCREEN";
@@ -146,6 +165,7 @@ void DrawArea::clearScreen()
 	update();
 }
 
+/*Supplementary function that draws the image into the screen*/
 void DrawArea::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
@@ -153,6 +173,7 @@ void DrawArea::paintEvent(QPaintEvent *event)
 	painter.drawImage(rect.topLeft(), image, rect);
 }
 
+/*Supplementary function that triggers an imageResize*/
 void DrawArea::resizeEvent(QResizeEvent *event)
 {
 	if (width() > image.width() || height() > image.height())
@@ -165,6 +186,7 @@ void DrawArea::resizeEvent(QResizeEvent *event)
 	QWidget::resizeEvent(event);
 }
 
+/*Supplementary function that resizes the image*/
 void DrawArea::resizeImage(QImage *image, const QSize &newSize)
 {
 	if (image->size() == newSize)
@@ -176,6 +198,11 @@ void DrawArea::resizeImage(QImage *image, const QSize &newSize)
 	*image = newImage;
 }
 
+/*The function that does all the input/output,
+this function gets triggered by a touch event,
+saves the data of the touch event as a touch point 
+and adds the touch point to a list, then draws the 
+output depending on the mapping function*/
 bool DrawArea::event(QEvent *event)
 {
 	switch (event->type())

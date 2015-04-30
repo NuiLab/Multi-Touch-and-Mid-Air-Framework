@@ -10,6 +10,8 @@ class Debug : public QMainWindow
 
 public:
 	Debug();
+
+	/*Function to start the debug monitor, WINDOWS ONLY*/
 	void showWin32Console();
 
 protected:

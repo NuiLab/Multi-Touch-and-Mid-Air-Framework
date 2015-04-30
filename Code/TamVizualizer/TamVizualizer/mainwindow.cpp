@@ -11,7 +11,10 @@
 #include "qmenubar"
 #include "debug.h"
 
-
+/*Main function
+Initializes the draw area object, menus and actions(buttons), 
+sets name of the window and size
+*/
 MainWindow::MainWindow()
 {
 	drawArea = new DrawArea();
@@ -24,19 +27,29 @@ MainWindow::MainWindow()
 
 }
 
-
+/*Receives the event when the resize button is clicked,
+strips the id of the size selected and calls the doResize function
+with the selected size as an argument*/
 void MainWindow::resizeBrush()
 {
 	QAction *action = qobject_cast<QAction *>(sender());
 	int size = action->data().toInt();
 	drawArea->doResizeBrush(size);
 }
+
+/*Receives the event when the map button is clicked,
+strips the id of the map selected and calls the doMap function
+with the selected map as an argument*/
 void MainWindow::map()
 {
 	QAction *action = qobject_cast<QAction *>(sender());
 	int map = action->data().toInt();
 	drawArea->doMap(map);
 }
+
+/*Receives the event when the save button is clicked,
+sets up the path of the application as the main path
+calls the doSave function with the current path as an argument*/
 bool MainWindow::saveGesture()
 {
 	QString path = QDir::currentPath() + "/untitled." + "csv";
@@ -52,6 +65,9 @@ bool MainWindow::saveGesture()
 	}
 }
 
+/*Receives the event when the open button is clicked,
+sets up the path of the application as the main path
+calls the doOpen function with the current path as an argument*/
 bool MainWindow::openGesture()
 {
 	QString path = QDir::currentPath();
@@ -64,7 +80,7 @@ bool MainWindow::openGesture()
 	}
 }
 
-
+/*Initializes all the actions(buttons)*/
 void MainWindow::loadActions()
 {
 	for (int i = 5; i <= 100; i= i+5)
@@ -101,6 +117,7 @@ void MainWindow::loadActions()
 	connect(clearScreenAction, SIGNAL(triggered()), drawArea, SLOT(clearScreen()));
 }
 
+/*initializes the menus*/
 void MainWindow::loadMenus()
 {
 	sizeMenu = new QMenu(tr("&BrushSize"), this);
