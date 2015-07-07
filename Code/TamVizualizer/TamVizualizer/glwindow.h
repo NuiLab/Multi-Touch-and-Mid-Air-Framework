@@ -11,6 +11,7 @@
 #include "globaldata.h"
 #include "processorthread.h"
 #include "shapedata.h"
+#include "debugwindow.h"
 
 # define PI_L          3.141592653589793238462643383279502884L /* pi */
 
@@ -67,15 +68,16 @@ private:
 	//QList<QList<touch_data*>> finger_tracker;	/*touch data organized by the finger id*/
 	QHash<int, int> fingers;					/*Global position of all 10 fingers currently*/
 
-
-    //QBasicTimer timer;
+	QBasicTimer timer;							/*Timer to set frames per second*/
+	volatile bool isDrawing;					/*Used to prevent multiple calls to update*/
+	int fps;									/*Frames per second to update the timer*/
 
 	ProcessorThread *process;
 	void sendDataToProcessThread();
 	void updateData(touch_data data);				/*Update the touch data for the 10 fingers*/
 	void drawScreenGL(QList<TAMShape *> shapes);
 
-	//void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;
+	void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;
 
 	/*
 	void drawLineGL(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, int color);

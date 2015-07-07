@@ -6,9 +6,6 @@ sets name of the window and size
 */
 MainWindow::MainWindow() {
 	window = new GLWindow();
-	debug = new DebugWindow();
-
-	debug->show();
 
 	setCentralWidget(window);
 	loadActions();
@@ -23,10 +20,14 @@ MainWindow::MainWindow() {
 	for (int i = 1; i < type_list.size(); i++) {
 		type_option += ";;" + type_list[i] + " Files(*." + type_list[i].toLower() + ")";
 	}
+
+	debug = new DebugWindow();
+	debug->show();
 }
 
-MainWindow::~MainWindow(){
-	delete debug;
+void MainWindow::closeEvent(QCloseEvent *event) {
+	debug->close();
+	event->accept();
 }
 
 /*Receives the event when the resize button is clicked,
@@ -65,17 +66,21 @@ bool MainWindow::saveGesture()
 	
 	fileName = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::currentPath(), type_option, &selected);
 	//tr("%1 Files (*.%2);; %3 Files(*. %4);; All Files(*)").arg(JSON_STR).arg(JSON_STR).arg("CSV").arg("csv")
-	qDebug() << fileName << "   " << selected << endl;
+	
+	//qDebug() << fileName << "   " << selected << endl;
+	DebugWindow::println(fileName + "   " + selected);
 
 	if (fileName.isEmpty() || selected.isEmpty()){
-		qDebug() << "Save Cancelled" << endl;
+		DebugWindow::println("Save Cancelled");
+		//qDebug() << "Save Cancelled" << endl;
 		return false;
 	}
 
 	foreach (QString type, type_list) {
 		//QString check = tr("%1 Files (*.%2)").arg(type).arg(type.toLower());
 
-		qDebug() << selected.left(type.size()) << " TEST" << endl;
+		DebugWindow::println(selected.left(type.size()) + " TEST");
+		//qDebug() << selected.left(type.size()) << " TEST" << endl;
 		if (selected.left(type.size()) == type) {
 			return window->doSaveGesture(fileName, type);
 		}
@@ -99,7 +104,8 @@ bool MainWindow::openGesture()
 		QFileInfo f(fileName);
 		QString file_type = f.suffix().toLower();
 
-		qDebug() << file_type << endl;
+		//qDebug() << file_type << endl;
+		DebugWindow::println(file_type);
 		foreach(QString type, type_list) {
 			if (file_type == type.toLower()) {
 				return window->doOpenGesture(fileName, file_type);

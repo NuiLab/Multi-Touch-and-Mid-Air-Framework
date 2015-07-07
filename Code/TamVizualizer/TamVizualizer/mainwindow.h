@@ -10,7 +10,6 @@ class MainWindow : public QMainWindow {
 
 public:
 	MainWindow();
-	~MainWindow();
 
 	/* List of all file types to export from */
 	QList<QString> type_list;
@@ -24,6 +23,9 @@ protected:
 	bool openGesture();
 	void map();
 	void changeDisplay();
+
+protected:
+	void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private:
 	GLWindow *window;

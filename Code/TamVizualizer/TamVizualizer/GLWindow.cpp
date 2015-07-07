@@ -15,6 +15,8 @@ GLWindow::GLWindow(QWidget *parent) : QOpenGLWidget(parent) {
 	setAttribute(Qt::WA_MouseTracking);			// Allow Mouse Detection
 
 	process = new ProcessorThread();
+
+	timer.start(1000 / fps, Qt::TimerType::PreciseTimer, this);
 }
 
 GLWindow::~GLWindow(){
@@ -25,33 +27,36 @@ GLWindow::~GLWindow(){
 void GLWindow::doResizeBrush(int i)
 {
 	brushSize = i;
-	qDebug() << "BRUSH SIZE: " << i;
+	//qDebug() << "BRUSH SIZE: " << i;
+	DebugWindow::println("BRUSH SIZE: " + i);
 }
 
 /*Changes the global map variable to the selected map fuunction*/
-void GLWindow::doMap(int map)
-{
+void GLWindow::doMap(int map) {
+	mapping = map;
+	
 	switch (map)
 	{
 	case 1:
 		mapping = 1;
-		qDebug() << "MAPPING FUNCTION SELECTED IS 1";
+		//qDebug() << "MAPPING FUNCTION SELECTED IS 1";
 		break;
 	case 2:
 		mapping = 2;
-		qDebug() << "MAPPING FUNCTION SELECTED IS 2";
+		//qDebug() << "MAPPING FUNCTION SELECTED IS 2";
 		break;
 	case 3:
 		mapping = 0.5;
-		qDebug() << "MAPPING FUNCTION SELECTED IS 1/2";
+		//qDebug() << "MAPPING FUNCTION SELECTED IS 1/2";
 		break;
 	default:
 		mapping = 1;
 	}
+	DebugWindow::println("MAPPING FUNCTION SELECTED IS " + tr(to_string(mapping).c_str()) + ".");
 }
 
 /*Set the display mode for the window*/
-void GLWindow::setDisplay(DisplaySetting action){
+void GLWindow::setDisplay(DisplaySetting action) {
 	display_type = action;
 	/*DisplaySetting setting;
 	switch (action){
@@ -109,6 +114,8 @@ void GLWindow::resizeGL(int width, int height){
 * Renders the OpenGL scene. Gets called whenever the widget needs to be updated.
 */
 void GLWindow::paintGL(){
+	isDrawing = true;
+
 	QPainter painter(this);
 	painter.beginNativePainting();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -126,19 +133,21 @@ void GLWindow::paintGL(){
 
 	QList<TAMShape *> results = process->getResults();
 	if (results.isEmpty() && playback_mode) {
-		qDebug() << "ERROR: Results are Empty" << endl;
+		//qDebug() << "ERROR: Results are Empty" << endl;
+		DebugWindow::println("ERROR: Results are Empty");
 	}
 	else {
 		if(playback_mode)
-			qDebug() << "Drawing Results. # of shapes:" << results.size() << endl;
+			//qDebug() << "Drawing Results. # of shapes: " << results.size() << endl;
+			DebugWindow::println("Drawing Results. # of shaptes: " + results.size());
 		drawScreenGL(results);
 	}
 
 
 	painter.endNativePainting();
 
-	//drawScreen(painter);
-	update();
+	//update();
+	isDrawing = false;
 }
 
 /*
@@ -284,19 +293,9 @@ void GLWindow::drawScreenGL(QList<TAMShape *> shapes){
 
 void GLWindow::updateData(touch_data data){
 	if (data.x < 0 || data.y < 0) {
-		/*qDebug() << "POINT: [RELEASE]";
-		qDebug() << "ID: " << data.id;
-		qDebug() << "TIME (ms): " << data.time;
-		*/
 		fingers.remove(data.id);
 	}
 	else {
-		/*qDebug() << "POINT: \n";
-		qDebug() << "X: " << data.x;
-		qDebug() << "Y: " << data.y;
-		qDebug() << "ID: " << data.id;
-		qDebug() << "TIME (ms): " << data.time;
-		*/
 		//angular_speed = 1.0;
 		fingers[data.id] = touch_list.size();
 	}
@@ -501,7 +500,8 @@ bool GLWindow::doOpenGesture(QString fileName, QString fileType)
 	Added choice of JSON file detection. Not fully implemented.
 	*/
 
-	qDebug() << "OPENING A FILE";
+	//qDebug() << "OPENING A FILE";
+	DebugWindow::println("OPENING A FILE");
 	touch_list.clear();
 
 	if (fileType.toLower() == "json") {
@@ -566,7 +566,8 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType)
 	Added choice of JSON file detection. Not fully implemented.
 	*/
 
-	qDebug() << "SAVING THE FILE TO " << fileName;
+	//qDebug() << "SAVING THE FILE TO " << fileName;
+	DebugWindow::println("SAVING THE FILE TO " + fileName);
 
 	if (fileType.toLower() == "json") {
 		/* EDITS: Links below
@@ -576,7 +577,8 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType)
 		QFile saveFile(fileName);
 
 		if (!saveFile.open(QIODevice::WriteOnly)) {
-			qDebug() << "Couldn't open save file.";
+			//qDebug() << "Couldn't open save file.";
+			DebugWindow::println("Couldn't open save file");
 			return false;
 		}
 
@@ -604,7 +606,8 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType)
 		}
 	}
 	else {
-		qDebug() << "ERROR: File Type Invalid" << endl;
+		//qDebug() << "ERROR: File Type Invalid" << endl;
+		DebugWindow::println("ERROR: File Type Invalid");
 		return false;
 	}
 	clearScreen();
@@ -614,18 +617,21 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType)
 
 /*Goes through the list of stored points and draws the results on the screen*/
 void GLWindow::playback() {
-	qDebug() << "ON PLAYBACK";
+	//qDebug() << "ON PLAYBACK"; 
+	DebugWindow::println("ON PLAYBACK");
 	playback_mode = true;
 
 	int beginTime = clock();
 	int time;
 	int index = 0;
-	foreach(touch_data data, touch_list)
-	{
+	foreach(touch_data data, touch_list) {
 
 		time = clock();
 		if (data.time - (time - beginTime) > 0) {
-			qDebug() << "  SLEEP FOR " << (data.time - (time - beginTime)) << endl;
+			//qDebug() << "  SLEEP FOR " << (data.time - (time - beginTime)) << endl;
+			DebugWindow::println("SLEEP FOR" + (data.time - beginTime));
+
+
 			// Pause between touch data 
 			QThread::yieldCurrentThread();
 			qApp->processEvents();
@@ -640,11 +646,7 @@ void GLWindow::playback() {
 			//angular_speed = 1.0;
 		}
 
-		// Next Frame
-		//drawScreen();
-
-		// EDIT: Encapsulate the drawing of touch events into one function
-		//drawScreen();
+		// Send data to proccess thread for calculation
 		sendDataToProcessThread();
 
 		index++;
@@ -788,7 +790,9 @@ effectively clearing the screen*/
 void GLWindow::clearScreen()
 {
 	if (!playback_mode){
-		qDebug() << "CLEARING THE SCREEN";
+		//qDebug() << "CLEARING THE SCREEN";
+		DebugWindow::println("CLEARING THE SCREEN");
+
 		//image.fill(qRgb(235, 235, 235));
 		init_time = 0;
 		touch_list.clear();
@@ -889,9 +893,9 @@ bool GLWindow::event(QEvent *event) {
 	return true;
 }
 
-/*
+
 void GLWindow::timerEvent(QTimerEvent *) {
-	// Decrease angular speed (friction)
+	/*// Decrease angular speed (friction)
 	angular_speed *= 0.98;
 
 	// Stop rotation when speed goes below threshold
@@ -901,5 +905,6 @@ void GLWindow::timerEvent(QTimerEvent *) {
 	else {
 		angular_pos += 3*angular_speed;
 		if (angular_pos > 360.0) angular_pos -= 360.0;
-	}
-}*/
+	}*/
+	if(!isDrawing) update();
+}
