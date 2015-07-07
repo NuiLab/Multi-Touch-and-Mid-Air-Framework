@@ -18,6 +18,7 @@ protected:
 
 private:
 	QLabel *imageLabel = new QLabel;
+
 };
 
 #endif // DEBUG_H

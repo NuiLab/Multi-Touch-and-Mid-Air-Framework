@@ -1,37 +1,36 @@
-﻿Build started 5/3/2015 12:44:04 PM.
-     1>Project "C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 7/7/2015 1:58:05 AM.
+     1>Project "C:\Users\Stevester360\Documents\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" on node 2 (Build target(s)).
      1>CustomBuild:
          Moc'ing mainwindow.h...
-         Uic'ing mainwindow.ui...
-         Moc'ing drawArea.h...
-         Moc'ing debug.h...
-         Rcc'ing mainwindow.qrc...
-     1>RCC : warning : No resources in 'C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\mainwindow.qrc'.
-         
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_debugwindow.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_debugwindow.cpp, GeneratedFiles\Release\moc_debugwindow.cpp.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_glwindow.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_glwindow.cpp, GeneratedFiles\Release\moc_glwindow.cpp.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_processorthread.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_processorthread.cpp, GeneratedFiles\Release\moc_processorthread.cpp.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_debug.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_debug.cpp, GeneratedFiles\Release\moc_debug.cpp.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_mainwindow.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_mainwindow.cpp, GeneratedFiles\Release\moc_mainwindow.cpp.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.4\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.4\msvc2013_64\include\QtCore /IC:\Qt\5.4\msvc2013_64\include\QtGui /IC:\Qt\5.4\msvc2013_64\include\QtTest /IC:\Qt\5.4\msvc2013_64\include\QtOpenGL /IC:\Qt\5.4\msvc2013_64\include\QtPrintSupport /IC:\Qt\5.4\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_TESTLIB_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt debug.cpp drawArea.cpp GeneratedFiles\Debug\moc_debug.cpp GeneratedFiles\Debug\moc_drawArea.cpp GeneratedFiles\Debug\moc_mainwindow.cpp main.cpp mainwindow.cpp
-         debug.cpp
-         drawArea.cpp
-         moc_debug.cpp
-         moc_drawArea.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.4\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.4\msvc2013_64\include\QtCore /IC:\Qt\5.4\msvc2013_64\include\QtGui /IC:\Qt\5.4\msvc2013_64\include\QtTest /IC:\Qt\5.4\msvc2013_64\include\QtOpenGL /IC:\Qt\5.4\msvc2013_64\include\QtPrintSupport /IC:\Qt\5.4\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_TESTLIB_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt GeneratedFiles\Debug\moc_mainwindow.cpp main.cpp mainwindow.cpp
          moc_mainwindow.cpp
          main.cpp
          mainwindow.cpp
          Generating Code...
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.4\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.4\msvc2013_64\include\QtCore /IC:\Qt\5.4\msvc2013_64\include\QtGui /IC:\Qt\5.4\msvc2013_64\include\QtTest /IC:\Qt\5.4\msvc2013_64\include\QtOpenGL /IC:\Qt\5.4\msvc2013_64\include\QtPrintSupport /IC:\Qt\5.4\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_TESTLIB_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt GeneratedFiles\qrc_mainwindow.cpp
-         qrc_mainwindow.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Debug\\TamVizualizer.exe" /NOLOGO /LIBPATH:C:\Qt\5.4\msvc2013_64\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Testd.lib Qt5OpenGLd.lib opengl32.lib glu32.lib Qt5PrintSupportd.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Debug\TamVizualizer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Debug\TamVizualizer.lib" /MACHINE:X64 x64\Debug\debug.obj
-         x64\Debug\drawArea.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Stevester360\Documents\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\x64\Debug\\TamVizualizer.exe" /NOLOGO /LIBPATH:C:\Qt\5.4\msvc2013_64\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Testd.lib Qt5OpenGLd.lib opengl32.lib glu32.lib Qt5PrintSupportd.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Stevester360\Documents\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\x64\Debug\TamVizualizer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Stevester360\Documents\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\x64\Debug\TamVizualizer.lib" /MACHINE:X64 x64\Debug\debugwindow.obj
+         x64\Debug\moc_debugwindow.obj
+         x64\Debug\moc_glwindow.obj
+         x64\Debug\moc_processorthread.obj
+         x64\Debug\globaldata.obj
+         x64\Debug\GLWindow.obj
+         x64\Debug\debug.obj
          x64\Debug\moc_debug.obj
-         x64\Debug\moc_drawArea.obj
          x64\Debug\moc_mainwindow.obj
          x64\Debug\qrc_mainwindow.obj
          x64\Debug\main.obj
          x64\Debug\mainwindow.obj
-         TamVizualizer.vcxproj -> C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Debug\TamVizualizer.exe
-     1>Done Building Project "C:\Users\Richin\Documents\GitHub\SeniorProject\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" (Rebuild target(s)).
+         x64\Debug\ProcessorThread.obj
+         x64\Debug\shapedata.obj
+         TamVizualizer.vcxproj -> C:\Users\Stevester360\Documents\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\x64\Debug\TamVizualizer.exe
+     1>Done Building Project "C:\Users\Stevester360\Documents\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:12.48
+Time Elapsed 00:00:09.15
