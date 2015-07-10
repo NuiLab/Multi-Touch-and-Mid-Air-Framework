@@ -1,7 +1,7 @@
-﻿Build started 7/7/2015 5:53:14 PM.
+﻿Build started 7/10/2015 11:32:48 AM.
      1>Project "C:\Code\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" on node 2 (Build target(s)).
      1>CustomBuild:
-         Moc'ing glwindow.h...
+         Moc'ing debugwindow.h...
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_debugwindow.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_debugwindow.cpp, GeneratedFiles\Release\moc_debugwindow.cpp.
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_glwindow.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_glwindow.cpp, GeneratedFiles\Release\moc_glwindow.cpp.
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_processorthread.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_processorthread.cpp, GeneratedFiles\Release\moc_processorthread.cpp.
@@ -37,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:42.52
+Time Elapsed 00:00:19.74

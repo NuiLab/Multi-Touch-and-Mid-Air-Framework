@@ -12,6 +12,9 @@ using namespace std;
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);
 
+	Debug d;
+	d.showWin32Console();
+
 	// Create a MainWindow object and maximize the window
 	MainWindow w;
 	w.showMaximized();

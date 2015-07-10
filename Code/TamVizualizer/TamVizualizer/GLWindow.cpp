@@ -27,8 +27,10 @@ GLWindow::~GLWindow(){
 void GLWindow::doResizeBrush(int i)
 {
 	brushSize = i;
-	//qDebug() << "BRUSH SIZE: " << i;
-	DebugWindow::println("BRUSH SIZE: " + i);
+	qDebug() << "BRUSH SIZE: " << i;
+	stringstream str;
+	str << "BRUSH SIZE" << i;
+	DebugWindow::println(str);
 }
 
 /*Changes the global map variable to the selected map fuunction*/
@@ -52,7 +54,10 @@ void GLWindow::doMap(int map) {
 	default:
 		mapping = 1;
 	}
-	DebugWindow::println("MAPPING FUNCTION SELECTED IS " + tr(to_string(mapping).c_str()) + ".");
+	qDebug() << "MAPPING FUNCTION SELECTED IS " << mapping << '.' << endl;
+	stringstream str;
+	str << "MAPPING FUNCTION SELECTED IS" << mapping;
+	DebugWindow::println(str);
 }
 
 /*Set the display mode for the window*/
@@ -133,13 +138,18 @@ void GLWindow::paintGL(){
 
 	QList<TAMShape *> results = process->getResults();
 	if (results.isEmpty() && playback_mode) {
-		//qDebug() << "ERROR: Results are Empty" << endl;
-		DebugWindow::println("ERROR: Results are Empty");
+		qDebug() << "ERROR: Results are Empty" << endl;
+		stringstream str;
+		str << "ERROR: Results are Empty";
+		DebugWindow::println(str);
 	}
 	else {
-		if(playback_mode)
-			//qDebug() << "Drawing Results. # of shapes: " << results.size() << endl;
-			DebugWindow::println("Drawing Results. # of shaptes: " + results.size());
+		if (playback_mode){
+			qDebug() << "Drawing Results. # of shapes: " << results.size() << endl;
+			stringstream str;
+			str << "Drawing Results. # of shapes: " << results.size();
+			DebugWindow::println(str);
+		}
 		drawScreenGL(results);
 	}
 
@@ -500,8 +510,10 @@ bool GLWindow::doOpenGesture(QString fileName, QString fileType)
 	Added choice of JSON file detection. Not fully implemented.
 	*/
 
-	//qDebug() << "OPENING A FILE";
-	DebugWindow::println("OPENING A FILE");
+	qDebug() << "OPENING A FILE";
+	stringstream str;
+	str << "OPENING A FILE";
+	DebugWindow::println(str);
 	touch_list.clear();
 
 	if (fileType.toLower() == "json") {
@@ -566,8 +578,10 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType)
 	Added choice of JSON file detection. Not fully implemented.
 	*/
 
-	//qDebug() << "SAVING THE FILE TO " << fileName;
-	DebugWindow::println("SAVING THE FILE TO " + fileName);
+	qDebug() << "SAVING THE FILE TO " << fileName;
+	stringstream str;
+	str << "SAVING FILE TO " << fileName.toStdString();
+	DebugWindow::println(str);
 
 	if (fileType.toLower() == "json") {
 		/* EDITS: Links below
@@ -577,8 +591,10 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType)
 		QFile saveFile(fileName);
 
 		if (!saveFile.open(QIODevice::WriteOnly)) {
-			//qDebug() << "Couldn't open save file.";
-			DebugWindow::println("Couldn't open save file");
+			qDebug() << "Couldn't open save file.";
+			stringstream str;
+			str << "Couldn't open save file";
+			DebugWindow::println(str);
 			return false;
 		}
 
@@ -606,8 +622,10 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType)
 		}
 	}
 	else {
-		//qDebug() << "ERROR: File Type Invalid" << endl;
-		DebugWindow::println("ERROR: File Type Invalid");
+		qDebug() << "ERROR: File Type Invalid" << endl;
+		stringstream str;
+		str << "ERROR: File Type Invalid";
+		DebugWindow::println(str);
 		return false;
 	}
 	clearScreen();
@@ -617,8 +635,10 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType)
 
 /*Goes through the list of stored points and draws the results on the screen*/
 void GLWindow::playback() {
-	//qDebug() << "ON PLAYBACK"; 
-	DebugWindow::println("ON PLAYBACK");
+	qDebug() << "ON PLAYBACK";
+	stringstream str;
+	str << "ON PLAYBACK";
+	DebugWindow::println(str);
 	playback_mode = true;
 
 	int beginTime = clock();
@@ -628,8 +648,10 @@ void GLWindow::playback() {
 
 		time = clock();
 		if (data.time - (time - beginTime) > 0) {
-			//qDebug() << "  SLEEP FOR " << (data.time - (time - beginTime)) << endl;
-			DebugWindow::println("SLEEP FOR" + (data.time - beginTime));
+			qDebug() << "  SLEEP FOR " << (data.time - (time - beginTime)) << endl;
+			stringstream str;
+			str << "  SLEEP FOR " << (data.time - (time - beginTime));
+			DebugWindow::println(str);
 
 
 			// Pause between touch data 
@@ -785,13 +807,15 @@ QList<int> GLWindow::getShortestHamiltonianPath(QList< QList<int> > dist, int &r
 }
 */
 
-/*Draws a clear immage the size of the draw area
+/*Draws a clear image the size of the draw area
 effectively clearing the screen*/
 void GLWindow::clearScreen()
 {
 	if (!playback_mode){
-		//qDebug() << "CLEARING THE SCREEN";
-		DebugWindow::println("CLEARING THE SCREEN");
+		qDebug() << "CLEARING THE SCREEN";
+		stringstream str;
+		str << "CLEARING THE SCREEN" << endl;
+		DebugWindow::println(str);
 
 		//image.fill(qRgb(235, 235, 235));
 		init_time = 0;

@@ -67,20 +67,26 @@ bool MainWindow::saveGesture()
 	fileName = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::currentPath(), type_option, &selected);
 	//tr("%1 Files (*.%2);; %3 Files(*. %4);; All Files(*)").arg(JSON_STR).arg(JSON_STR).arg("CSV").arg("csv")
 	
-	//qDebug() << fileName << "   " << selected << endl;
-	DebugWindow::println(fileName + "   " + selected);
+	qDebug() << fileName << "   " << selected << endl;
+	stringstream str;
+	str << fileName.toStdString() << "   " << selected.toStdString();
+	DebugWindow::println(str);
 
 	if (fileName.isEmpty() || selected.isEmpty()){
-		DebugWindow::println("Save Cancelled");
-		//qDebug() << "Save Cancelled" << endl;
+		qDebug() << "Save Cancelled" << endl;
+		stringstream str;
+		str << "Save Cancelled";
+		DebugWindow::println(str);
 		return false;
 	}
 
 	foreach (QString type, type_list) {
 		//QString check = tr("%1 Files (*.%2)").arg(type).arg(type.toLower());
 
-		DebugWindow::println(selected.left(type.size()) + " TEST");
-		//qDebug() << selected.left(type.size()) << " TEST" << endl;
+		qDebug() << selected.left(type.size()) << " TEST" << endl;
+		stringstream str;
+		str << selected.left(type.size()).toStdString() << " TEST";
+		DebugWindow::println(str);
 		if (selected.left(type.size()) == type) {
 			return window->doSaveGesture(fileName, type);
 		}
@@ -104,8 +110,10 @@ bool MainWindow::openGesture()
 		QFileInfo f(fileName);
 		QString file_type = f.suffix().toLower();
 
-		//qDebug() << file_type << endl;
-		DebugWindow::println(file_type);
+		qDebug() << file_type << endl;
+		stringstream str;
+		str << file_type.toStdString();
+		DebugWindow::println(str);
 		foreach(QString type, type_list) {
 			if (file_type == type.toLower()) {
 				return window->doOpenGesture(fileName, file_type);

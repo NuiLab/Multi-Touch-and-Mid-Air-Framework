@@ -10,14 +10,16 @@ class DebugWindow : public QMainWindow {
 
 public:
 	DebugWindow();
-	static void print(const QString& message);	
-	static void println(const QString& message);
+	static void print(const stringstream &message);	
+	static void println(const stringstream &message);
 	
 private:
 	static QString prev;
 	static bool exists;
 	//QScrollArea *scrollArea = new QScrollArea;
-	static QTextEdit * debugText;
+	static QScrollArea *scrollarea;
+	static QTextEdit *debugText;
+	static QList<QString*> stringlist;
 };
 
 #endif // DEBUGWINDOW_H

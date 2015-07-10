@@ -3,6 +3,7 @@
 
 bool DebugWindow::exists = false; 
 QString DebugWindow::prev;
+QScrollArea *DebugWindow::scrollarea;
 QTextEdit *DebugWindow::debugText;
 
 /* Main function
@@ -10,8 +11,15 @@ Initializes the draw area object, menus and actions(buttons),
 sets name of the window and size
 */
 DebugWindow::DebugWindow() {
+	scrollarea = new QScrollArea;
 	debugText = new QTextEdit();
-	setCentralWidget(debugText);
+	scrollarea->setWidget(debugText);
+	scrollarea->setWidgetResizable(true);
+	//scrollarea->resize(500, 200);
+	scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAsNeeded);
+	scrollarea->ensureVisible(0, debugText->height());
+	setCentralWidget(scrollarea);
+	//setCentralWidget(debugText);
 
 	setWindowTitle(tr("TAM Debugger"));
 	resize(500, 200);
@@ -27,20 +35,18 @@ DebugWindow::DebugWindow() {
 	exists = true;
 }
 
-void DebugWindow::print(const QString &message) {
+void DebugWindow::print(const stringstream &message){
+	QString mess = tr(message.str().c_str());
 	if (!exists){
-		prev += message;
+		prev += mess;
 	} else {
-		debugText->append(message);
+		debugText->append(mess + "\n");
+		scrollarea->ensureVisible(0, debugText->height());
 	}
-	qDebug() << message;
 }
 
-void DebugWindow::println(const QString &message){
-	if (!exists){
-		prev += message;
-	} else {
-		debugText->append(message + "\n");
-	}
-	qDebug() << message << endl;
+void DebugWindow::println(const stringstream &message){
+	stringstream newline;
+	newline << message.str() << endl;
+	DebugWindow::print(newline);
 }
