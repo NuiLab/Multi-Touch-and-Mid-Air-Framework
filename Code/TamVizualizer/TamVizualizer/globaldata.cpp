@@ -1,12 +1,12 @@
 #include "globaldata.h"
 #include <math.h>
 
-/*Calculates circumcircle given 3 touch data points*/
+/* Function to calculate the circumscribed circle for a triangle (or 3 vertices)
+   in relatively constant-time (no loops or change in time for the size of given data, number-wise.
+   Only sqrt() function is questionable in terms of time-complexity) */
 bool Algorithm::getCircumcenter(touch_data data1, touch_data data2, touch_data data3, int accuracy, float &centerX, float &centerY, float &radius){
-	/* Efficient equation found here: https://en.wikipedia.org/wiki/Circumscribed_circle#Cartesian_coordinates */
+	/* Efficient Math Equation found here: https://en.wikipedia.org/wiki/Circumscribed_circle#Cartesian_coordinates */
 
-	/* To be looked at further: "Least Square Circle Fitting"
-	http://www.dtcenter.org/met/users/docs/write_ups/circle_fit.pdf */
 	centerX = centerY = radius = -1;
 	long long temp1, temp2, temp3;
 	float denom;
@@ -38,6 +38,7 @@ bool Algorithm::getCircumcenter(touch_data data1, touch_data data2, touch_data d
 }
 
 
+/* Bellman, Held, and Karp's Dynamic Programming Solution to Shortest Hamiltonian Path.*/
 QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &res){
 	// Algorithm retrieved from Google Source Code and converted to C++:
 	// https://sites.google.com/site/indy256/algo/shortest_hamiltonian_path
@@ -70,7 +71,7 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 				for (int j = 0; j < n; j++) {
 					temp = dp[mask ^ (1 << i)][j] + dist[j][i];
 					if ((mask & (1 << j)) != 0 && temp < dp[mask][i]) {
-						dp[mask][i] = temp;//Math.min(dp[mask][i], dp[mask ^ (1 << i)][j] + dist[j][i]);
+						dp[mask][i] = temp;	//Math.min(dp[mask][i], dp[mask ^ (1 << i)][j] + dist[j][i]);
 					}
 				}
 			}
@@ -81,14 +82,13 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 	for (int i = 0; i < n; i++) {
 		temp = dp[(1 << n) - 1][i];
 		if (temp < res){
-			res = temp;
+			res = temp;	// Math.min(res, dp[(1 << n) - 1][i]);
 		}
-		//res = Math.min(res, dp[(1 << n) - 1][i]);
 	}
 
-	// reconstruct path
+	// Reconstruct path
 	int cur = (1 << n) - 1;
-	//int order = new int[n];
+
 	int last = -1;
 	for (int i = n - 1; i >= 0; i--) {
 		int bj = -1;

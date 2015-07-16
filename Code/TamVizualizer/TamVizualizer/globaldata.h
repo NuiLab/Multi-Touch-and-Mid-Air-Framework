@@ -4,11 +4,15 @@
 #include <cstdlib>
 #include <qobject.h>
 
+# define PI_L	3.141592653589793238462643383279502884L /* Pi */
+
 using namespace std;
 
-# define PI_L          3.141592653589793238462643383279502884L /* pi */
+/* The GlobalData Files is used to store variables, methods, structures, and classes that may
+   be used throughout the project. This provides a way to modify global values that will
+   reach all parts of the project in one easily accessible place. */
 
-/*The structure to hold the data of a touch input*/
+/*The structure to hold touch-screen input data*/
 struct touch_data
 {
 	long long x;
@@ -17,14 +21,18 @@ struct touch_data
 	long long time;
 };
 
+/* Enumerations of the different display settings available currently*/
 enum DisplaySetting { NONE, AVG, MST, CIRCLE, SHP, CUBE };
+/* Maps a number to the respective enum*/
 static const DisplaySetting toDS[6] = { NONE, AVG, MST, CIRCLE, SHP, CUBE };
 
+/* Algorithm class to store all computationally-expensive calculations 
+   It's purpose is to have easy access for quickly updating the method
+   if a more-improved algorithm gets written up.*/
 class Algorithm {
 public:
-
 	static bool getCircumcenter(touch_data data1, touch_data data2, touch_data data3, int accuracy,
-						float &centerX, float &centerY, float &radius);
+		float &centerX, float &centerY, float &radius);
 
 	static QList<int> getShortestHamiltonianPath(QList< QList<int> > dist, int &res);
 };

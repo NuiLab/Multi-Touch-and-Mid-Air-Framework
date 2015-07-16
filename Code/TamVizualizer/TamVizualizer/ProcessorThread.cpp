@@ -1,24 +1,24 @@
 #include "processorthread.h"
 
+/* Initialize and start the thread */
 ProcessorThread::ProcessorThread(){
 	running = true;
 	start();
 }
 
+/* Stop the threading process*/
 ProcessorThread::~ProcessorThread(){
 	running = false;
-
-	//update_m.lock();
 	update = true;
-	//update_m.unlock();
 	wait();
 }
 
+/* Feed the thread what type of display setting the window is using */
 void ProcessorThread::setProcess(DisplaySetting new_setting){
 	setting = new_setting;
-	//update_m.unlock();
 }
 
+/* Feed the thread the touch-screen input data*/
 void ProcessorThread::setFingers(const QList<touch_data> &fingers){
 	finger_m.lock();
 	finger_data.clear();
@@ -27,10 +27,20 @@ void ProcessorThread::setFingers(const QList<touch_data> &fingers){
 	}
 	finger_m.unlock();
 
-	//update_m.unlock();
 	update = true;
 }
 
+/* Load a new model for the purpose of loading  in your own OBJ models */
+bool ProcessorThread::addOBJModel(string path){
+	OBJModel *model = new OBJModel(path);
+	if (model->exists())
+		obj_models << model;
+	update = true;
+
+	return model->exists();
+}
+
+/* Returns the calculated results to be drawn */
 QList<TAMShape *> ProcessorThread::getResults(){
 	result_m.lock();
 	QList<TAMShape *> current_results;
@@ -42,71 +52,51 @@ QList<TAMShape *> ProcessorThread::getResults(){
 	return current_results;
 }
 
+/* The running process */
 void ProcessorThread::run(){
 	float angular_pos = 0;
 
-	while (running){
+	while (running) {
+		// Don't proceed if there is no updated touch-screen input
 		if (!update) continue;
-		// Fetch current data
+
+		// Fetch and copy current touch-screen input data
 		finger_m.lock();
 		QList<touch_data> current_data;
 		foreach(touch_data data, finger_data){
 			current_data << data;
 		}
 		finger_m.unlock();
+
+		// Variable to store the results to draw on scren
 		QList<TAMShape *> current_result;
 
-		/*
-		QQuaternion q1(cos(angular_pos / 2.0f), sin(angular_pos / 2.0f), 0, 0);
-		QQuaternion q2(cos(angular_pos), 0, sin(angular_pos), 0);
-		QQuaternion q3(cos(angular_pos * 3 / 2.0f), 0, 0, sin(angular_pos * 3 / 2.0f));
-		QQuaternion q = q1 * q2 * q3;
-		angular_pos += 0.5;
-		if (angular_pos > 360) angular_pos -= 360;*/
-		QQuaternion q;
-		current_result << new WorldBox(q, 50);
+		// Testing the World Box
+		//QQuaternion q;
+		//current_result << new WorldBox(q, 20);
 
-		if (setting != CUBE){
-			//touch_data prev;
-			//prev.id = -1;
-			foreach(touch_data data, current_data){
-				current_result << new Finger(data.x, data.y, brushSize, data.id);
-				//if(prev.id > 0) current_result << new Line(data.x, data.y, prev.x, prev.y, 60);
-				//prev = data;
-			}
-		} else {
+		// Draw all OBJ Models that have been loaded
+		for (TAMShape* model : obj_models){
+			current_result << model;
+		}
+
+		if (setting == CUBE){
+			// Draw Cubes instead of Fingers
+			// Used initially to display the power of OpenGL
 			foreach(touch_data data, current_data){
 				current_result << new SimpleCube(data.x, data.y, brushSize / 2.0f);
 			}
+		} else {
+			// Draw finger-shapes for the touch-screen data recorded
+			foreach(touch_data data, current_data){
+				current_result << new Finger(data.x, data.y, brushSize, data.id);
+			}
 		}
 
+		// Draw based on the display setting chosen by the user
 		switch (setting){
 		case AVG:	// O(N)
 			operationFingerAveraging(current_data, current_result);		break;
-		/*{
-			current_result << new SimpleCube(0, 0, 1);
-			current_result << new Line(0, 0, 20, 20, 40, 100);
-			current_result << new Circle(100, 100, 50, 20, false);
-
-			if (current_data.size() < 2) break;
-
-			// Best Fit Circle for all points (work-in-progress)
-			int avgX = 0, avgY = 0, count = current_data.size();
-			//float centerX = 0, centerY = 0, radius = 5, avgR = 0;
-
-			foreach(touch_data data, current_data){
-				avgX += data.x;
-				avgY += data.y;
-			}
-			avgX /= count;
-			avgY /= count;
-
-			touch_data data;
-			foreach(touch_data data, current_data){
-				current_result << new Line(data.x, data.y, avgX, avgY, 60);
-			}
-			break;
-		}*/
 		case CIRCLE: 	// O(N^3)
 			operationCircularConnection(current_data, current_result);	break;
 		case MST: 	// O(N^2)
@@ -115,34 +105,27 @@ void ProcessorThread::run(){
 			operationShortestPath(current_data, current_result);		break;
 		}
 
-		// Update results
+		// Update results calculated
 		result_m.lock();
-		/*while (!results.isEmpty()){
-			delete results.first();
-		}*/
 		results.clear();
 		foreach(TAMShape* shape, current_result){
 			results << shape;
 		}
 		result_m.unlock();
 
-		//qDebug() << "Running . . ." << endl;
-
-		// Hold until next update
-		//update_m.lock();
-		//while (update_m.tryLock());
-		//update_m.unlock();
+		// Update Complete
 		update = false;
-	}
+	} // End-While
 	running = true;
 }
 
+/* Function to calculate for the "Finger Averaging" Display Setting
+   Time Complexity: O(N)
+   Algorithm: Linearly scan to add all numbers and divide it by the total count
+   This is a simple implementation of finding the average position of all vertices*/
 void ProcessorThread::operationFingerAveraging(const QList<touch_data> &input, QList<TAMShape *> &output){
 	if (input.size() < 2) return;
-
-	// Best Fit Circle for all points (work-in-progress)
 	int avgX = 0, avgY = 0, count = input.size();
-	//float centerX = 0, centerY = 0, radius = 5, avgR = 0;
 
 	foreach(touch_data data, input){
 		avgX += data.x;
@@ -157,22 +140,27 @@ void ProcessorThread::operationFingerAveraging(const QList<touch_data> &input, Q
 	}
 }
 
+/* Function to calculate for the "Shortest Finger Mapping" Display Setting
+   Time Complexity: O(N^2)
+   Algorithm: Prim's Algorithm using Naiive Implementation (Two For-loops)
+   This is to find the Minimum Spanning Tree connection of the finger data*/
 void ProcessorThread::operationShortestMapping(const QList<touch_data> &input, QList<TAMShape *> &output){
 	if (input.size() <= 1) return;
-
-	// Finger Connecting Logic (M.S.T.)
 	long distance, minI, minJ, minD;
 	touch_data p1, p2;
-	QList<int> removed, unselected;
+	QList<int> selected, unselected;
 
+	// Initialize unselected vertices
 	for (int index = 0; index < input.size(); index++){
 		unselected << index;
 	}
 
-	removed << unselected.takeFirst();	// Random vertex
+	// Begin with a random vertex
+	// Find shortest connection between a selected vertex and unselected vertex
+	selected << unselected.takeFirst();	// Random vertex
 	while (!unselected.isEmpty()) {
-		minD = 10000000L;
-		foreach(int i, removed){
+		minD = 10000000L;	// Initialize minimum distance to infinity (or an absurdly high number)
+		foreach(int i, selected){
 			p1 = input[i];
 
 			foreach(int j, unselected) {
@@ -187,23 +175,32 @@ void ProcessorThread::operationShortestMapping(const QList<touch_data> &input, Q
 			}
 		}
 
-		p1 = input[minI];
-		p2 = input[minJ];
+		// Get the two vertices
+		p1 = input[minI];	// Get selected vertex
+		p2 = input[minJ];	// Get unselected vertex
 
+		// Draw a line to connect the shortest mapping found
 		output << new Line(p1.x, p1.y, p2.x, p2.y, 50);
 
-		unselected.removeOne(minJ);
-		removed << minJ;
+		unselected.removeOne(minJ);	// Remove from unselected
+		selected << minJ;			// Add to selected
 	}
 }
 
+/* Function to calculate for the "Circular Connection" Display Setting
+   Time Complexity: O(N^3)
+   Algorithm: Average of all mathematical computation of circumcenter for every unique 3-vertices pairing
+   Aimed for a simple solution to finding the Best-Fit for drawing a circle that comes closest as possible
+   to circumscribing (connecting) to all the vertices.*/
 void ProcessorThread::operationCircularConnection(const QList<touch_data> &input, QList<TAMShape *> &output){
-	if (input.size() < 3) return;
+	/* Looked at "Least Square Circle Fitting" to improve circle fitting algorithm performance:
+		http://www.dtcenter.org/met/users/docs/write_ups/circle_fit.pdf */
 
-	// Best Fit Circle for all points (work-in-progress)
+	if (input.size() < 3) return;
 	int avgX = 0, avgY = 0, count = 0;
 	float centerX = 0, centerY = 0, radius = 5, avgR = 0;
 
+	// Find 3 unique vertices pairing and add it's circumcenter to the total
 	foreach(touch_data data1, input){
 		foreach(touch_data data2, input){
 			if (data1.id <= data2.id) continue;
@@ -220,20 +217,28 @@ void ProcessorThread::operationCircularConnection(const QList<touch_data> &input
 		}
 	}
 
-	if (count == 0) return;
+	if (count == 0) return;	// No circle is good enough to fit to all vertices
 
+	// Average up the results
 	avgX /= count;
 	avgY /= count;
 	avgR /= count;
 
-	// Get Circle
+	// Draw Circumscribed Circle (circle that obtains a good enough circular connection)
 	output << new Circle(avgX, avgY, avgR, 100);
 
+	// Draw Lines to connect the fingers to the circumcenter
 	foreach(touch_data data, input) {
 		output << new Line(data.x, data.y, avgX, avgY, data.id);
 	}
 }
 
+/* Function to calculate for the "Shortest Hamiltonion Path" Display Setting
+   Time Complexity: O(N^2 * 2^N)
+   Algorithm: See class Algorithm for more details.
+   Solution to this problem is known to be NP-Complete, and therefore has a large computation time
+   for even the smallest set of data. This display setting is set for the sole purpose of testing
+   to see if computing in this thread will in any way slow down the UI thread. */
 void ProcessorThread::operationShortestPath(const QList<touch_data> &input, QList<TAMShape *> &output){
 	if (input.size() < 2) return;
 
@@ -242,16 +247,15 @@ void ProcessorThread::operationShortestPath(const QList<touch_data> &input, QLis
 	QList< QList<int> > adj_matrix;
 	QList<int> point_map;
 	const int MAX = 1 << 30;
-	int temp;// , m, n;
+	int temp;
 
-	//m = 0;
+	// Convert touch-screen input data to an Adjacency Matrix for the algorithm to use
 	for (int i = 0; i < input.size(); i++){
 		node1 = input[i];
 
 		QList<int> add;
 		adj_matrix.append(add);
 
-		//n = 0;
 		for (int j = 0; j < input.size(); j++){
 			if (i == j) {
 				adj_matrix[i].append(MAX);
@@ -262,39 +266,22 @@ void ProcessorThread::operationShortestPath(const QList<touch_data> &input, QLis
 				temp = (node1.x - node2.x)*(node1.x - node2.x) + (node1.y - node2.y)*(node1.y - node2.y);
 				adj_matrix[i].append(temp);
 			}
-			//n++;
 		}
-		//m++;
 	}
 
-	/*qDebug() << "Made it this far with the following results:" << endl;
-	QString message;
-	foreach(QList<int> row, adj_matrix) {
-	message = "";
-	foreach(int col, row) {
-	message += tr(std::to_string(col).c_str()) + ',';
-	}
-	qDebug() << message << endl;
-	}*/
-
+	// Calculate the Shortest Hamiltonian Path
 	int res;
 	QList<int> order = Algorithm::getShortestHamiltonianPath(adj_matrix, res);
 
-
-	/*qDebug() << tr(std::to_string(res).c_str()) << endl;
-
-	qDebug() << "Made it FURTHER! With the following results:" << endl;
-	message = "";
-	foreach(int num, order){
-	message += tr(std::to_string(num).c_str()) + ',';
-	}
-	qDebug() << message << endl;*/
-
+	// Get the path from the algorithm's result
 	touch_data prev = input[order[0]];
 	touch_data curr;
 	for (int i = 1; i < order.size(); i++) {
 		curr = input[order[i]];
+
+		// Draw Line of the Shortest Hamiltonian Path
 		output << new Line(prev.x, prev.y, curr.x, curr.y, 70);
+
 		prev = curr;
 	}
 }

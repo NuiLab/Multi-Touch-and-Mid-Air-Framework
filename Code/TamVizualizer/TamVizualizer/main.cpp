@@ -12,6 +12,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);
 
+	// Create a Window's Console (to use for debugging purposes)
 	Debug d;
 	d.showWin32Console();
 
