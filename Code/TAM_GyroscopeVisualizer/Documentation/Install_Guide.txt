@@ -1,0 +1,27 @@
+Installation Guide: 
+
+
+
+Gyroscope Drivers: 
+
+Install YEI 3-space sensor suite (includes drivers) from YEI website.
+
+
+
+
+
+Development Environment: 
+
+Install Visual Studio 2013 
+
+Install Qt 5.4.1 32-bit openGL version 
+
+Install Qt Visual Studio add-in 1.2.4
+
+Find project folder with code and threespace api
+
+open project solution in visual studio 
+
+copy ThreeSpace_API.dll into debugging environment directory (this directory is found in VS2013 Project settings in the debugging option)
+
+run program
