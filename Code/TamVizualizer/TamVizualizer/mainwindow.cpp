@@ -56,6 +56,16 @@ void MainWindow::map() {
   Sets up the path of the application as the main path
   calls the doSave function with the current path as an argument*/
 bool MainWindow::saveGesture() {
+	playbackAction->setEnabled(false);
+	openAction->setEnabled(false);
+	saveAction->setEnabled(false);
+	sizeMenu->setEnabled(false);
+	mapMenu->setEnabled(false);
+	displayMenu->setEnabled(false);
+	clearScreenAction->setEnabled(false);
+	objAction->setEnabled(false);
+
+	bool success = false;
 	QString fileName;
 	QString selected;
 	
@@ -71,30 +81,49 @@ bool MainWindow::saveGesture() {
 		stringstream str;
 		str << "Save Cancelled";
 		DebugWindow::println(str);
-		return false;
-	}
+	} else {
+		foreach(QString type, type_list) {
+			qDebug() << selected.left(type.size()) << " TEST" << endl;
+			stringstream str;
+			str << selected.left(type.size()).toStdString() << " TEST";
+			DebugWindow::println(str);
 
-	foreach (QString type, type_list) {
-		qDebug() << selected.left(type.size()) << " TEST" << endl;
-		stringstream str;
-		str << selected.left(type.size()).toStdString() << " TEST";
-		DebugWindow::println(str);
-
-		if (selected.left(type.size()) == type) {
-			return window->doSaveGesture(fileName, type);
+			if (selected.left(type.size()) == type) {
+				success = window->doSaveGesture(fileName, type);
+				break;
+			}
 		}
 	}
-	return false;
+
+	playbackAction->setEnabled(true);
+	openAction->setEnabled(true);
+	saveAction->setEnabled(true);
+	sizeMenu->setEnabled(true);
+	mapMenu->setEnabled(true);
+	displayMenu->setEnabled(true);
+	clearScreenAction->setEnabled(true);
+	objAction->setEnabled(true);
+
+	return success;
 }
 
 /*Receives the event when the open button is clicked:
   Sets up the path of the application as the main path
   calls the doOpen function with the current path as an argument*/
 bool MainWindow::openGesture() {
+	playbackAction->setEnabled(false);
+	openAction->setEnabled(false);
+	saveAction->setEnabled(false);
+	sizeMenu->setEnabled(false);
+	mapMenu->setEnabled(false);
+	displayMenu->setEnabled(false);
+	clearScreenAction->setEnabled(false);
+	objAction->setEnabled(false);
+
+	bool success = false;
 	QString fileName = QFileDialog::getOpenFileName(this);
-	if (fileName.isEmpty()) {
-		return false;
-	} else {
+
+	if (!fileName.isEmpty()) {
 		QFileInfo f(fileName);
 		QString file_type = f.suffix().toLower();
 
@@ -104,22 +133,40 @@ bool MainWindow::openGesture() {
 		DebugWindow::println(str);
 		foreach(QString type, type_list) {
 			if (file_type == type.toLower()) {
-				return window->doOpenGesture(fileName, file_type);
+				success = window->doOpenGesture(fileName, file_type);
+				break;
 			}
 		}
-		return false;
 	}
+
+	openAction->setEnabled(true);
+	saveAction->setEnabled(true);
+	sizeMenu->setEnabled(true);
+	mapMenu->setEnabled(true);
+	displayMenu->setEnabled(true);
+	playbackAction->setEnabled(true);
+	clearScreenAction->setEnabled(true);
+	objAction->setEnabled(true);
+
+	return success;
 }
 
 /*Receives the event when the load OBJ button is clicked:
   Opens a prompt to select the path of the OBJ file to read, then
   calls the doLoadOBJFile function with the current path as an argument*/
 bool MainWindow::loadOBJFile() {
+	playbackAction->setEnabled(false);
+	openAction->setEnabled(false);
+	saveAction->setEnabled(false);
+	sizeMenu->setEnabled(false);
+	mapMenu->setEnabled(false);
+	displayMenu->setEnabled(false);
+	clearScreenAction->setEnabled(false);
+	objAction->setEnabled(false);
+
+	bool success = false;
 	QString fileName = QFileDialog::getOpenFileName(this);
-	if (fileName.isEmpty()) {
-		return false;
-	}
-	else {
+	if (!fileName.isEmpty()) {
 		QFileInfo f(fileName);
 		QString file_type = f.suffix().toLower();
 
@@ -128,11 +175,42 @@ bool MainWindow::loadOBJFile() {
 		str << file_type.toStdString();
 		DebugWindow::println(str);
 
-		if (file_type == "obj") {
-			return window->doLoadOBJFile(fileName.toStdString());
-		}
-		return false;
+		if (file_type == "obj")
+			success = window->doLoadOBJFile(fileName.toStdString());
 	}
+
+	openAction->setEnabled(true);
+	saveAction->setEnabled(true);
+	sizeMenu->setEnabled(true);
+	mapMenu->setEnabled(true);
+	displayMenu->setEnabled(true);
+	playbackAction->setEnabled(true);
+	clearScreenAction->setEnabled(true);
+	objAction->setEnabled(true);
+
+	return success;
+}
+
+void MainWindow::doPlayback(){
+	playbackAction->setEnabled(false);
+	openAction->setEnabled(false);
+	saveAction->setEnabled(false);
+	sizeMenu->setEnabled(false);
+	mapMenu->setEnabled(false);
+	displayMenu->setEnabled(false);
+	clearScreenAction->setEnabled(false);
+	objAction->setEnabled(false);
+
+	window->playback();
+
+	openAction->setEnabled(true);
+	saveAction->setEnabled(true);
+	sizeMenu->setEnabled(true);
+	mapMenu->setEnabled(true);
+	displayMenu->setEnabled(true);
+	playbackAction->setEnabled(true);
+	clearScreenAction->setEnabled(true);
+	objAction->setEnabled(true);
 }
 
 
@@ -164,8 +242,8 @@ void MainWindow::loadActions() {
 		mapActions.append(action);
 	}
 
-	playbackAction = new QAction(tr("&PlayBack"), this);
-	connect(playbackAction, SIGNAL(triggered()), window, SLOT(playback()));
+	playbackAction = new QAction(tr("&Playback"), this);
+	connect(playbackAction, SIGNAL(triggered()), this, SLOT(doPlayback()));
 
 	saveAction = new QAction(tr("&Save"), this);
 	connect(saveAction, SIGNAL(triggered()), this, SLOT(saveGesture()));
@@ -173,7 +251,7 @@ void MainWindow::loadActions() {
 	openAction = new QAction(tr("&Open"), this);
 	connect(openAction, SIGNAL(triggered()), this, SLOT(openGesture()));
 
-	clearScreenAction = new QAction(tr("&ClearScreen"), this);
+	clearScreenAction = new QAction(tr("&Clear Screen"), this);
 	clearScreenAction->setShortcut(tr("Ctrl+L"));
 	connect(clearScreenAction, SIGNAL(triggered()), window, SLOT(clearScreen()));
 
@@ -214,12 +292,11 @@ void MainWindow::loadActions() {
 	/* For the purpose of loading  in your own OBJ models*/
 	objAction = new QAction(tr("&Load OBJ"), this);
 	connect(objAction, SIGNAL(triggered()), this, SLOT(loadOBJFile()));
-
 }
 
 /*initializes the Menus*/
 void MainWindow::loadMenus() {
-	sizeMenu = new QMenu(tr("&BrushSize"), this);
+	sizeMenu = new QMenu(tr("&Brush Size"), this);
 	foreach(QAction *action, sizeActions)
 		sizeMenu->addAction(action);
 
@@ -234,10 +311,9 @@ void MainWindow::loadMenus() {
 	menuBar()->addAction(openAction);
 	menuBar()->addAction(saveAction);
 	menuBar()->addMenu(sizeMenu);
-	menuBar()->addMenu(mapMenu);
+	//menuBar()->addMenu(mapMenu);
 	menuBar()->addMenu(displayMenu);
 	menuBar()->addAction(playbackAction);
 	menuBar()->addAction(clearScreenAction);
-	menuBar()->addAction(objAction);			/* For the purpose of loading  in your own OBJ models*/
-
+	//menuBar()->addAction(objAction);			/* For the purpose of loading  in your own OBJ models*/
 }

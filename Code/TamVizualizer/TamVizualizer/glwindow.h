@@ -58,7 +58,6 @@ private:
 	const float view_half_width = 0.2;
 	const float view_near = 0.5;
 	const float view_far = 30;
-	int brushSize = 50;				/*Global size of the brush*/
 	double mapping = 1;				/*Global value for mapping function*/
 	int init_time = 0;				/*Global value of the starting of recording time*/
 

@@ -11,12 +11,20 @@ public:
 	
 	/* Feed the thread what type of display setting the window is using */
 	void setProcess(DisplaySetting setting);
+	/* Feed the thread what type of display setting the window is using */
+	void setBrushSize(int size);
 	/* Feed the thread the touch-screen input data*/
 	void setFingers(const QList<touch_data> &fingers);
 	/* Load a new model for the purpose of loading  in your own OBJ models*/
 	bool addOBJModel(string path);
 	/* Returns the calculated results */
 	QList<TAMShape *> getResults();
+
+	/* Functions used for intensive-calculations (based on display setting) */
+	static void operationFingerAveraging(const QList<touch_data> &input, QList<TAMShape *> &output);
+	static void operationShortestMapping(const QList<touch_data> &input, QList<TAMShape *> &output);
+	static void operationCircularConnection(const QList<touch_data> &input, QList<TAMShape *> &output);
+	static void operationShortestPath(const QList<touch_data> &input, QList<TAMShape *> &output);
 
 protected:
 	void run() override;
@@ -32,10 +40,4 @@ private:
 	volatile bool running, update;			/* Tests for if the thread is running and needs to do re-calculation */
 
 	int brushSize = 50;		/* The brush size set by the user [Currently just hard-coded]*/
-	
-	/* Functions used for intensive-calculations (based on display setting) */
-	void operationFingerAveraging(const QList<touch_data> &input, QList<TAMShape *> &output);
-	void operationShortestMapping(const QList<touch_data> &input, QList<TAMShape *> &output);
-	void operationCircularConnection(const QList<touch_data> &input, QList<TAMShape *> &output);
-	void operationShortestPath(const QList<touch_data> &input, QList<TAMShape *> &output);
 };

@@ -46,6 +46,7 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 	const int n = dist.size();
 	const int MAX = 1 << 30;
 	const int MAX_N = (1 << n);
+	res = 0;
 
 	//int dp[1 << n][n];
 	QList< QList<int> > dp;
@@ -60,6 +61,11 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 	}
 
 	for (int i = 0; i < n; i++){
+		if (dist.at(i).size() != n) {
+			// If no an N x N matrix
+			order.clear();
+			return order;
+		}
 		order.append(-1);
 		dp[(1 << i)][i] = 0;
 	}

@@ -16,17 +16,16 @@ GLWindow::GLWindow(QWidget *parent) : QOpenGLWidget(parent) {
 }
 
 /* To be certain that the thread closes properly */
-GLWindow::~GLWindow(){
+GLWindow::~GLWindow() {
 	delete process;
 }
 
 /*Changes the global brushSize variable to the selected size i*/
-void GLWindow::doResizeBrush(int i)
-{
-	brushSize = i;
-	qDebug() << "BRUSH SIZE: " << i;
+void GLWindow::doResizeBrush(int size) {
+	process->setBrushSize(size);
+	qDebug() << "BRUSH SIZE: " << size;
 	stringstream str;
-	str << "BRUSH SIZE" << i;
+	str << "BRUSH SIZE" << size;
 	DebugWindow::println(str);
 }
 
@@ -72,9 +71,9 @@ void GLWindow::initializeGL() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 
-	GLSpace::initGLLighting();
-	// Use QBasicTimer because its faster than QTimer
-	//timer.start(12, this);
+
+	// Initialize lighting ONLY if using OBJParser
+	//GLSpace::initGLLighting();
 }
 
 /*	Sets up the OpenGL viewport, projection, etc. Gets called whenever the widget has been resized
@@ -152,8 +151,6 @@ void GLWindow::drawScreenGL(QList<TAMShape *> shapes){
    the results. It reads the data differently depending on
    if it's a JSON file or a CSV file. */
 bool GLWindow::doOpenGesture(QString fileName, QString fileType) {
-	if (playback_mode) return false;
-
 	qDebug() << "OPENING A FILE";
 	stringstream str;
 	str << "OPENING A FILE";
@@ -224,8 +221,6 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType) {
 		http://doc.qt.io/qt-5/json.html
 		http://doc.qt.io/qt-5/qtcore-json-savegame-example.html
 	*/
-	if (playback_mode) return false;
-
 
 	qDebug() << "SAVING THE FILE TO " << fileName;
 	stringstream str;
@@ -283,8 +278,6 @@ bool GLWindow::doSaveGesture(QString fileName, QString fileType) {
 
 /* Opens an OBJ file to be loaded into the processor thread for drawing */
 bool GLWindow::doLoadOBJFile(string path) {
-	if (playback_mode) return false;
-
 	qDebug() << "LOADING OBJ FILE";
 	stringstream str;
 	str << "LOADING OBJ FILE";
@@ -350,8 +343,6 @@ void GLWindow::playback() {
 
 /* Clear the recorded data*/
 void GLWindow::clearScreen() {
-	if (playback_mode) return;
-
 	qDebug() << "CLEARING THE SCREEN";
 	stringstream str;
 	str << "CLEARING THE SCREEN" << endl;
@@ -400,10 +391,15 @@ and adds the touch point to a list, then draws the
 output depending on the mapping function*/
 bool GLWindow::event(QEvent *event) {
 	static bool mousePressed = false;
+
+	if (playback_mode)
+		return QWidget::event(event);
+
 	int time = clock();
 	touch_data data;
 
 	switch (event->type()) {
+	/*
 	case QEvent::MouseButtonPress:
 		mousePressed = true;
 	case QEvent::MouseMove:
@@ -442,7 +438,7 @@ bool GLWindow::event(QEvent *event) {
 
 		mousePressed = false;
 		break;
-	}
+	}*/
 	case QEvent::TouchBegin:
 	case QEvent::TouchUpdate:
 	case QEvent::TouchEnd:

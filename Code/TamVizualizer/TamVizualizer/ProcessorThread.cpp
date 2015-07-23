@@ -18,11 +18,22 @@ void ProcessorThread::setProcess(DisplaySetting new_setting){
 	setting = new_setting;
 }
 
+void ProcessorThread::setBrushSize(int size){
+	brushSize = size;
+}
+
 /* Feed the thread the touch-screen input data*/
 void ProcessorThread::setFingers(const QList<touch_data> &fingers){
 	finger_m.lock();
 	finger_data.clear();
+
 	foreach (touch_data data, fingers){
+		if (data.x < 0 || data.y < 0) {
+			finger_data.clear();
+			finger_m.unlock();
+			return;
+		}
+
 		finger_data << data;
 	}
 	finger_m.unlock();
@@ -193,7 +204,7 @@ void ProcessorThread::operationShortestMapping(const QList<touch_data> &input, Q
    Aimed for a simple solution to finding the Best-Fit for drawing a circle that comes closest as possible
    to circumscribing (connecting) to all the vertices.*/
 void ProcessorThread::operationCircularConnection(const QList<touch_data> &input, QList<TAMShape *> &output){
-	/* Looked at "Least Square Circle Fitting" to improve circle fitting algorithm performance:
+	/* Look at "Least Square Circle Fitting" to improve circle fitting algorithm performance:
 		http://www.dtcenter.org/met/users/docs/write_ups/circle_fit.pdf */
 
 	if (input.size() < 3) return;
@@ -201,13 +212,13 @@ void ProcessorThread::operationCircularConnection(const QList<touch_data> &input
 	float centerX = 0, centerY = 0, radius = 5, avgR = 0;
 
 	// Find 3 unique vertices pairing and add it's circumcenter to the total
-	foreach(touch_data data1, input){
-		foreach(touch_data data2, input){
+	foreach(touch_data data1, input) {
+		foreach(touch_data data2, input) {
 			if (data1.id <= data2.id) continue;
 			foreach(touch_data data3, input) {
 				if (data2.id <= data3.id) continue;
 
-				if (Algorithm::getCircumcenter(data1, data2, data3, 100, centerX, centerY, radius)) {
+				if (Algorithm::getCircumcenter(data1, data2, data3, 1000, centerX, centerY, radius)) {
 					avgX += centerX;
 					avgY += centerY;
 					avgR += radius;

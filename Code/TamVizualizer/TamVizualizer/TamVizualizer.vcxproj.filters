@@ -92,6 +92,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_debugwindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="NativeUnitTesting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -124,6 +127,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapedata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nativeunittesting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

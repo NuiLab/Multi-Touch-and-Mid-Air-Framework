@@ -1,4 +1,6 @@
 #include "shapedata.h"
+
+
 float GLSpace::half_width;
 float GLSpace::half_height;
 float GLSpace::v_near;
@@ -8,29 +10,37 @@ int GLSpace::screen_width;
 
 const float GLSpace::MODEL_DEPTH_SCREEN_WIDTH_RATIO = 16;
 const float GLSpace::MODEL_DIST_TRANSLATE_RATIO = 0.00625f;  // (1 / 160) translate ratio
+bool GLSpace::verified = false;
 
-/* Sets up the frustum for the camera, and will help to determine screen position / length calculations later on */
-void GLSpace::frustum(float half_width, float half_height, float v_near, float v_far) {
-	GLSpace::half_width = half_width;
-	GLSpace::half_height = half_height;
-	GLSpace::v_near = v_near;
-	GLSpace::v_far = v_far;
+/*	Sets up the frustum for the camera, and will help to determine screen position / length calculations later on
+	Code to verify float value: http://www.cplusplus.com/reference/cmath/isfinite/	*/
+void GLSpace::frustum(float window_half_width, float window_half_height, float view_near, float view_far) {
+	half_width = window_half_width;
+	half_height = window_half_height;
+	v_near = view_near;
+	v_far = view_far;
+	verified = !(isfinite(half_width) && isfinite(half_height) && isfinite(v_near) && isfinite(v_far) && isfinite(screen_width) && isfinite(screen_height)
+		&& half_width > 0 && half_height > 0 && v_near > 0 && v_far > v_near);
 }
 
 /* Sets the screen size used for screen position / length calculations */
 void GLSpace::screenSize(int width, int height){
 	screen_width = width;
 	screen_height = height;
+	verified = !(isfinite(half_width) && isfinite(half_height) && isfinite(v_near) && isfinite(v_far) && isfinite(screen_width) && isfinite(screen_height)
+		&& half_width > 0 && half_height > 0 && v_near > 0 && v_far > v_near);
 }
 
 /* Used to calculate where to draw in OpenGL space based on screen coordinates given and the position of the model in the z-axis (how far away it is) */
-void GLSpace::calculateScreenPosition(GLfloat screen_x, GLfloat screen_y, GLfloat world_z, GLfloat &world_x, GLfloat &world_y){
+void GLSpace::calculateScreenPosition(GLfloat screen_x, GLfloat screen_y, GLfloat world_z, GLfloat &world_x, GLfloat &world_y) {
+	if (!verified) throw 0;
 	world_x = (world_z / v_near)*(2.0f*half_width*(screen_x / screen_width) - half_width);
 	world_y = (world_z / v_near)*(2.0f*half_width*((screen_height - screen_y) / screen_height) - half_width)*(screen_height / (float)screen_width);
 }
 
 /* Used to calculate how large something is in OpenGL space based on the length interpreted on screen and the position of the length in the z-axis (how far away it is) */
-void GLSpace::calculateScreenLength(GLfloat screen_length, GLfloat world_z, GLfloat &world_length){
+void GLSpace::calculateScreenLength(GLfloat screen_length, GLfloat world_z, GLfloat &world_length) {
+	if (!verified) throw 0;
 	world_length = (world_z / v_near)*(2.0f*half_width*(screen_length / screen_width));
 }
 
@@ -71,6 +81,9 @@ void GLSpace::initGLLighting() {
 
 /* Draw a Line in OpenGL */
 void Line::draw(){
+	if (!(isfinite(x1) && isfinite(y1) && isfinite(x2) && isfinite(y2) && isfinite(thick) && x1 != x2 && y1 != y2))
+		throw 0;
+
 	float xA, yA, xB, yB;
 	GLSpace::calculateScreenPosition(x1, y1, GLSpace::v_near, xA, yA);
 	GLSpace::calculateScreenPosition(x2, y2, GLSpace::v_near, xB, yB);
@@ -84,12 +97,15 @@ void Line::draw(){
 	glVertex3f(xB, yB, -GLSpace::v_near);	//x2 y2
 	glEnd();
 	glPopMatrix();
-
-	//qDebug() << "Line" << endl;
 }
 
 /* Draw a Circle in OpenGL */
 void Circle::draw(){
+	if (!(isfinite(x) && isfinite(y) && isfinite(radius) && radius > 0))
+		throw 0;
+
+	static const GLfloat twicePi = 2.0f * PI_L;
+
 	/* Credit for Drawing Circle: https://gist.github.com/strife25/803118 */
 	float centerX, centerY, centerZ = -GLSpace::v_near;
 	float world_radius;
@@ -99,12 +115,8 @@ void Circle::draw(){
 	int i;
 	int triangleAmount = 20; //# of triangles used to draw circle
 
-	//GLfloat radius = 0.8f; //radius
-	GLfloat twicePi = 2.0f * PI_L;
-
 	glPushMatrix();
 	glLoadIdentity();
-	//glTranslatef(0.0f, 0.0f, -20.0f); //move along z-axis
 
 	GLSpace::generateColor(color);
 
@@ -122,13 +134,14 @@ void Circle::draw(){
 	}
 	glEnd();
 	glPopMatrix();
-
-	//qDebug() << "Circle" << endl;
 }
 
 /* Draw in OpenGL where the finger has touched on screen (for touch-screen devices) */
-void Finger::draw(){
-	float brush_size = size * 3 / 4.0f;// *0.02f*0.01f;
+void Finger::draw() {
+	if (!(isfinite(x) && isfinite(y) && isfinite(size) && size > 0))
+		throw 0;
+
+	float brush_size = size * 3 / 4.0f;
 
 	glLineWidth(brush_size / 5.0f);
 	Circle circle1(x, y, brush_size, color);
@@ -139,6 +152,9 @@ void Finger::draw(){
 
 /* Draw a Cube in OpenGL */
 void SimpleCube::draw(){
+	if (!(isfinite(x) && isfinite(y) && isfinite(size)))
+		throw 0;
+
 	static int angular_pos = 0;
 	float centerX, centerY, centerZ = -(GLSpace::v_near + GLSpace::v_far) / 2.0f;
 	float world_size;
@@ -226,7 +242,7 @@ void WorldBox::draw() {
 	glTranslatef(centerX, centerY, centerZ);
 	glScalef(world_size, world_size, world_size);
 
-	/*
+	/* TODO: Fix Code to work with Quaternions, currently auto-rotates...
 	QVector4D quat = quaternion.toVector4D();
 	float denom = sqrt(1.0 - (quat.w()*quat.w()));
 	glRotatef(2*acos(quat.w()), quat.x() / denom, quat.y() / denom, quat.z() / denom);

@@ -24,6 +24,7 @@ protected:
 		bool openGesture();		/* Calls GLWindow to open playback recordings of touch screen data  */
 		void map();				/* Calls GLWindow to change mapping [FEATURE DISABLED] */
 		void changeDisplay();	/* Calls GLWindow to change the display setting */
+		void doPlayback();		/* Calls GLWindow to run a playback of the current recording */
 		bool loadOBJFile();		/* Calls GLWindow for the purpose of loading  in your own OBJ models*/
 
 
