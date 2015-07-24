@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="QADI">
+    <Position X="3.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAACACAAAAABKRBIAAAIAAAIAACAAAAAAIAAAA=</HashCode>
+      <FileName>qFlightInstruments.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QCompass">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <InheritanceLine Type="QWidget" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="3.688" Y="7.5" />
+        <Point X="3.688" Y="5.636" />
+        <Point X="1.5" Y="5.636" />
+        <Point X="1.5" Y="5.261" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAUAAAEAAAAAIAAABIQAIAAAQAAAMAACAAAAAIIAQAA=</HashCode>
+      <FileName>qFlightInstruments.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QAccel">
+    <Position X="0.5" Y="6" Width="2" />
+    <InheritanceLine Type="QWidget" FixedFromPoint="true">
+      <Path>
+        <Point X="3.5" Y="7.938" />
+        <Point X="2.5" Y="7.938" />
+      </Path>
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="0.058" Y="-0.294" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>QAEAAAAAAQCAAAAABIAAIBAAIgAAcAACAAAAAAIgAAA=</HashCode>
+      <FileName>qFlightInstruments.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QKeyValueListView">
+    <Position X="9.5" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEQAAAAAIAAAAAAAIAAAAAAAAAAAAEAAAAAAAAcAAA=</HashCode>
+      <FileName>qFlightInstruments.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GyroThread">
+    <Position X="12" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAABAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GyroThread.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GLWindow">
+    <Position X="8.25" Y="0.75" Width="2" />
+    <InheritanceLine Type="QOpenGLWidget" FixedFromPoint="true">
+      <Path>
+        <Point X="7.5" Y="2.312" />
+        <Point X="8.25" Y="2.312" />
+      </Path>
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="0.067" Y="0.129" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAHAAaAAAAAAAAACACAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>glwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AviationVisualizer">
+    <Position X="6.5" Y="6.75" Width="2.5" />
+    <InheritanceLine Type="QWidget" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="7.938" />
+        <Point X="5.125" Y="7.938" />
+        <Point X="5.125" Y="7.938" />
+        <Point X="6.5" Y="7.938" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAgAAIhAAAAgQIAAEAAAAAAAAAAE=</HashCode>
+      <FileName>AviationVisualizer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QWidget" Collapsed="true">
+    <Position X="3.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hA6pAGgYqIASoYVAaL8yqpBimu1GwLWO4PBqCgXdwII=</HashCode>
+      <FileName>c:\qt\qt5.4.1\5.4\msvc2013_opengl\include\qtwidgets\qwidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QOpenGLWidget" Collapsed="true">
+    <Position X="6" Y="2" Width="1.5" />
+    <InheritanceLine Type="QWidget" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="4.25" Y="7.5" />
+        <Point X="4.25" Y="5.152" />
+        <Point X="6.75" Y="5.152" />
+        <Point X="6.75" Y="2.691" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAACAIAAAAAKCAAyACAACAAAAAAAAICAAAABBAAEAAA=</HashCode>
+      <FileName>c:\qt\qt5.4.1\5.4\msvc2013_opengl\include\qtwidgets\qopenglwidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QMainWindow" Collapsed="true">
+    <Position X="11.25" Y="3.75" Width="1.5" />
+    <InheritanceLine Type="QWidget" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="4.812" Y="7.5" />
+        <Point X="4.812" Y="6.197" />
+        <Point X="12" Y="6.197" />
+        <Point X="12" Y="4.441" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AgACQgKYCAUhRAgRkKBY4oAAABEAABuBggAgIAMgACA=</HashCode>
+      <FileName>c:\qt\qt5.4.1\5.4\msvc2013_opengl\include\qtwidgets\qmainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GyroscopeVisualizer">
+    <Position X="10.75" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAgAAAAAAAAAAACAAA=</HashCode>
+      <FileName>gyroscopevisualizer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
