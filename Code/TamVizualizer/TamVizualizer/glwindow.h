@@ -55,6 +55,10 @@ protected:
 
 private:
 	/* Global Data for Frustum */
+	/*	WARNING: these constant values must NOT be changed, as the methods
+		that they are used for have not been fully tested (GLSpace methods).
+		These values are the only guaranteed values to work at the moment,
+		until the GLSpace methods are fully tested */
 	const float view_half_width = 0.2;
 	const float view_near = 0.5;
 	const float view_far = 30;
