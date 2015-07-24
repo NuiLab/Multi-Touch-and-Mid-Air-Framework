@@ -10,15 +10,41 @@ GLWindow::~GLWindow()
 
 void GLWindow::setData(float x, float y, float z, float w)
 {
-	this->angle_w = w;
-	this->angle_x = x;
-	this->angle_y = y;
-	this->angle_z = z;
+	this->q_w = w;
+	this->q_x = x;
+	this->q_y = y;
+	this->q_z = z;
 }
 
 void GLWindow::setGLData(float x, float y, float z, float w)
 {
 	this->setData(x, y, z, w);
+}
+
+QMatrix4x4 GLWindow::quatToMat(float w, float x, float y, float z)
+{
+	/*
+	TODO: Gyroscope orientation needs to be modified to be taken "without" respect to the
+	dongle, so that the corretionAngle need not be manually modified in order to get
+	a correct rotation.
+	*/
+
+	QMatrix4x4 rotationMatrix;
+	float correctionAngle = 180.0;
+
+	rotationMatrix.setToIdentity();
+
+	QQuaternion rotation(w, x, -y, -z);
+	QQuaternion correction = QQuaternion::fromAxisAndAngle(0.0, 1.0, 0.0, correctionAngle);
+	rotation.normalize();
+	correction.normalize();
+	rotation = correction * rotation;
+	rotationMatrix.rotate(rotation);
+
+	/*
+	qDebug() << "(" << w << ", " << x << ", " << y << ", " << z << ")" << endl;
+	*/
+	return rotationMatrix;
 }
 
 void GLWindow::initializeGL()
@@ -52,23 +78,7 @@ void GLWindow::paintGL()
 	glTranslatef(0.0f, 0.0f, -20.0f);		// Zoom out to view image
 
 	// Rotate gyroscope representation
-	/*
-	TODO: Gyroscope orientation needs to be modified to be taken "without" respect to the 
-	dongle, so that the corretionAngle need not be manually modified in order to get 
-	a correct rotation.
-	*/
-	QMatrix4x4 rotationMatrix;
-	float correctionAngle = 180.0;
-
-	rotationMatrix.setToIdentity();
-
-	QQuaternion rotation(angle_w, angle_x, -angle_y, -angle_z);
-	QQuaternion correction = QQuaternion::fromAxisAndAngle(0.0, 1.0, 0.0, correctionAngle);
-	rotation.normalize();
-	correction.normalize();
-	rotation = correction * rotation;
-	rotationMatrix.rotate(rotation);
-
+	QMatrix4x4 rotationMatrix = GLWindow::quatToMat(q_w, q_x, q_y, q_z);
 	glMultMatrixf(rotationMatrix.constData());
 
 	/* create 3D-Cube */

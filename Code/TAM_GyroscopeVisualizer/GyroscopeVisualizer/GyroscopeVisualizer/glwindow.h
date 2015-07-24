@@ -14,8 +14,10 @@ public:
 	GLWindow(QWidget *parent = NULL);
 	~GLWindow();
 
+	static QMatrix4x4 quatToMat(float w, float x, float y, float z);
+
 	virtual void setData(float x, float y, float z, float w);
-	
+
 	public slots:
 		void setGLData(float x, float y, float z, float w);
 
@@ -26,9 +28,9 @@ public:
 		void resizeGL(int width, int height);	
 
 	private:
-		float angle_w;
-		float angle_x; 
-		float angle_y; 
-		float angle_z;
+		float q_w;
+		float q_x; 
+		float q_y; 
+		float q_z;
 };
 #endif 

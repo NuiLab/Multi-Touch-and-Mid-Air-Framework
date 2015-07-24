@@ -1,15 +1,12 @@
-﻿  Moc'ing qFlightInstruments.h...
+﻿  Moc'ing UnitTest.h...
 C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_AviationVisualizer.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_AviationVisualizer.cpp, GeneratedFiles\Release\moc_AviationVisualizer.cpp.
 C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_glwindow.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_glwindow.cpp, GeneratedFiles\Release\moc_glwindow.cpp.
 C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_gyroscopevisualizer.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_gyroscopevisualizer.cpp, GeneratedFiles\Release\moc_gyroscopevisualizer.cpp.
 C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_GyroThread.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_GyroThread.cpp, GeneratedFiles\Release\moc_GyroThread.cpp.
 C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_qFlightInstruments.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_qFlightInstruments.cpp, GeneratedFiles\Release\moc_qFlightInstruments.cpp.
-  AviationVisualizer.cpp
-  moc_AviationVisualizer.cpp
-  moc_gyroscopevisualizer.cpp
-  moc_qFlightInstruments.cpp
-  gyroscopevisualizer.cpp
+C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(935,5): warning MSB8027: Two or more files with the name of moc_UnitTest.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_UnitTest.cpp, GeneratedFiles\Release\moc_UnitTest.cpp.
+  moc_UnitTest.cpp
+  UnitTest.cpp
   main.cpp
-  qFlightInstruments.cpp
   Generating Code...
   GyroscopeVisualizer.vcxproj -> C:\Users\Alfred\documents\visual studio 2013\Projects\GyroscopeVisualizer\Win32\Debug\GyroscopeVisualizer.exe
