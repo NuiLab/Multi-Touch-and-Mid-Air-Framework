@@ -1,6 +1,5 @@
-Input Device Framework 
-
-(Touch, Motion, and Mid-Air). 
+Input Device Framework Senior Design Project Code 
+Part of TAMGeF -- Touch-midAir-Motion Gesture Framework. 
 
 Description: 
 	A platform for the use of multi-touch, or mid-air input devices in the development of applications and games.
@@ -19,8 +18,10 @@ License B: The second license, is a private license available via Dr. Rishe and 
 
 	Main Developer: 
 		Francisco R. Ortega
-
-
-	Senior Student Developers (FALL 2015):
+	
+	Senior Student Developers (SUMMER 2015)
+                Alfredo Zellek
+                Steven Ignetti
+	Senior Student Developers (SPRING 2015):
 		Richard A. Lopez:
 		
