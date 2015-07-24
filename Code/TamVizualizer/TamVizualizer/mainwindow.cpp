@@ -198,7 +198,6 @@ void MainWindow::doPlayback(){
 	sizeMenu->setEnabled(false);
 	mapMenu->setEnabled(false);
 	displayMenu->setEnabled(false);
-	clearScreenAction->setEnabled(false);
 	objAction->setEnabled(false);
 
 	window->playback();
@@ -209,7 +208,6 @@ void MainWindow::doPlayback(){
 	mapMenu->setEnabled(true);
 	displayMenu->setEnabled(true);
 	playbackAction->setEnabled(true);
-	clearScreenAction->setEnabled(true);
 	objAction->setEnabled(true);
 }
 

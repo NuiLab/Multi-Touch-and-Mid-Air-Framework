@@ -1,3 +1,6 @@
+#ifndef PROCESSORTHREAD_H
+#define PROCESSORTHREAD_H
+
 #include <qthread.h>
 //#include "globaldata.h"
 #include "shapedata.h"
@@ -41,3 +44,5 @@ private:
 
 	int brushSize = 50;		/* The brush size set by the user [Currently just hard-coded]*/
 };
+
+#endif //PROCESSORTHREAD_H

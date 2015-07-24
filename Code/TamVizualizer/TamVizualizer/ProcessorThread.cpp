@@ -265,19 +265,19 @@ void ProcessorThread::operationShortestPath(const QList<touch_data> &input, QLis
 		node1 = input[i];
 
 		QList<int> add;
-		adj_matrix.append(add);
 
 		for (int j = 0; j < input.size(); j++){
 			if (i == j) {
-				adj_matrix[i].append(MAX);
+				add.append(0);
 			} else if (i > j) {
-				adj_matrix[i].append(adj_matrix[j][i]);
+				add.append(adj_matrix[j][i]);
 			} else {
 				node2 = input[j];
 				temp = (node1.x - node2.x)*(node1.x - node2.x) + (node1.y - node2.y)*(node1.y - node2.y);
-				adj_matrix[i].append(temp);
+				add.append(temp);
 			}
 		}
+		adj_matrix.append(add);
 	}
 
 	// Calculate the Shortest Hamiltonian Path

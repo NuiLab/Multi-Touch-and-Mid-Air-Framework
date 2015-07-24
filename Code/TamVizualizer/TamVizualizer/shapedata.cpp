@@ -19,16 +19,22 @@ void GLSpace::frustum(float window_half_width, float window_half_height, float v
 	half_height = window_half_height;
 	v_near = view_near;
 	v_far = view_far;
-	verified = !(isfinite(half_width) && isfinite(half_height) && isfinite(v_near) && isfinite(v_far) && isfinite(screen_width) && isfinite(screen_height)
-		&& half_width > 0 && half_height > 0 && v_near > 0 && v_far > v_near);
+	verify();
 }
 
 /* Sets the screen size used for screen position / length calculations */
 void GLSpace::screenSize(int width, int height){
 	screen_width = width;
 	screen_height = height;
-	verified = !(isfinite(half_width) && isfinite(half_height) && isfinite(v_near) && isfinite(v_far) && isfinite(screen_width) && isfinite(screen_height)
-		&& half_width > 0 && half_height > 0 && v_near > 0 && v_far > v_near);
+	verify();
+}
+
+/* Verify that all values are proper */
+void GLSpace::verify(){
+	//verified = fpclassify(half_width) == FP_NORMAL && fpclassify(half_height) == FP_NORMAL && fpclassify(v_near) == FP_NORMAL
+	//	&& fpclassify(v_far) == FP_NORMAL && half_width > 0 && half_height > 0 && v_near > 0 && v_far > v_near && screen_width > 0 && screen_height > 0;
+	verified = isfinite(half_width) && isfinite(half_height) && isfinite(v_near) && isfinite(v_far) && isfinite(half_height)
+		&& half_width > 0 && half_height > 0 && v_near > 0 && v_far > v_near && screen_width > 0 && screen_height > 0;
 }
 
 /* Used to calculate where to draw in OpenGL space based on screen coordinates given and the position of the model in the z-axis (how far away it is) */
@@ -79,10 +85,13 @@ void GLSpace::initGLLighting() {
 	glEnable(GL_LIGHTING);
 }
 
+
+
+
+
 /* Draw a Line in OpenGL */
 void Line::draw(){
-	if (!(isfinite(x1) && isfinite(y1) && isfinite(x2) && isfinite(y2) && isfinite(thick) && x1 != x2 && y1 != y2))
-		throw 0;
+	if (!(isfinite(x1) && isfinite(y1) && isfinite(x2) && isfinite(y2) && isfinite(thick) && (x1 != x2 || y1 != y2))) return;
 
 	float xA, yA, xB, yB;
 	GLSpace::calculateScreenPosition(x1, y1, GLSpace::v_near, xA, yA);
@@ -101,8 +110,7 @@ void Line::draw(){
 
 /* Draw a Circle in OpenGL */
 void Circle::draw(){
-	if (!(isfinite(x) && isfinite(y) && isfinite(radius) && radius > 0))
-		throw 0;
+	if (!(isfinite(x) && isfinite(y) && isfinite(radius) && radius > 0)) return;
 
 	static const GLfloat twicePi = 2.0f * PI_L;
 
@@ -138,8 +146,7 @@ void Circle::draw(){
 
 /* Draw in OpenGL where the finger has touched on screen (for touch-screen devices) */
 void Finger::draw() {
-	if (!(isfinite(x) && isfinite(y) && isfinite(size) && size > 0))
-		throw 0;
+	if (!(isfinite(x) && isfinite(y) && isfinite(size) && size > 0)) return;
 
 	float brush_size = size * 3 / 4.0f;
 
@@ -152,8 +159,7 @@ void Finger::draw() {
 
 /* Draw a Cube in OpenGL */
 void SimpleCube::draw(){
-	if (!(isfinite(x) && isfinite(y) && isfinite(size)))
-		throw 0;
+	if (!(isfinite(x) && isfinite(y) && isfinite(size))) return;
 
 	static int angular_pos = 0;
 	float centerX, centerY, centerZ = -(GLSpace::v_near + GLSpace::v_far) / 2.0f;

@@ -11,13 +11,12 @@ GLWindow::GLWindow(QWidget *parent) : QOpenGLWidget(parent) {
 	setAttribute(Qt::WA_MouseTracking);			// Allow Mouse Detection
 
 	process = new ProcessorThread();
-
-	timer.start(1000 / fps, Qt::TimerType::PreciseTimer, this);
 }
 
 /* To be certain that the thread closes properly */
 GLWindow::~GLWindow() {
 	delete process;
+	playback_mode = false;
 }
 
 /*Changes the global brushSize variable to the selected size i*/
@@ -74,6 +73,9 @@ void GLWindow::initializeGL() {
 
 	// Initialize lighting ONLY if using OBJParser
 	//GLSpace::initGLLighting();
+
+	// Initialize timer
+	timer.start(1000 / fps, Qt::TimerType::PreciseTimer, this);
 }
 
 /*	Sets up the OpenGL viewport, projection, etc. Gets called whenever the widget has been resized
@@ -100,7 +102,7 @@ void GLWindow::resizeGL(int width, int height){
 }
 
 /* Renders the OpenGL scene. Gets called whenever the widget needs to be updated. */
-void GLWindow::paintGL(){
+void GLWindow::paintGL() {
 	QPainter painter(this);
 
 	isDrawing = true;	// Let others know that you are drawing
@@ -334,6 +336,9 @@ void GLWindow::playback() {
 		// Update current frame
 		update();
 		index++;
+
+		// Stop when playback mode closes
+		if (!playback_mode) break;
 	}
 
 	// Let others know you stopped playback mode
@@ -343,14 +348,20 @@ void GLWindow::playback() {
 
 /* Clear the recorded data*/
 void GLWindow::clearScreen() {
+	if (playback_mode){
+		playback_mode = false;
+		return;
+	}
+
 	qDebug() << "CLEARING THE SCREEN";
 	stringstream str;
 	str << "CLEARING THE SCREEN" << endl;
 	DebugWindow::println(str);
 
 	init_time = 0;
-	touch_list.clear();
 	fingers.clear();
+	touch_list.clear();
+	sendDataToProcessThread();
 }
 
 /* Update the touch data for multiple fingers*/
@@ -492,5 +503,8 @@ bool GLWindow::event(QEvent *event) {
 void GLWindow::timerEvent(QTimerEvent *) {
 	// If you're no longer drawing, draw next frame
 	// If you're in playback mode, let the playback call when to draw next frame
-	if(!isDrawing && !playback_mode) update();
+
+	if (!isDrawing && !playback_mode){
+		update();
+	}
 }

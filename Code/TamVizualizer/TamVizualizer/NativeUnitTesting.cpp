@@ -1,10 +1,10 @@
 #include "nativeunittesting.h""
 
-float UnitTest::INF = 1.0 / 0.0;
-float UnitTest::NEG_INF = -1.0 / 0.0;
+float UnitTest::INF = INFINITY;
+float UnitTest::NEG_INF = LOCALE_SNEGINFINITY;
 float UnitTest::NaN = NAN;
 
-inline bool frustumTest(){
+bool frustumTest(){
 	static float norm_x = 0, norm_y = 0, norm_z = 10, norm_length = 2;
 	static float world_x, world_y, world_length;
 	try{
@@ -20,7 +20,7 @@ inline bool frustumTest(){
 	return true;
 }
 
-inline bool testTAMShape(TAMShape *shape){
+bool testTAMShape(TAMShape *shape){
 	try {
 		shape->draw();
 		return false;
@@ -28,13 +28,15 @@ inline bool testTAMShape(TAMShape *shape){
 	return true;
 }
 
-inline bool compareLine(Line *line1, Line *line2){
+bool compareLine(Line *line1, Line *line2){
 	return ((line1->x1 == line2->x1 && line1->y1 == line2->y1 && line1->x2 == line2->x2 && line1->y2 == line2->y2)
 		|| (line1->x1 == line2->x2 && line1->y1 == line2->y2 && line1->x2 == line2->x1 && line1->y2 == line2->y1));
 }
 
 bool compareLists(QList<TAMShape *> output, QList<TAMShape *> results){
-	if (output.size() != results.size()) return false;
+	if (output.size() != results.size())
+		return false;
+
 	QList<int> indices;
 	for (int i = 0; i < results.size(); i++) {
 		indices.push_back(i);
@@ -52,6 +54,7 @@ bool compareLists(QList<TAMShape *> output, QList<TAMShape *> results){
 		}
 		if (!found) return false;
 	}
+	return true;
 }
 
 bool UnitTest::run(){
@@ -65,34 +68,34 @@ bool UnitTest::run(){
 		for (float err_val : checks){
 			// Width test
 			GLSpace::frustum(err_val, norm_half_height, norm_near, norm_far);
-			if (!frustumTest()) return false;
+			if (!frustumTest()) throw 0;
 
 			// Height test
 			GLSpace::frustum(norm_half_width, err_val, norm_near, norm_far);
-			if (!frustumTest()) return false;
+			if (!frustumTest()) throw 0;
 
 			// Near test
 			GLSpace::frustum(norm_half_width, norm_half_height, err_val, norm_far);
-			if (!frustumTest()) return false;
+			if (!frustumTest()) throw 0;
 
 			// Far Test
 			GLSpace::frustum(norm_half_width, norm_half_height, norm_near, err_val);
-			if (!frustumTest()) return false;
+			if (!frustumTest()) throw 0;
 		}
 
 		// Invalid Face-Near test
 		GLSpace::frustum(norm_half_width, norm_half_height, norm_far, norm_near);
-		if (!frustumTest()) return false;
+		if (!frustumTest()) throw 0;
 
 		GLSpace::frustum(norm_half_width, norm_half_height, norm_far, norm_far);
-		if (!frustumTest()) return false;
+		if (!frustumTest()) throw 0;
 	}
 
 	// Test frustum() method #2 : Verified near input checks
 	// Test frustum() method #3 : Verified width / height input checks
 	{
 		//TODO: MATHEMATICAL Calculations
-
+	/*
 		float half_width_input[] = { 1 };
 		float half_height_input[] = { 1 };
 		float view_near_input[] = { 1 };
@@ -114,30 +117,14 @@ bool UnitTest::run(){
 			GLSpace::calculateScreenLength(screen_length_input[i], world_z_input[i], world_length);
 
 			if (world_x != world_x_checks[i] || world_y != world_y_checks[i] || world_length != world_length_checks[i])
-				return false;
+				throw 0;
 		}
+		*/
 	}
-
-	// Test screenSize() method #1 : Basic invalid input checks
-	{
-		float norm_width = 300, norm_height = 500;
-		float checks[] = { 0, -300, INF, NEG_INF, NaN };
-
-		for (float err_val : checks){
-
-			// Width test
-			GLSpace::screenSize(err_val, norm_height);
-			if (!frustumTest()) return false;
-
-			// Height test
-			GLSpace::screenSize(norm_width, err_val);
-			if (!frustumTest()) return false;
-		}
-	}
-
 
 	// Test screenSize() method #1 : Width / Height check
 	{
+		/*
 		float width_input[] = { 1 };
 		float height_input[] = { 1 };
 		float screen_x_input[] = { 1 };
@@ -157,8 +144,9 @@ bool UnitTest::run(){
 			GLSpace::calculateScreenLength(screen_length_input[i], world_z_input[i], world_length);
 
 			if (world_x != world_x_checks[i] || world_y != world_y_checks[i] || world_length != world_length_checks[i])
-				return false;
+				throw 0;
 		}
+		*/
 	}
 
 	// Test Line Constructor #1 : Basic invalid input checks
@@ -169,31 +157,31 @@ bool UnitTest::run(){
 
 		for (float err_val : checks) {
 			// X1 test
-			if (!testTAMShape(new Line(err_val, norm_y1, norm_x2, norm_y2, norm_color, norm_thick))) return false;
+			if (!testTAMShape(new Line(err_val, norm_y1, norm_x2, norm_y2, norm_color, norm_thick))) throw 0;
 
 			// Y1 test
-			if (!testTAMShape(new Line(norm_x1, err_val, norm_x2, norm_y2, norm_color, norm_thick))) return false;
+			if (!testTAMShape(new Line(norm_x1, err_val, norm_x2, norm_y2, norm_color, norm_thick))) throw 0;
 
 			// X2 test
-			if (!testTAMShape(new Line(norm_x1, norm_y1, err_val, norm_y2, norm_color, norm_thick))) return false;
+			if (!testTAMShape(new Line(norm_x1, norm_y1, err_val, norm_y2, norm_color, norm_thick))) throw 0;
 
 			// Y2 test
-			if (!testTAMShape(new Line(norm_x1, norm_y1, norm_x2, err_val, norm_color, norm_thick))) return false;
+			if (!testTAMShape(new Line(norm_x1, norm_y1, norm_x2, err_val, norm_color, norm_thick))) throw 0;
 
 			// Thick test
-			if (!testTAMShape(new Line(norm_x1, norm_y1, norm_x2, norm_y2, norm_color, err_val))) return false;
+			if (!testTAMShape(new Line(norm_x1, norm_y1, norm_x2, norm_y2, norm_color, err_val))) throw 0;
 		}
 
 		// More thick test
-		if (!testTAMShape(new Line(norm_x1, norm_y1, norm_x2, norm_y2, norm_color, 0))) return false;
-		if (!testTAMShape(new Line(norm_x1, norm_y1, norm_x2, norm_y2, norm_color, -50))) return false;
+		if (!testTAMShape(new Line(norm_x1, norm_y1, norm_x2, norm_y2, norm_color, 0))) throw 0;
+		if (!testTAMShape(new Line(norm_x1, norm_y1, norm_x2, norm_y2, norm_color, -50))) throw 0;
 	}
 
 	// Test Line Constructor #2 : More invalid input checks
 	{
 		float norm_x = 100, norm_y = 300, norm_thick = 50;
 		int norm_color = 0;
-		if (!testTAMShape(new Line(norm_x, norm_y, norm_y, norm_y, norm_color, norm_thick))) return false;
+		if (!testTAMShape(new Line(norm_x, norm_y, norm_y, norm_y, norm_color, norm_thick))) throw 0;
 	}
 
 	// Test Circle Constructor #1 : Basic invalid input checks
@@ -204,18 +192,18 @@ bool UnitTest::run(){
 
 		for (float err_val : checks) {
 			// X test
-			if (!testTAMShape(new Circle(err_val, norm_y, norm_radius, norm_color, false))) return false;
+			if (!testTAMShape(new Circle(err_val, norm_y, norm_radius, norm_color, false))) throw 0;
 
 			// Y test
-			if (!testTAMShape(new Circle(norm_x, err_val, norm_radius, norm_color, false))) return false;
+			if (!testTAMShape(new Circle(norm_x, err_val, norm_radius, norm_color, false))) throw 0;
 
 			// Radius test
-			if (!testTAMShape(new Circle(norm_x, norm_y, err_val, norm_color, false))) return false;
+			if (!testTAMShape(new Circle(norm_x, norm_y, err_val, norm_color, false))) throw 0;
 		}
 
 		// More radius test
-		if (!testTAMShape(new Circle(norm_x, norm_y, 0, norm_color, false))) return false;
-		if (!testTAMShape(new Circle(norm_x, norm_y, -300, norm_color, false))) return false;
+		if (!testTAMShape(new Circle(norm_x, norm_y, 0, norm_color, false))) throw 0;
+		if (!testTAMShape(new Circle(norm_x, norm_y, -300, norm_color, false))) throw 0;
 	}
 
 	// Test Finger Constructor #1 : Basic invalid input checks
@@ -226,18 +214,18 @@ bool UnitTest::run(){
 
 		for (float err_val : checks) {
 			// X test
-			if (!testTAMShape(new Finger(err_val, norm_y, norm_size, norm_color))) return false;
+			if (!testTAMShape(new Finger(err_val, norm_y, norm_size, norm_color))) throw 0;
 
 			// Y test
-			if (!testTAMShape(new Finger(norm_x, err_val, norm_size, norm_color))) return false;
+			if (!testTAMShape(new Finger(norm_x, err_val, norm_size, norm_color))) throw 0;
 
 			// Size test
-			if (!testTAMShape(new Finger(norm_x, norm_y, err_val, norm_color))) return false;
+			if (!testTAMShape(new Finger(norm_x, norm_y, err_val, norm_color))) throw 0;
 		}
 
 		// More size test
-		if (!testTAMShape(new Finger(norm_x, norm_y, 0, norm_color))) return false;
-		if (!testTAMShape(new Finger(norm_x, norm_y, -50, norm_color))) return false;
+		if (!testTAMShape(new Finger(norm_x, norm_y, 0, norm_color))) throw 0;
+		if (!testTAMShape(new Finger(norm_x, norm_y, -50, norm_color))) throw 0;
 	}
 
 	// Test SimpleCube Constructor #1 : Basic invalid input checks
@@ -247,18 +235,18 @@ bool UnitTest::run(){
 
 		for (float err_val : checks) {
 			// X test
-			if (!testTAMShape(new SimpleCube(err_val, norm_y, norm_size))) return false;
+			if (!testTAMShape(new SimpleCube(err_val, norm_y, norm_size))) throw 0;
 
 			// Y test
-			if (!testTAMShape(new SimpleCube(norm_x, err_val, norm_size))) return false;
+			if (!testTAMShape(new SimpleCube(norm_x, err_val, norm_size))) throw 0;
 
 			// Size test
-			if (!testTAMShape(new SimpleCube(norm_x, norm_y, err_val))) return false;
+			if (!testTAMShape(new SimpleCube(norm_x, norm_y, err_val))) throw 0;
 		}
 
 		// More size test
-		if (!testTAMShape(new SimpleCube(norm_x, norm_y, 0))) return false;
-		if (!testTAMShape(new SimpleCube(norm_x, norm_y, -50))) return false;
+		if (!testTAMShape(new SimpleCube(norm_x, norm_y, 0))) throw 0;
+		if (!testTAMShape(new SimpleCube(norm_x, norm_y, -50))) throw 0;
 	}
 
 
@@ -279,25 +267,25 @@ bool UnitTest::run(){
 		Algorithm::getCircumcenter(data1, data2, data3, 1000, answerX, answerY, answerRadius);
 
 		Algorithm::getCircumcenter(data1, data3, data2, 1000, centerX, centerY, radius);
-		if (answerX != centerX || answerY != centerY || answerRadius != radius) return false;
+		if (answerX != centerX || answerY != centerY || answerRadius != radius) throw 0;
 
 		Algorithm::getCircumcenter(data2, data1, data3, 1000, centerX, centerY, radius);
-		if (answerX != centerX || answerY != centerY || answerRadius != radius) return false;
+		if (answerX != centerX || answerY != centerY || answerRadius != radius) throw 0;
 
 		Algorithm::getCircumcenter(data2, data3, data1, 1000, centerX, centerY, radius);
-		if (answerX != centerX || answerY != centerY || answerRadius != radius) return false;
+		if (answerX != centerX || answerY != centerY || answerRadius != radius) throw 0;
 
 		Algorithm::getCircumcenter(data3, data1, data2, 1000, centerX, centerY, radius);
-		if (answerX != centerX || answerY != centerY || answerRadius != radius) return false;
+		if (answerX != centerX || answerY != centerY || answerRadius != radius) throw 0;
 
 		Algorithm::getCircumcenter(data3, data2, data1, 1000, centerX, centerY, radius);
-		if (answerX != centerX || answerY != centerY || answerRadius != radius) return false;
+		if (answerX != centerX || answerY != centerY || answerRadius != radius) throw 0;
 	}
 
 	// Test getCircumcenter method #2 : Verified input checks
 	{
 		float centerX = -1, centerY = -1, radius = -1;
-#define TEST_SIZE 7
+
 		vector<touch_data> data1_input;
 		vector<touch_data> data2_input;
 		vector<touch_data> data3_input;
@@ -313,39 +301,42 @@ bool UnitTest::run(){
 		data3.time = 0;	data3.id = 0;
 
 		// Input 1 : Three same points
+		// Fails result due to: No radius for circumcircle
 		data1.x = 100;	data1.y = 100;	
 		data2.x = 100;	data2.y = 100;
 		data3.x = 100;	data3.y = 100;
 		data1_input.push_back(data1);
 		data2_input.push_back(data2);
 		data3_input.push_back(data3);
-		centerX_checks.push_back(100);
-		centerY_checks.push_back(100);
-		radius_checks.push_back(0);
+		centerX_checks.push_back(-1);
+		centerY_checks.push_back(-1);
+		radius_checks.push_back(-1);
 		test_num++;
 
 		// Input 2 : Three points in a line
+		// Fails result due to: No center for circumcircle
 		data1.x = 0;	data1.y = 0;
 		data2.x = 50;	data2.y = 50;
 		data3.x = 100;	data3.y = 100;
 		data1_input.push_back(data1);
 		data2_input.push_back(data2);
 		data3_input.push_back(data3);
-		centerX_checks.push_back(50);
-		centerY_checks.push_back(50);
-		radius_checks.push_back(INF);
+		centerX_checks.push_back(-1);
+		centerY_checks.push_back(-1);
+		radius_checks.push_back(-1);
 		test_num++;
 
 		// Input 3 : Two points in a line (two of three are the same point)
+		// Fails result due to: Infinitely many circumcenters
 		data1.x = 50;	data1.y = 0;
 		data2.x = 50;	data2.y = 100;
 		data3.x = 50;	data3.y = 100;
 		data1_input.push_back(data1);
 		data2_input.push_back(data2);
 		data3_input.push_back(data3);
-		centerX_checks.push_back(50);
-		centerY_checks.push_back(50);
-		radius_checks.push_back(50);
+		centerX_checks.push_back(-1);
+		centerY_checks.push_back(-1);
+		radius_checks.push_back(-1);
 		test_num++;
 
 		// Input 4 : Right Triangle
@@ -363,6 +354,7 @@ bool UnitTest::run(){
 
 		// Input 5 : Equilateral Triangle
 		//Info for test: http://geometryatlas.com/entries/43
+		//				 https://www.easycalculation.com/analytical/circumcenter-triangle-calculator.php
 		data1.x = 30;	data1.y = 0;
 		data2.x = 0;	data2.y = 60;
 		data3.x = 60;	data3.y = 60;
@@ -370,8 +362,8 @@ bool UnitTest::run(){
 		data2_input.push_back(data2);
 		data3_input.push_back(data3);
 		centerX_checks.push_back(30);
-		centerY_checks.push_back(5*sqrt(3));
-		radius_checks.push_back(0);
+		centerY_checks.push_back(37.5);
+		radius_checks.push_back(37.5);
 		test_num++;
 
 		// Input 6 : Obtuse Triangle
@@ -393,16 +385,19 @@ bool UnitTest::run(){
 		data1.x = 10;	data1.y = 50;
 		data2.x = 30;	data2.y = 30;
 		data3.x = 0;	data3.y = 10;
-		centerX_checks[test_num] = 9;
-		centerY_checks[test_num] = 29;
-		radius_checks[test_num] = sqrt(81 + 361); // sqrt((9 - 0)^2 + (29 - 10)^2)
+		data1_input.push_back(data1);
+		data2_input.push_back(data2);
+		data3_input.push_back(data3);
+		centerX_checks.push_back(9);
+		centerY_checks.push_back(29);
+		radius_checks.push_back(sqrt(81 + 361)); // sqrt((9 - 0)^2 + (29 - 10)^2)
 		test_num++;
 
 
 		// Test All Case
-		for (int i = 0; i < TEST_SIZE; i++){
-			Algorithm::getCircumcenter(data1_input[test_num], data2_input[test_num], data3_input[test_num], 1000, centerX, centerY, radius);
-			if (centerX != centerX_checks[i] || centerY != centerY_checks[i] || radius != radius_checks[i]) return false;
+		for (int i = 0; i < test_num; i++) {
+			Algorithm::getCircumcenter(data1_input[i], data2_input[i], data3_input[i], 1000, centerX, centerY, radius);
+			if (centerX != centerX_checks[i] || centerY != centerY_checks[i] || radius != radius_checks[i]) throw 0;
 		}
 	}
 
@@ -418,13 +413,13 @@ bool UnitTest::run(){
 
 		//Empty
 		ProcessorThread::operationShortestPath(input, output);
-		if (!output.isEmpty()) return false;
+		if (!output.isEmpty()) throw 0;
 
 		// One
 		data.x = 0;	data.y = 0;	data.time = 0;	data.id = 0;
 		input.push_back(data);
 		ProcessorThread::operationShortestPath(input, output);
-		if (!output.isEmpty()) return false;
+		if (!output.isEmpty()) throw 0;
 	}
 
 	// Test operationShortestPath method #2 : Test same answer for swap of vertices
@@ -437,44 +432,73 @@ bool UnitTest::run(){
 		int res;
 		srand(time(NULL));
 
-		data1.x = rand() % 100;	data1.y = rand() % 300;	data1.time = 0;	data1.id = 0;
-		data2.x = rand() % 100;	data2.y = rand() % 300;	data2.time = 0;	data2.id = 0;
-		data3.x = rand() % 100;	data3.y = rand() % 300;	data3.time = 0;	data3.id = 0;
+		//data1.x = rand() % 100;	data1.y = rand() % 300;	data1.time = 0;	data1.id = 0;
+		//data2.x = rand() % 100;	data2.y = rand() % 300;	data2.time = 0;	data2.id = 0;
+		//data3.x = rand() % 100;	data3.y = rand() % 300;	data3.time = 0;	data3.id = 0;
+
+		// Example values
+		data1.x = 41;	data1.y = 293;	data1.time = 0;	data1.id = 0;
+		data2.x = 3;	data2.y = 183;	data2.time = 0;	data2.id = 0;
+		data3.x = 8;	data3.y = 287;	data3.time = 0;	data3.id = 0;
+
+		float data1todata2 = sqrt((data1.x - data2.x)*(data1.x - data2.x) + (data1.y - data2.y)*(data1.y - data2.y));
+		float data2todata3 = sqrt((data2.x - data3.x)*(data2.x - data3.x) + (data2.y - data3.y)*(data2.y - data3.y));
+		float data3todata1 = sqrt((data3.x - data1.x)*(data3.x - data1.x) + (data3.y - data1.y)*(data3.y - data1.y));
+
+		// Testing purposes
+		if (data1todata2 > data2todata3){
+			results.append(new Line(data2.x, data2.y, data3.x, data3.y, 70, 40));
+			if (data1todata2 > data3todata1)
+				 results.append(new Line(data3.x, data3.y, data1.x, data1.y, 70, 40));
+			else results.append(new Line(data1.x, data1.y, data2.x, data2.y, 70, 40));
+		}
+		else {
+			results.append(new Line(data1.x, data1.y, data2.x, data2.y, 70, 40));
+			if (data2todata3 > data3todata1)
+				 results.append(new Line(data1.x, data1.y, data2.x, data2.y, 70, 40));
+			else results.append(new Line(data2.x, data2.y, data3.x, data3.y, 70, 40));
+		}
+		
 
 		// Iteration 1-2-3
 		input.push_back(data1);	input.push_back(data2);	input.push_back(data3);
-		ProcessorThread::operationShortestPath(input, results);
+		ProcessorThread::operationShortestPath(input, output);
+		if (!compareLists(output, results)) throw 0;
 		input.clear();
+		output.clear();
 
 		// Iteration 1-3-2
 		input.push_back(data1);	input.push_back(data3);	input.push_back(data2);
 		ProcessorThread::operationShortestPath(input, output);
-		if (!compareLists(output, results)) return false;
+		if (!compareLists(output, results)) throw 0;
 		input.clear();
+		output.clear();
 
 		// Iteration 2-1-3
 		input.push_back(data2);	input.push_back(data1);	input.push_back(data3);
 		ProcessorThread::operationShortestPath(input, output);
-		if (!compareLists(output, results)) return false;
+		if (!compareLists(output, results)) throw 0;
 		input.clear();
+		output.clear();
 
 		// Iteration 2-3-1
 		input.push_back(data2);	input.push_back(data3);	input.push_back(data1);
 		ProcessorThread::operationShortestPath(input, output);
-		if (!compareLists(output, results)) return false;
+		if (!compareLists(output, results)) throw 0;
 		input.clear();
+		output.clear();
 
 		// Iteration 3-1-2
 		input.push_back(data3);	input.push_back(data1);	input.push_back(data2);
 		ProcessorThread::operationShortestPath(input, output);
-		if (!compareLists(output, results)) return false;
+		if (!compareLists(output, results)) throw 0;
 		input.clear();
+		output.clear();
 
 		// Iteration 3-2-1
 		input.push_back(data3);	input.push_back(data2);	input.push_back(data1);
 		ProcessorThread::operationShortestPath(input, output);
-		if (!compareLists(output, results)) return false;
-		input.clear();
+		if (!compareLists(output, results)) throw 0;
 	}
 
 	// Test getShortestHamiltonianPath method #3 : Verified input checks
@@ -490,9 +514,10 @@ bool UnitTest::run(){
 		data.x = 1;	data.y = 1;	data.time = 0;	data.id = 0;	input.push_back(data);
 		results.push_back(new Line(0, 0, 1, 1, 70));
 		ProcessorThread::operationShortestPath(input, output);
-		if (!compareLists(output, results)) return false;
+		if (!compareLists(output, results)) throw 0;
 		results.clear();
 		input.clear();
+		output.clear();
 
 
 		// Input 2 : Basic Three Vertices Graph (Simple Right Triangle of 3 : 4 : 5 side ratio)
@@ -502,9 +527,10 @@ bool UnitTest::run(){
 		results.push_back(new Line(20, 30, 60, 30, 70));
 		results.push_back(new Line(60, 30, 60, 60, 70));
 		ProcessorThread::operationShortestPath(input, output);
-		if (!compareLists(output, results)) return false;
+		if (!compareLists(output, results)) throw 0;
 		results.clear();
 		input.clear();
+		output.clear();
 	}
 
 	// Test getShortestHamiltonianPath method #1 : Verified input checks
@@ -537,7 +563,7 @@ bool UnitTest::run(){
 			Total Distance in Shortest Ham. Path	= 1924*/
 
 		QList<QList<int>> adj_matrix;
-		QList<int> row[16];
+		QList<int> row[15];
 		QList<int> result, answer;
 		int i = 0;
 		int res;
@@ -626,11 +652,17 @@ bool UnitTest::run(){
 		answer.push_back(9);	answer.push_back(11);	answer.push_back(12);	answer.push_back(1);	answer.push_back(3);
 		answer.push_back(7);	answer.push_back(6);	answer.push_back(4);	answer.push_back(8);	answer.push_back(0);
 
-		result = Algorithm::getShortestHamiltonianPath(adj_matrix, res);
-		if (result.size() != answer.size()) return false;
-		for (int i = 0; i < answer.size(); i++){
-			if (result[i] != answer[i]) return false;
+		for (QList<int> r : row){
+			adj_matrix.append(r);
 		}
+
+		result = Algorithm::getShortestHamiltonianPath(adj_matrix, res);
+		
+		if (result.size() != answer.size()) throw 0;
+		if (res >= 1924) throw 0; // shortest distance must be smaller or equal to based on best heuristic data found online
+		/*for (int i = 0; i < answer.size(); i++){
+			if (result[i] != answer[i]) throw 0;
+		}*/
 	}
 
 	// Test setFingers method #1 : Basic invalid input checks
@@ -657,7 +689,7 @@ bool UnitTest::run(){
 		for (time = 0; time < time_limit && !result.isEmpty(); time++) {
 			result = proc->getResults();
 		}
-		if (time == time_limit) return false;
+		if (time == time_limit) throw 0;
 
 		// Reset
 		proc->setFingers(valid);
@@ -667,7 +699,7 @@ bool UnitTest::run(){
 		proc->setFingers(invalid1);
 		for (time = 0; time < time_limit; time++) {}
 		result = proc->getResults();
-		if (!result.isEmpty()) return false;
+		if (!result.isEmpty()) throw 0;
 
 		// Reset
 		proc->setFingers(valid);
@@ -677,7 +709,7 @@ bool UnitTest::run(){
 		proc->setFingers(invalid2);
 		for (time = 0; time < time_limit; time++) {}
 		result = proc->getResults();
-		if (!result.isEmpty()) return false;
+		if (!result.isEmpty()) throw 0;
 
 		delete proc;
 	}

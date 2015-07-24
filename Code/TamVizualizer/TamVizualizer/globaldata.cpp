@@ -6,10 +6,12 @@
    Only sqrt() function is questionable in terms of time-complexity) */
 bool Algorithm::getCircumcenter(touch_data data1, touch_data data2, touch_data data3, int accuracy, float &centerX, float &centerY, float &radius){
 	/* Efficient Math Equation found here: https://en.wikipedia.org/wiki/Circumscribed_circle#Cartesian_coordinates */
-
+	
+	// Solve for circumcenter
 	centerX = centerY = radius = -1;
 	long long temp1, temp2, temp3;
-	float denom;
+	double denom;
+	double precise_radius;
 	temp1 = data2.y - data3.y;
 	temp2 = data3.y - data1.y;
 	temp3 = data1.y - data2.y;
@@ -26,14 +28,25 @@ bool Algorithm::getCircumcenter(touch_data data1, touch_data data2, touch_data d
 	centerX = (sqlen1*temp1 + sqlen2*temp2 + sqlen3*temp3) / denom;
 	centerY = (sqlen1*(data3.x - data2.x) + sqlen2*(data1.x - data3.x) + sqlen3*(data2.x - data1.x)) / denom;
 
-	temp1 = centerX - data1.x;
-	temp2 = centerY - data1.y;
-	radius = temp1*temp1 + temp2*temp2;
-	if (radius > accuracy*accuracy) {
+	float ftemp1, ftemp2;
+	// Average the 3 different radius (due to floating point inaccuracies)
+	ftemp1 = centerX - data1.x;
+	ftemp2 = centerY - data1.y;
+	precise_radius = ftemp1*ftemp1 + ftemp2*ftemp2;
+	ftemp1 = centerX - data2.x;
+	ftemp2 = centerY - data2.y;
+	precise_radius += ftemp1*ftemp1 + ftemp2*ftemp2;
+	ftemp1 = centerX - data3.x;
+	ftemp2 = centerY - data3.y;
+	precise_radius += ftemp1*ftemp1 + ftemp2*ftemp2;
+	precise_radius /= 3;
+
+	// If radius too large
+	if (precise_radius > accuracy*accuracy) {
 		centerX = centerY = radius = -1;
 		return false;
 	}
-	radius = sqrt(radius);
+	radius = sqrt(precise_radius);
 	return true;
 }
 
@@ -46,23 +59,26 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 	const int n = dist.size();
 	const int MAX = 1 << 30;
 	const int MAX_N = (1 << n);
-	res = 0;
+	res = -1;
 
 	//int dp[1 << n][n];
 	QList< QList<int> > dp;
 	QList<int> order;
 
+	// Make sure size is not too large
+	if (n > 20) return order;
+
+	// Initialize 
 	for (int i = 0; i < MAX_N; i++){
 		QList<int> add;
-		dp.append(add);
 		for (int j = 0; j < n; j++){
-			dp[i].append(MAX);
+			add.append(MAX);
 		}
+		dp.append(add);
 	}
-
 	for (int i = 0; i < n; i++){
 		if (dist.at(i).size() != n) {
-			// If no an N x N matrix
+			// If not an N x N matrix, return empty
 			order.clear();
 			return order;
 		}
@@ -70,8 +86,9 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 		dp[(1 << i)][i] = 0;
 	}
 
+	// Begin DP Algorithm
 	int temp;
-	for (int mask = 0; mask < 1 << n; mask++) {
+	for (int mask = 0; mask < (1 << n); mask++) {
 		for (int i = 0; i < n; i++) {
 			if ((mask & (1 << i)) != 0) {
 				for (int j = 0; j < n; j++) {
@@ -87,7 +104,7 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 	res = MAX;
 	for (int i = 0; i < n; i++) {
 		temp = dp[(1 << n) - 1][i];
-		if (temp < res){
+		if (temp < res) {
 			res = temp;	// Math.min(res, dp[(1 << n) - 1][i]);
 		}
 	}
@@ -99,9 +116,9 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 	for (int i = n - 1; i >= 0; i--) {
 		int bj = -1;
 		for (int j = 0; j < n; j++) {
-			if ((cur & 1 << j) != 0
+			if ((cur & (1 << j)) != 0
 				&& (bj == -1
-				|| dp[cur][bj] + (last == -1 ? 0 : dist[bj][last]) > dp[cur][j] + (last == -1 ? 0 : dist[j][last]))) {
+				|| ((dp[cur][bj] + (last == -1 ? 0 : dist[bj][last])) > (dp[cur][j] + (last == -1 ? 0 : dist[j][last]))))) {
 				bj = j;
 			}
 		}
@@ -109,5 +126,6 @@ QList<int> Algorithm::getShortestHamiltonianPath(QList< QList<int> > dist, int &
 		cur ^= (1 << bj);
 		last = bj;
 	}
+
 	return order;
 }

@@ -36,6 +36,9 @@ public:
 
 private:
 	static bool verified;
+
+	/* Verify values are proper */
+	static void verify();
 };
 
 /* Interface for which the window will use to draw all kinds of shapes created */
