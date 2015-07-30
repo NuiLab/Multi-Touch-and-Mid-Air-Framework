@@ -25,3 +25,14 @@ License B: The second license, is a private license available via Dr. Rishe and 
 	Senior Student Developers (SPRING 2015):
 		Richard A. Lopez:
 		
+
+
+Directory Structure:
+
+	Multi-Touch visualizer:
+	* Source Code: Code\TamVizualizer\TamVizualizer\
+	* Visual Studio Solution: Code\TamVizualizer\TamVizualizer.sln
+	
+	Gyroscope visualizer:
+	* Source code: Code\TAM_GyroscopeVisualizer\GyroscopeVisualizer\GyroscopeVisualizer\
+	* Visual Studio Solution: Code\TAM_GyroscopeVisualizer\GyroscopeVisualizer\GyroscopeVisualizer.sln
