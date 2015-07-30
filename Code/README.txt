@@ -31,8 +31,8 @@ Directory Structure:
 
 	Multi-Touch visualizer:
 	* Source Code: Code\TamVizualizer\TamVizualizer\
-	* Visual Studio Solution: Code\TamVizualizer\TamVizualizer.sln
+	* VS2013 Sln: Code\TamVizualizer\TamVizualizer.sln
 	
 	Gyroscope visualizer:
 	* Source code: Code\TAM_GyroscopeVisualizer\GyroscopeVisualizer\GyroscopeVisualizer\
-	* Visual Studio Solution: Code\TAM_GyroscopeVisualizer\GyroscopeVisualizer\GyroscopeVisualizer.sln
+	* VS2013 Sln: Code\TAM_GyroscopeVisualizer\GyroscopeVisualizer\GyroscopeVisualizer.sln
