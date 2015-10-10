@@ -36,3 +36,5 @@ Directory Structure:
 	Gyroscope visualizer:
 	* Source code: Code\TAM_GyroscopeVisualizer\GyroscopeVisualizer\GyroscopeVisualizer\
 	* VS2013 Sln: Code\TAM_GyroscopeVisualizer\GyroscopeVisualizer\GyroscopeVisualizer.sln
+
+==
