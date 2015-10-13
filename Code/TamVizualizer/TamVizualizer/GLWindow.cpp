@@ -10,12 +10,15 @@ GLWindow::GLWindow(QWidget *parent) : QOpenGLWidget(parent) {
 	setAttribute(Qt::WA_AcceptTouchEvents);		// Allow Touch Screen Detection
 	setAttribute(Qt::WA_MouseTracking);			// Allow Mouse Detection
 
-	process = new ProcessorThread();
+	vis = new TAM::Visualizer<TAMShape>();
+	process = vis->startProcess();
+	vis->coord.setThread(process);
 }
 
 /* To be certain that the thread closes properly */
 GLWindow::~GLWindow() {
 	delete process;
+	delete vis;
 	playback_mode = false;
 }
 
@@ -46,12 +49,14 @@ void GLWindow::doMap(int map) {
 }
 
 /* Set the display mode for the window*/
-void GLWindow::setDisplay(DisplaySetting action) {
-	display_type = action;
-	process->setProcess(action);
+void GLWindow::setDisplay(void(*function)(DisplaySetting, ProcessorThread*), DisplaySetting action, ProcessorThread* proc) {
+	function(action, proc);
 }
 
-
+/* Returns pointer to ProcessorThread */
+ProcessorThread* GLWindow::getProcessorThread() {
+	return process;
+}
 
 
 
@@ -66,54 +71,23 @@ void GLWindow::setDisplay(DisplaySetting action) {
 /*	Sets up the OpenGL rendering context, defines display lists, etc.
 	Gets called once before the first time resizeGL() or paintGL() is called.*/
 void GLWindow::initializeGL() {
-	glClearColor(1.0, 1.0, 1.0, 0.0);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_COLOR_MATERIAL);
-
-
-	// Initialize lighting ONLY if using OBJParser
-	//GLSpace::initGLLighting();
-
-	// Initialize timer
+	TAM::VisualizerHandler<TAMShape>::initGL(NULL);
 	timer.start(1000 / fps, Qt::TimerType::PreciseTimer, this);
 }
 
 /*	Sets up the OpenGL viewport, projection, etc. Gets called whenever the widget has been resized
 	(and also when it is shown for the first time because all newly created widgets get a resize event automatically). */
 void GLWindow::resizeGL(int width, int height){
-	glViewport(0, 0, (GLint)width, (GLint)height);
-
-	/* Create viewing cone with near and far clipping planes */
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	float screen_ratio = (float)height / (float)width;
-	glFrustum(	-view_half_width, view_half_width, 
-				-view_half_width * screen_ratio, view_half_width * screen_ratio,
-				view_near, view_far);
-	//glOrtho(-5, 5, -5.0f * screen_ratio, 5.0f * screen_ratio, 0.5, 30.0);	//To Switch to Orthogonal View (Not tested)
-
+	float screen_ratio = TAM::VisualizerHandler<TAMShape>::resizeGL(NULL, width, height);
 	//Initialize GLShape Frustum and Screen Size
 	GLSpace::frustum(view_half_width, view_half_width * screen_ratio, view_near, view_far);
 	GLSpace::screenSize(width, height);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 }
 
-/* Renders the OpenGL scene. Gets called whenever the widget needs to be updated. */
-void GLWindow::paintGL() {
-	QPainter painter(this);
+/* Renders the OpenGL scene. Gets called whenever the widget needs to be updated.*/
+void GLWindow::paintGL() {	
 
 	isDrawing = true;	// Let others know that you are drawing
-	painter.beginNativePainting();
-
-	//delete color and depth buffer
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-
-	glMatrixMode(GL_MODELVIEW);
-	glEnable(GL_DEPTH_TEST);
 
 	// Retrieve results from processor thread
 	QList<TAMShape *> results = process->getResults();
@@ -126,10 +100,15 @@ void GLWindow::paintGL() {
 		DebugWindow::println(str);
 	}
 
-	// Draw results to screen
-	drawScreenGL(results);
+	/* This is just for testing */
+	foreach(ShapeCoordinates x, vis->coord.getGLCoordinates(GLSpace::screen_width, GLSpace::screen_height)) {
+		cout << "Hello coordinates\n";
+		cout << "X: " << x.getXCoordinate() << endl;
+		cout << "Y: " << x.getYCoordinate() << endl;
+	}
 
-	painter.endNativePainting();
+	TAM::VisualizerHandler<TAMShape>::paintGL(&GLWindow::drawScreenGL, results);
+
 	isDrawing = false;	// Let others know you stopped drawing
 }
 

@@ -1,17 +1,26 @@
 #ifndef GLSHAPE_H
 #define GLSHAPE_H
+#define _USE_MATH_DEFINES
 
-#include <QtOpenGL>
+#include <glew.h>
+#include <QGLWidget>
 #include <qquaternion.h>
 #include "globaldata.h"
 #include "debugwindow.h"
+#include <qdebug.h>
 #include <time.h>
+#include <string>
 #include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <shader.hpp>
+#include <chrono>
 
 static const short X = 0;
 static const short Y = 1;
 static const short Z = 2;
-
+static auto t_start = std::chrono::high_resolution_clock::now();
 /* Class used solely for assistance in resizing and placing shapes on screen based on the Frustum settings
 (Not a fully tested feature for the various frustum setting, only the current one)
  */
@@ -26,8 +35,9 @@ public:
 
 	static void calculateScreenPosition(float screen_x, float screen_y, float world_z, float &world_x, float &world_y);
 	static void calculateScreenLength(float screen_length, float world_z, float &world_length);
+	static void getGLScreenCoordinates(float screen_x, float screen_y, float &world_x, float &world_y);
 	static void generateColor(int id);
-
+	static void generateColor(int id, float &r, float &g, float &b);	
 	/* Initialize all the lighting necessary for the OpenGL Environment */
 	static void initGLLighting();
 
@@ -41,10 +51,22 @@ private:
 	static void verify();
 };
 
+/* Holds a set of coordinates for a given shape */
+class ShapeCoordinates
+{
+public:
+	ShapeCoordinates(float x, float y) : x(x), y(y){}
+	float getXCoordinate();
+	float getYCoordinate();
+private:
+	float x, y;
+};
+
 /* Interface for which the window will use to draw all kinds of shapes created */
 class TAMShape {
 public:
 	virtual void draw() = 0;
+	virtual list<ShapeCoordinates> getCoordinates() = 0;
 };
 
 /* Shape to draw line in front of camera given two (x,y) coordinates */
@@ -53,9 +75,10 @@ public:
 	float x1, y1, x2, y2, thick;
 	int color;
 
-	Line(float x1, float y1, float x2, float y2, int color, float thick = 40) :
+	Line(float x1, float y1, float x2, float y2, int color, float thick = 10) :
 		x1(x1), y1(y1), x2(x2), y2(y2), thick(thick), color(color){}
 	void draw() override;
+	list<ShapeCoordinates> getCoordinates() override;
 };
 
 /* Shape to draw circle in front of camera given one (x,y) coordinate and its radius */
@@ -68,6 +91,7 @@ public:
 	Circle(float x, float y, float radius, int color, bool doFill = false) :
 		x(x), y(y), radius(radius), color(color), doFill(doFill) {}
 	void draw() override;
+	list<ShapeCoordinates> getCoordinates() override;
 };
 
 /* Shape used to draw the design for when touch is detected */
@@ -79,6 +103,7 @@ public:
 	Finger(float x, float y, float size, int color) :
 		x(x), y(y), size(size), color(color){}
 	void draw() override;
+	list<ShapeCoordinates> getCoordinates() override;
 };
 
 /* A Simple Cube. This was merely for testing purposes */
@@ -89,6 +114,7 @@ public:
 	SimpleCube(float x, float y, float size) :
 		x(x), y(y), size(size) {}
 	void draw() override;
+	list<ShapeCoordinates> getCoordinates() override;
 };
 
 /* A Box with X-Y-Z Axis Arrows, to display 3D-rotations to the user
@@ -98,6 +124,7 @@ public:
 	WorldBox(QQuaternion quaternion, float size, float screen_x = (GLSpace::screen_width / 2.0f), float screen_y = (GLSpace::screen_height / 2.0f)) :
 		quaternion(quaternion), size(size), screen_x(screen_x), screen_y(screen_y){}
 	void draw() override;
+	list<ShapeCoordinates> getCoordinates() override;
 private:
 	float screen_x, screen_y, size;
 	QQuaternion quaternion;
@@ -114,6 +141,7 @@ public:
 	OBJModel(string path);
 	bool exists();
 	void draw() override;
+	list<ShapeCoordinates> getCoordinates() override;
 private:
 	// Boolean to test if model loaded successfully
 	bool isWorking;
