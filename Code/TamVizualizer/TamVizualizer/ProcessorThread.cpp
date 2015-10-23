@@ -107,13 +107,17 @@ void ProcessorThread::run(){
 		// Draw based on the display setting chosen by the user
 		switch (setting){
 		case AVG:	// O(N)
-			operationFingerAveraging(current_data, current_result);		break;
+			operationFingerAveraging(current_data, current_result);		
+			break;
 		case CIRCLE: 	// O(N^3)
-			operationCircularConnection(current_data, current_result);	break;
+			operationCircularConnection(current_data, current_result);	
+			break;
 		case MST: 	// O(N^2)
-			operationShortestMapping(current_data, current_result);		break;
+			operationShortestMapping(current_data, current_result);		
+			break;
 		case SHP: 	// O(N^2 * 2^N)
-			operationShortestPath(current_data, current_result);		break;
+			operationShortestPath(current_data, current_result);		
+			break;
 		}
 
 		// Update results calculated

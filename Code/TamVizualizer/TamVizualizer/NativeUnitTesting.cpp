@@ -1,4 +1,4 @@
-#include "nativeunittesting.h""
+#include "nativeunittesting.h"
 
 float UnitTest::INF = INFINITY;
 float UnitTest::NEG_INF = LOCALE_SNEGINFINITY;

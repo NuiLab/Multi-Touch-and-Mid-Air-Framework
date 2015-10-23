@@ -21,10 +21,11 @@ int main(int argc, char *argv[]) {
 	if (!UnitTest::run()){
 		qDebug() << "A Test Failed...";
 	}*/
-
+	
 	// Create a MainWindow object and maximize the window
 	MainWindow w;
 	w.showMaximized();
 
+	cout << "hihi\n";
 	return a.exec();
 }

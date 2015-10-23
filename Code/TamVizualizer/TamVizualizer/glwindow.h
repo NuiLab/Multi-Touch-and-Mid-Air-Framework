@@ -1,8 +1,20 @@
 #ifndef GLWINDOW_H
 #define GLWINDOW_H
 
-#include <QtOpenGL>
-#include <QGLWidget>
+#include <glew.h>
+#include <QOpenGLWidget>
+#include <qevent.h>
+#include <qbasictimer.h>
+#include <qjsondocument.h>
+#include <qjsonarray.h>
+#include <qjsonobject.h>
+#include <qapplication.h>
+#include <qdebug.h>
+#include <qaction.h>
+#include <qmenu.h>
+#include <qfile.h>
+#include <qfiledialog.h>
+#include <qmenubar.h>
 #include <ctime>
 
 #include <fstream>
@@ -12,6 +24,7 @@
 #include "processorthread.h"
 #include "shapedata.h"
 #include "debugwindow.h"
+#include "api.h"
 
 using namespace std;
 
@@ -30,13 +43,15 @@ public:
 	/* Changes the global mapping attribute */
 	void doMap(int map);
 	/* Set the display mode for the window */
-	void setDisplay(DisplaySetting action);	
+	void setDisplay(void (*function)(DisplaySetting, ProcessorThread*), DisplaySetting action, ProcessorThread* proc);	
 	/* Starts the save action by opening a save dialog native to the OS */
 	bool doSaveGesture(QString fileName, QString fileType);
 	/* Starts the open action by opening an open dialog native to the OS */
 	bool doOpenGesture(QString fileName, QString fileType);
 	/* For the purpose of loading  in your own OBJ models */
 	bool doLoadOBJFile(string path);
+
+	ProcessorThread* getProcessorThread();
 
 	/* Slots used for communication between GLWindow and MainWindow */
 	public slots:
@@ -79,12 +94,14 @@ private:
 
 	ProcessorThread *process;	/* Processor Thread to run the calculations on */
 	
+	TAM::Visualizer<TAMShape> *vis;
+
 	/* Send finger data to the ProcessorThread */
 	void sendDataToProcessThread();
 	/* Update the touch data for multiple fingers */
 	void updateData(touch_data data);
 	/* Draw the list of TAMShapes to the screen */
-	void drawScreenGL(QList<TAMShape *> shapes);
+	static void drawScreenGL(QList<TAMShape *> shapes);
 
 	/* Timer for setting a frame-per-second drawing rate */
 	void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;

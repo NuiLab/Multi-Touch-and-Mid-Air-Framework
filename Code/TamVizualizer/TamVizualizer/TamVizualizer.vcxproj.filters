@@ -95,6 +95,12 @@
     <ClCompile Include="NativeUnitTesting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="api.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -118,23 +124,27 @@
     <CustomBuild Include="debugwindow.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_mainwindow.h">
+    <CustomBuild Include="ClassDiagram.cd" />
+    <CustomBuild Include="packages.config" />
+    <CustomBuild Include="nativeunittesting.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shapedata.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="globaldata.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_mainwindow.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="globaldata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shapedata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nativeunittesting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="ClassDiagram.cd" />
+    <ClInclude Include="shader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
