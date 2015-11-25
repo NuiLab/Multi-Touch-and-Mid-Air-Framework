@@ -10,15 +10,12 @@ GLWindow::GLWindow(QWidget *parent) : QOpenGLWidget(parent) {
 	setAttribute(Qt::WA_AcceptTouchEvents);		// Allow Touch Screen Detection
 	setAttribute(Qt::WA_MouseTracking);			// Allow Mouse Detection
 
-	vis = new TAM::Visualizer<TAMShape>();
-	process = vis->startProcess();
-	vis->coord.setThread(process);
+	process = new ProcessorThread();
 }
 
 /* To be certain that the thread closes properly */
 GLWindow::~GLWindow() {
 	delete process;
-	delete vis;
 	playback_mode = false;
 }
 
@@ -71,7 +68,7 @@ ProcessorThread* GLWindow::getProcessorThread() {
 /*	Sets up the OpenGL rendering context, defines display lists, etc.
 	Gets called once before the first time resizeGL() or paintGL() is called.*/
 void GLWindow::initializeGL() {
-	TAM::VisualizerHandler<TAMShape>::initGL(NULL);
+	TAM::VisualizerHandler<TAMShape>::initGL(NULL, 1.0, 1.0, 1.0, 1.0f);
 	timer.start(1000 / fps, Qt::TimerType::PreciseTimer, this);
 }
 
@@ -90,7 +87,7 @@ void GLWindow::paintGL() {
 	isDrawing = true;	// Let others know that you are drawing
 
 	// Retrieve results from processor thread
-	QList<TAMShape *> results = process->getResults();
+	std::list<TAMShape *> results = process->getResults();
 
 	// Print results if in playback mode (For testing purposes)
 	if (playback_mode){
@@ -101,11 +98,11 @@ void GLWindow::paintGL() {
 	}
 
 	/* This is just for testing */
-	foreach(ShapeCoordinates x, vis->coord.getGLCoordinates(GLSpace::screen_width, GLSpace::screen_height)) {
+	/*foreach(ShapeCoordinates x, vis->coord.getGLCoordinates(GLSpace::screen_width, GLSpace::screen_height)) {
 		cout << "Hello coordinates\n";
 		cout << "X: " << x.getXCoordinate() << endl;
 		cout << "Y: " << x.getYCoordinate() << endl;
-	}
+	}*/
 
 	TAM::VisualizerHandler<TAMShape>::paintGL(&GLWindow::drawScreenGL, results);
 
@@ -113,7 +110,7 @@ void GLWindow::paintGL() {
 }
 
 /* Draw the list of TAMShapes to the screen*/
-void GLWindow::drawScreenGL(QList<TAMShape *> shapes){
+void GLWindow::drawScreenGL(std::list<TAMShape *> shapes){
 	foreach(TAMShape* shape, shapes){
 		shape->draw();
 	}

@@ -25,7 +25,6 @@
 #include "shapedata.h"
 #include "debugwindow.h"
 #include "api.h"
-
 using namespace std;
 
 /* The GLWindow is the Window that will:
@@ -93,15 +92,13 @@ private:
 	int fps;					/* Frames per second to update the timer */
 
 	ProcessorThread *process;	/* Processor Thread to run the calculations on */
-	
-	TAM::Visualizer<TAMShape> *vis;
 
 	/* Send finger data to the ProcessorThread */
 	void sendDataToProcessThread();
 	/* Update the touch data for multiple fingers */
 	void updateData(touch_data data);
 	/* Draw the list of TAMShapes to the screen */
-	static void drawScreenGL(QList<TAMShape *> shapes);
+	static void drawScreenGL(std::list<TAMShape *> shapes);
 
 	/* Timer for setting a frame-per-second drawing rate */
 	void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;

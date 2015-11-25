@@ -216,7 +216,7 @@ void MainWindow::doPlayback(){
 void MainWindow::changeDisplay() {
 	QAction *action = qobject_cast<QAction *>(sender());
 	int type = action->data().toInt();
-	window->setDisplay(&TAM::VisualizerHandler<TAMShape>::setDisplay, toDS[type], window->getProcessorThread());
+	window->getProcessorThread()->setProcess(toDS[type]);
 }
 
 

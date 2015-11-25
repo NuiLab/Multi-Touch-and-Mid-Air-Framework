@@ -199,6 +199,7 @@
     <ClCompile Include="ProcessorThread.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="shapedata.cpp" />
+    <ClCompile Include="unittestapi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -518,6 +519,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="api.h" />
+    <ClInclude Include="unittestapi.h" />
     <ClInclude Include="shader.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

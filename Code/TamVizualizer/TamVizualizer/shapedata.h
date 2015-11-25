@@ -21,6 +21,7 @@ static const short X = 0;
 static const short Y = 1;
 static const short Z = 2;
 static auto t_start = std::chrono::high_resolution_clock::now();
+
 /* Class used solely for assistance in resizing and placing shapes on screen based on the Frustum settings
 (Not a fully tested feature for the various frustum setting, only the current one)
  */
@@ -65,7 +66,7 @@ private:
 /* Interface for which the window will use to draw all kinds of shapes created */
 class TAMShape {
 public:
-	virtual void draw() = 0;
+	virtual void draw() = 0; 
 	virtual list<ShapeCoordinates> getCoordinates() = 0;
 };
 
@@ -110,7 +111,6 @@ public:
 class SimpleCube : public TAMShape {
 public:
 	float x, y, size;
-
 	SimpleCube(float x, float y, float size) :
 		x(x), y(y), size(size) {}
 	void draw() override;
@@ -171,4 +171,13 @@ private:
 	void generateNormals();
 	void extractOBJdata(string fp);
 };
+
+/* For API testing purposes */
+static void mapper(float x, float y, float z, float w, float *new_x, float *new_y, float *new_z, float *new_w) {
+	*new_x = x;
+	*new_y = y;
+	*new_z = z;
+	*new_w = w;
+}
+
 #endif

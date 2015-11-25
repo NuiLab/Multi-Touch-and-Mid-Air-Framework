@@ -52,11 +52,11 @@ bool ProcessorThread::addOBJModel(string path){
 }
 
 /* Returns the calculated results to be drawn */
-QList<TAMShape *> ProcessorThread::getResults(){
+std::list<TAMShape *> ProcessorThread::getResults(){
 	result_m.lock();
-	QList<TAMShape *> current_results;
+	std::list<TAMShape *> current_results;
 	foreach(TAMShape * shape, results){
-		current_results << shape;
+		current_results.push_back(shape);
 	}
 	result_m.unlock();
 

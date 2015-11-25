@@ -21,7 +21,7 @@ public:
 	/* Load a new model for the purpose of loading  in your own OBJ models*/
 	bool addOBJModel(string path);
 	/* Returns the calculated results */
-	QList<TAMShape *> getResults();
+	std::list<TAMShape *> getResults();
 
 	/* Functions used for intensive-calculations (based on display setting) */
 	static void operationFingerAveraging(const QList<touch_data> &input, QList<TAMShape *> &output);

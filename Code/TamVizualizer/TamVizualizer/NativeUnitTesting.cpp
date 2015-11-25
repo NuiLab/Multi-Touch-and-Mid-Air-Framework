@@ -669,7 +669,7 @@ bool UnitTest::run(){
 	{
 		ProcessorThread *proc;
 		QList<touch_data> empty, invalid1, invalid2, valid;
-		QList<TAMShape *> result;
+		std::list<TAMShape *> result;
 		touch_data data;
 		int time, time_limit = 100000;
 		
@@ -686,7 +686,7 @@ bool UnitTest::run(){
 		// Empty
 		proc->setFingers(empty);
 		result = proc->getResults();
-		for (time = 0; time < time_limit && !result.isEmpty(); time++) {
+		for (time = 0; time < time_limit && !result.empty(); time++) {
 			result = proc->getResults();
 		}
 		if (time == time_limit) throw 0;
@@ -699,7 +699,7 @@ bool UnitTest::run(){
 		proc->setFingers(invalid1);
 		for (time = 0; time < time_limit; time++) {}
 		result = proc->getResults();
-		if (!result.isEmpty()) throw 0;
+		if (!result.empty()) throw 0;
 
 		// Reset
 		proc->setFingers(valid);
@@ -709,7 +709,7 @@ bool UnitTest::run(){
 		proc->setFingers(invalid2);
 		for (time = 0; time < time_limit; time++) {}
 		result = proc->getResults();
-		if (!result.isEmpty()) throw 0;
+		if (!result.empty()) throw 0;
 
 		delete proc;
 	}
