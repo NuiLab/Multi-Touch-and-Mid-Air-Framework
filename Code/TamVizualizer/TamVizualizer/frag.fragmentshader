@@ -1,0 +1,5 @@
+#version 150 core\n
+out vec4 outColor;
+void main() {
+   outColor = vec4(" + std::to_string(r) + "," + std::to_string(g) + "," + std::to_string(b) + "," + std::to_string(t) + ");
+}

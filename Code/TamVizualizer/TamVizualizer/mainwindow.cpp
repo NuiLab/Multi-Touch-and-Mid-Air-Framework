@@ -17,7 +17,7 @@ MainWindow::MainWindow() {
 
 	// Set-up Main Window
 	setWindowTitle(tr("TamVisualizer"));
-	resize(500, 500);
+	resize(700, 300);
 
 	// Initialize File Types the program will use
 	type_list << tr("JSON") << tr("CSV");
@@ -216,7 +216,7 @@ void MainWindow::doPlayback(){
 void MainWindow::changeDisplay() {
 	QAction *action = qobject_cast<QAction *>(sender());
 	int type = action->data().toInt();
-	window->setDisplay(&TAM::VisualizerHandler<TAMShape>::setDisplay, toDS[type], window->getProcessorThread());
+	window->getProcessorThread()->setProcess(toDS[type]);
 }
 
 
