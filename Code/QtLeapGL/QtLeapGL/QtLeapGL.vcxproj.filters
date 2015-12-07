@@ -50,9 +50,6 @@
     <ClCompile Include="GeneratedFiles\qrc_qtleapgl.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="api.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="glwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,9 +75,6 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="api.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="glwindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
