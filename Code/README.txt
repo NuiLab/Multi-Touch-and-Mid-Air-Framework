@@ -44,6 +44,10 @@ Directory Structure:
 	* Source Code: Code\KnVis\KnVis\
 	* VS2013 Sln: Code\KnVis\KnVis.sln
 	
+	Kinect Data Application:
+	* Source Code: Code\TestingSamples\ConsoleApplication1\ConsoleApplication1
+	* VS2013 Sln: Code\KnVis\ConsoleApplication1.sln
+	
 	Multi-Touch visualizer:
 	* Source Code: Code\TamVizualizer\TamVizualizer\
 	* VS2013 Sln: Code\TamVizualizer\TamVizualizer.sln
