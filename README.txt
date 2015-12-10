@@ -19,6 +19,9 @@ License B: The second license, is a private license available via Dr. Rishe and 
 	Main Developer: 
 		Francisco R. Ortega
 	
+	Senior Student Developers (FALL 2015)
+                Alberto Carrillo
+                David Escobar
 	Senior Student Developers (SUMMER 2015)
                 Alfredo Zellek
                 Steven Ignetti
