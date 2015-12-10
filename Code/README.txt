@@ -19,6 +19,9 @@ License B: The second license, is a private license available via Dr. Rishe and 
 	Main Developer: 
 		Francisco R. Ortega
 	
+	Senior Student Developers (FALL 2015)
+                Alberto Carrillo
+                David Escobar
 	Senior Student Developers (SUMMER 2015)
                 Alfredo Zellek
                 Steven Ignetti
@@ -29,6 +32,18 @@ License B: The second license, is a private license available via Dr. Rishe and 
 
 Directory Structure:
 
+	TAMGeF API:
+	* Source Code: Code\TAM_API_PROJ\TAM_API\
+	* VS2013 Sln: Code\TAM_API_PROJ\TAMAPI.sln
+	
+	LeapMotion Visualizer:
+	* Source Code: Code\QtLeapGL\QtLeapGL\
+	* VS2013 Sln: Code\QtLeapGL\QtLeapGL.sln
+	
+	Kinect Visualizer:
+	* Source Code: Code\KnVis\KnVis\
+	* VS2013 Sln: Code\KnVis\KnVis.sln
+	
 	Multi-Touch visualizer:
 	* Source Code: Code\TamVizualizer\TamVizualizer\
 	* VS2013 Sln: Code\TamVizualizer\TamVizualizer.sln
