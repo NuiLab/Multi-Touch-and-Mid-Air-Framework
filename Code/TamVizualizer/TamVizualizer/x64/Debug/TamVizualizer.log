@@ -1,7 +1,30 @@
-﻿Build started 9/15/2015 8:36:33 PM.
-     1>Project "C:\Users\Eczek\Test\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Eczek\Test\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\x64\Debug\\TamVizualizer.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\lib /LIBPATH:"C:\Users\Eczek\Test\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\TamVizualizer\..\glew\lib" qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Testd.lib Qt5OpenGLd.lib opengl32.lib glu32.lib glew32d.lib Qt5PrintSupportd.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Eczek\Test\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\x64\Debug\TamVizualizer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Eczek\Test\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\x64\Debug\TamVizualizer.lib" /MACHINE:X64 x64\Debug\debugwindow.obj
+﻿Build started 12/10/2015 4:53:19 AM.
+     1>Project "C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtCore /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtGui /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtTest /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtOpenGL /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtPrintSupport /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtWidgets /I"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\..\glew\include" /I"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\..\glm" /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_TESTLIB_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt api.cpp debugwindow.cpp GeneratedFiles\Debug\moc_debugwindow.cpp GeneratedFiles\Debug\moc_glwindow.cpp GeneratedFiles\Debug\moc_processorthread.cpp globaldata.cpp GLWindow.cpp debug.cpp GeneratedFiles\Debug\moc_debug.cpp GeneratedFiles\Debug\moc_mainwindow.cpp main.cpp mainwindow.cpp NativeUnitTesting.cpp ProcessorThread.cpp shader.cpp shapedata.cpp unittestapi.cpp
+         api.cpp
+         debugwindow.cpp
+         moc_debugwindow.cpp
+         moc_glwindow.cpp
+         moc_processorthread.cpp
+         globaldata.cpp
+         GLWindow.cpp
+         debug.cpp
+         moc_debug.cpp
+         moc_mainwindow.cpp
+         main.cpp
+         mainwindow.cpp
+         NativeUnitTesting.cpp
+         ProcessorThread.cpp
+         shader.cpp
+         shapedata.cpp
+         unittestapi.cpp
+         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtCore /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtGui /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtTest /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtOpenGL /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtPrintSupport /IC:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\include\QtWidgets /I"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\..\glew\include" /I"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\..\glm" /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_TESTLIB_LIB /D QT_OPENGL_LIB /D QT_PRINTSUPPORT_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt GeneratedFiles\qrc_mainwindow.cpp
+         qrc_mainwindow.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Debug\\TamVizualizer.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.4.1\5.4\msvc2013_64_opengl\lib /LIBPATH:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\..\glew\lib" qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Testd.lib Qt5OpenGLd.lib opengl32.lib glu32.lib glew32d.lib Qt5PrintSupportd.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Debug\TamVizualizer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Debug\TamVizualizer.lib" /MACHINE:X64 x64\Debug\api.obj
+         x64\Debug\debugwindow.obj
          x64\Debug\moc_debugwindow.obj
          x64\Debug\moc_glwindow.obj
          x64\Debug\moc_processorthread.obj
@@ -15,11 +38,51 @@
          x64\Debug\mainwindow.obj
          x64\Debug\NativeUnitTesting.obj
          x64\Debug\ProcessorThread.obj
+         x64\Debug\shader.obj
          x64\Debug\shapedata.obj
-     1>shapedata.obj : error LNK2019: unresolved external symbol __imp_glewInit referenced in function "public: virtual void __cdecl Circle::draw(void)" (?draw@Circle@@UEAAXXZ)
-     1>C:\Users\Eczek\Test\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\x64\Debug\\TamVizualizer.exe : fatal error LNK1120: 1 unresolved externals
-     1>Done Building Project "C:\Users\Eczek\Test\Multi-Touch-and-Mid-Air-Framework-master\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" (Build target(s)) -- FAILED.
+         x64\Debug\unittestapi.obj
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewDeleteBuffers
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewAttachShader
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewAttachShader
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewCompileShader
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewCompileShader
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewCreateProgram
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewCreateProgram
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewCreateShader
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewCreateShader
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewDeleteProgram
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewDeleteShader
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewDeleteShader
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewDisableVertexAttribArray
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewGetAttribLocation
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramInfoLog
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramInfoLog
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramiv
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramiv
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderInfoLog
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderInfoLog
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderiv
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderiv
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewGetUniformLocation
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewLinkProgram
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewLinkProgram
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewShaderSource
+     1>shader.obj : error LNK2001: unresolved external symbol __imp___glewShaderSource
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewUniformMatrix4fv
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewUseProgram
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewBindFragDataLocation
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewDeleteVertexArrays
+     1>api.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+     1>GLWindow.obj : error LNK2019: unresolved external symbol __imp_glewInit referenced in function "public: static void __cdecl TAM::VisualizerHandler<class TAMShape>::initGL(void (__cdecl*)(void),float,float,float,float)" (?initGL@?$VisualizerHandler@VTAMShape@@@TAM@@SAXP6AXXZMMMM@Z)
+     1>C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\x64\Debug\\TamVizualizer.exe : fatal error LNK1120: 28 unresolved externals
+     1>Done Building Project "C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\TamVizualizer\TamVizualizer\TamVizualizer.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:00.31
+Time Elapsed 00:00:26.03

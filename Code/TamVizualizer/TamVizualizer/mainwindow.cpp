@@ -281,8 +281,33 @@ void MainWindow::loadActions() {
 	connect(disp_action, SIGNAL(triggered()), this, SLOT(changeDisplay()));
 	displayActions.append(disp_action);
 
+	disp_action = new QAction(tr("Rectangle Display (Finger Only)"), this);
+	disp_action->setData(value = DisplaySetting::SQUARE);
+	connect(disp_action, SIGNAL(triggered()), this, SLOT(changeDisplay()));
+	displayActions.append(disp_action);
+
+	disp_action = new QAction(tr("Right Triangle Compounded (Finger Only)"), this);
+	disp_action->setData(value = DisplaySetting::TRIG);
+	connect(disp_action, SIGNAL(triggered()), this, SLOT(changeDisplay()));
+	displayActions.append(disp_action);
+
 	disp_action = new QAction(tr("OpenGL Cube Display (Finger Only)"), this);
-	disp_action->setData(value++);
+	disp_action->setData(value = DisplaySetting::CUBE);
+	connect(disp_action, SIGNAL(triggered()), this, SLOT(changeDisplay()));
+	displayActions.append(disp_action);
+
+	disp_action = new QAction(tr("OpenGL Cube and Pyramid (Finger Only)"), this);
+	disp_action->setData(value = DisplaySetting::COMP);
+	connect(disp_action, SIGNAL(triggered()), this, SLOT(changeDisplay()));
+	displayActions.append(disp_action);
+
+	disp_action = new QAction(tr("OpenGL Cube Structure (Finger Only)"), this);
+	disp_action->setData(value = DisplaySetting::STRUCT);
+	connect(disp_action, SIGNAL(triggered()), this, SLOT(changeDisplay()));
+	displayActions.append(disp_action);
+
+	disp_action = new QAction(tr("OpenGL Pyramid (Finger Only)"), this);
+	disp_action->setData(value = DisplaySetting::PYRA);
 	connect(disp_action, SIGNAL(triggered()), this, SLOT(changeDisplay()));
 	displayActions.append(disp_action);
 	/*---------------------------- END ---------------------------*/

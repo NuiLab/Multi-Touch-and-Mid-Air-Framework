@@ -95,12 +95,48 @@ void ProcessorThread::run(){
 			// Draw Cubes instead of Fingers
 			// Used initially to display the power of OpenGL
 			foreach(touch_data data, current_data){
-				current_result << new SimpleCube(data.x, data.y, brushSize / 2.0f);
+				current_result << new SimpleCube(data.x, data.y, brushSize / 2.0f, false, false, false, true, false, false);
 			}
-		} else {
+		}
+		else if (setting == COMP)
+		{
+			foreach(touch_data data, current_data){
+				current_result << new SimpleCube(data.x, data.y, brushSize / 2.0f, false, true, false, false, false, false);
+			}
+		
+		} 
+		else if (setting == STRUCT)
+		{
+			foreach(touch_data data, current_data){
+				current_result << new SimpleCube(data.x, data.y, brushSize / 2.0f, true, false, false, false, false ,false);
+			}
+
+		}
+		else if (setting == PYRA)
+		{
+			foreach(touch_data data, current_data){
+				current_result << new SimpleCube(data.x, data.y, brushSize / 2.0f, false, false, true, false, false, false);
+			}
+
+		}
+		else if (setting == SQUARE)
+		{
+			foreach(touch_data data, current_data){
+				current_result << new SimpleCube(data.x, data.y, brushSize / 2.0f, false, false, false, false, true, false);
+			}
+
+		}
+		else if (setting == TRIG)
+		{
+			foreach(touch_data data, current_data){
+				current_result << new Finger(data.x, data.y, brushSize, data.id, false, true);
+			}
+
+		}
+		else {
 			// Draw finger-shapes for the touch-screen data recorded
 			foreach(touch_data data, current_data){
-				current_result << new Finger(data.x, data.y, brushSize, data.id);
+				current_result << new Finger(data.x, data.y, brushSize, data.id, true, false);
 			}
 		}
 

@@ -100,9 +100,10 @@ class Finger : public TAMShape {
 public:
 	float x, y, size;
 	int color;
+	bool circle, trig;
 
-	Finger(float x, float y, float size, int color) :
-		x(x), y(y), size(size), color(color){}
+	Finger(float x, float y, float size, int color, bool circle, bool trig) :
+		x(x), y(y), size(size), color(color), circle(circle), trig(trig){}
 	void draw() override;
 	list<ShapeCoordinates> getCoordinates() override;
 };
@@ -111,8 +112,10 @@ public:
 class SimpleCube : public TAMShape {
 public:
 	float x, y, size;
-	SimpleCube(float x, float y, float size) :
-		x(x), y(y), size(size) {}
+	bool stru, comp, pyra, simple, sqr, trig;
+	float transparency = 1.0f;
+	SimpleCube(float x, float y, float size, bool stru, bool comp, bool pyra, bool simple, bool sqr, bool trig) :
+		x(x), y(y), size(size), stru(stru), comp(comp), pyra(pyra), simple(simple), sqr(sqr), trig(trig) {}
 	void draw() override;
 	list<ShapeCoordinates> getCoordinates() override;
 };

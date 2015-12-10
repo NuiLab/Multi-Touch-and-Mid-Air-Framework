@@ -1,23 +1,17 @@
-﻿Build started 12/6/2015 11:50:39 PM.
+﻿Build started 12/9/2015 12:52:22 AM.
      1>Project "C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\QtLeapGL\QtLeapGL.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\QtLeapGL\..\..\TAM_API\\" /IC:\Users\Eczek\Leap_Motion_SDK_Windows_2.3.1\LeapDeveloperKit_2.3.1+31549_win\LeapSDK\include /I.\GeneratedFiles /I. /I"C:\Qt\Qt5.4.1-32\5.4\msvc2013_opengl\include" /I.\GeneratedFiles\Debug /I"C:\Qt\Qt5.4.1-32\5.4\msvc2013_opengl\include\QtCore" /I"C:\Qt\Qt5.4.1-32\5.4\msvc2013_opengl\include\QtGui" /I"C:\Qt\Qt5.4.1-32\5.4\msvc2013_opengl\include\QtOpenGL" /I"C:\Qt\Qt5.4.1-32\5.4\msvc2013_opengl\include\QtWidgets" /I"C:\Users\Eczek\Documents\Visual Studio 2013\Projects\QtLeapGL\glm" /I"C:\Users\Eczek\Documents\Visual Studio 2013\Projects\QtLeapGL\glew\include" /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_OPENGL_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt InputHandler.cpp Wrapper.cpp glwindow.cpp main.cpp
-         InputHandler.cpp
-         Wrapper.cpp
-         glwindow.cpp
-         main.cpp
-         Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\Win32\Debug\\QtLeapGL.exe" /NOLOGO /LIBPATH:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\QtLeapGL\..\..\TAM_API" /LIBPATH:"C:\Qt\Qt5.4.1-32\5.4\msvc2013_opengl\lib" /LIBPATH:"C:\Users\Eczek\Documents\Visual Studio 2013\Projects\QtLeapGL\glew\lib" /LIBPATH:C:\Users\Eczek\Leap_Motion_SDK_Windows_2.3.1\LeapDeveloperKit_2.3.1+31549_win\LeapSDK\lib\x86 qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5OpenGLd.lib opengl32.lib glu32.lib Qt5Widgetsd.lib Leap.lib glew32d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib TAMAPI.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\Win32\Debug\QtLeapGL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\Win32\Debug\QtLeapGL.lib" /MACHINE:X86 /SAFESEH Debug\moc_qtleapgl.obj
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\Win32\Debug\\QtLeapGL.exe" /NOLOGO /LIBPATH:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\QtLeapGL\..\..\TAM_API" /LIBPATH:"C:\Qt\Qt5.4.1-32\5.4\msvc2013_opengl\lib" /LIBPATH:C:\Users\Eczek\Leap_Motion_SDK_Windows_2.3.1\LeapDeveloperKit_2.3.1+31549_win\LeapSDK\lib\x86 qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5OpenGLd.lib opengl32.lib glu32.lib Qt5Widgetsd.lib Leap.lib glew32d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib TAMAPI.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\Win32\Debug\QtLeapGL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\Win32\Debug\QtLeapGL.lib" /MACHINE:X86 /SAFESEH Debug\moc_qtleapgl.obj
          Debug\qrc_qtleapgl.obj
          Debug\glwindow.obj
          Debug\InputHandler.obj
          Debug\main.obj
          Debug\qtleapgl.obj
          Debug\Wrapper.obj
+     1>TAMAPI.lib(api.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
          QtLeapGL.vcxproj -> C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\Win32\Debug\QtLeapGL.exe
      1>Done Building Project "C:\Users\Eczek\Documents\GitHub\Multi-Touch-and-Mid-Air-Framework\Code\QtLeapGL\QtLeapGL\QtLeapGL.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:04.75
+Time Elapsed 00:00:01.77

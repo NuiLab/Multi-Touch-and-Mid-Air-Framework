@@ -128,75 +128,10 @@ void Line::draw(){
 	GLSpace::getGLScreenCoordinates(x2, y2, xB, yB);
 	float r, g, b;
 	GLSpace::generateColor(color, r, g, b);
-	string frag =
-		"#version 150 core\n"
-		"out vec4 outColor;"
-		"void main() {"
-		"   outColor = vec4(" + to_string(r) + "," + to_string(g) + "," + to_string(b) + ", 1.0f" + ");"
-		"}";
-
-	const GLchar* vertexSource =
-		"#version 150 core\n"
-		"in vec2 position;"
-		"void main() {"
-		"   gl_Position = vec4(position, 0.0, 1.0);"
-		"}";
-
-	const GLchar* fragmentSource = frag.c_str();
-
-
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-
-	GLfloat vertices[6] =
-	{
-		xA, yA, -GLSpace::v_near, //First Vertex for line
-
-		xB, yB, -GLSpace::v_near //Second Vertex for line
-	};	
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);	
-
-	// Create and compile the vertex shader
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexSource, NULL);
-	glCompileShader(vertexShader);
-
-	// Create and compile the fragment shader
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
-	glCompileShader(fragmentShader);
-
-	// Link the vertex and fragment shader into a shader program
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glBindFragDataLocation(shaderProgram, 0, "outColor");
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
-
-	// Specify the layout of the vertex data
-	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
-	
-	glLineWidth(thick);
-	glDrawArrays(GL_LINES, 0, 2);
-
-	glDeleteProgram(shaderProgram);
-	glDeleteShader(fragmentShader);
-	glDeleteShader(vertexShader);	
-	glDeleteBuffers(1, &vbo);
-	glDeleteVertexArrays(1, &vao);
+	TAM::InputMapper newInput(&mapper, xA, yA, 0.5f, 0.0f);
+	TAM::Line newLine(r, g, b, 1.0f, 10);
+	newLine.setEndPoint(xB, yB, 0.5f);
+	newLine.draw(newInput);
 	
 }
 
@@ -221,128 +156,7 @@ void Circle::draw(){
 
 	TAM::InputMapper newInput(&mapper, new_x, new_y, new_z, 0.0f);
 	TAM::Circle newCircle(GLSpace::screen_width, GLSpace::screen_height, world_radius, r, g, b, 1.0f, false);
-	newCircle.draw(newInput);
-	//	TAM::RightTriangle newTriangle(r, g, b, 0.3f, 0.20f);
-		
-	//newTriangle.draw(newInput);
-	//TAM::InputMapper np = newTriangle.compound(newInput, TAM::LEFT, false, false);
-	//np = newTriangle.compound(np, TAM::TOP, false, false);
-	//newTriangle.compound(np, TAM::RIGHT, false, false);
-
-	//TAM::Circle newLine(world_radius, 1.0f, 0.0f, 0.0f, 0.2f, true);
-	//newLine.draw(newInput);
-	//////////////////////////////////// Connection Test
-	/*TAM::InputMapper otherInput(&mapper, newInput.getXCoordinate() + 0.2f, newInput.getYCoordinate() - 0.5f, 0.5f, 0.0f);
-	
-	TAM::RightTriangle otherTriangle(r, g, b, 0.20f);
-
-	TAM::Line newLine(r, g, b, 10);
-	newTriangle.draw(newInput);
-	newLine.connect(newInput, otherInput);
-	newTriangle.draw(otherInput);*/
-
-	//////////////////////////////////// Test Triangle compounding from all sides
-
-	/*newTriangle.draw(newInput);
-
-	TAM::InputMapper newestInput = newTriangle.compound(newInput, TAM::TOP, false, false);
-	newTriangle.clear();
-	newestInput = newTriangle.compound(newestInput, TAM::TOP, false, false); 
-	newTriangle.compound(newestInput, TAM::RIGHT, false, false);
-	newTriangle.compound(newestInput, TAM::LEFT, false, false);
-	newTriangle.compound(newestInput, TAM::RIGHT, false, false);
-	newTriangle.compound(newInput, TAM::BOT, false, false);*/
-
-	//////////////////////////////////// Compound triangles to form square
-
-	/*newTriangle.draw(newInput);
-	newTriangle.compound(newInput, TAM::TOP, false, true);*/
-
-	//static const GLfloat twicePi = 2.0f * PI_L;
-
-	/* Credit for Drawing Circle: https://gist.github.com/strife25/803118 */
-	//float centerZ = -GLSpace::v_near;
-	//float world_radius, new_x, new_y;	
-	//float r, g, b;
-	//GLSpace::calculateScreenLength(radius, GLSpace::v_near, world_radius);
-	//GLSpace::getGLScreenCoordinates(x, y, new_x, new_y);
-	//GLSpace::generateColor(color, r, g, b);
-
-	//cout << "Radius: " << radius << endl;
-	//string frag =
-	//	"#version 150 core\n"
-	//	"out vec4 outColor;"
-	//	"void main() {"
-	//	"   outColor = vec4(" + to_string(r) + "," + to_string(g) + "," + to_string(b) + ", 0.0" + ");"
-	//	"}";
-
-	//const GLchar* vertexSource =
-	//	"#version 150 core\n"
-	//	"in vec2 position;"		
-	//	"void main() {"
-	//	"   gl_Position = vec4(position, 0.0, 1.0);"
-	//	"}";
-	//
-	//const GLchar* fragmentSource = frag.c_str();
-
-	//GLuint vao;
-	//glGenVertexArrays(1, &vao);
-	//glBindVertexArray(vao);
-
-	//// Create a Vertex Buffer Object and copy the vertex data to it
-	//GLuint vbo;
-	//glGenBuffers(1, &vbo);
-
-	//const int VERTEX_COUNT = 30;	
-
-	//GLfloat buffer[3 * VERTEX_COUNT];
-	//int id = 0;
-	//
-	///*Circle showing as ellipsis has to do with heigth and width and not related to my function*/
-	//for (int i = 0; i < VERTEX_COUNT; i++)
-	//{
-	//	buffer[id++] = new_x + (world_radius * cos(((float)i * twicePi) / (float)VERTEX_COUNT));
-	//	buffer[id++] = new_y + (world_radius * sin(((float)i * twicePi) / (float)VERTEX_COUNT));
-	//	buffer[id++] = centerZ;
-	//}
-	//
-	//glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
-
-	//// Create and compile the vertex shader
-	//GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	//glShaderSource(vertexShader, 1, &vertexSource, NULL);
-	//glCompileShader(vertexShader);
-
-	//// Create and compile the fragment shader
-	//GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	//glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
-	//glCompileShader(fragmentShader);
-
-	//// Link the vertex and fragment shader into a shader program
-	//GLuint shaderProgram = glCreateProgram();
-	//glAttachShader(shaderProgram, vertexShader);
-	//glAttachShader(shaderProgram, fragmentShader);
-	//glBindFragDataLocation(shaderProgram, 0, "outColor");
-	//glLinkProgram(shaderProgram);
-	//glUseProgram(shaderProgram);
-
-	//// Specify the layout of the vertex data
-	//GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	//glEnableVertexAttribArray(posAttrib);
-	//glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	//GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-	//glEnableVertexAttribArray(colAttrib);
-	//glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
-	//
-	//(doFill) ? glDrawArrays(GL_TRIANGLE_FAN, 0, VERTEX_COUNT) : glDrawArrays(GL_LINE_LOOP, 0, VERTEX_COUNT);
-
-	//glDeleteProgram(shaderProgram);
-	//glDeleteShader(fragmentShader);
-	//glDeleteShader(vertexShader);
-	//glDeleteBuffers(1, &vbo);
-	//glDeleteVertexArrays(1, &vao);	
+	newCircle.draw(newInput);	
 }
 
 /* Returns a list of ShapeCoordinates */
@@ -352,18 +166,36 @@ list<ShapeCoordinates> Finger::getCoordinates() {
 	return ret;
 }
 
-/* Draw in OpenGL where the finger has touched on screen (for touch-screen devices)
-   @TODO: Fix so that creating one circle produces the desired effect of having one circle inside of another(performance gain)*/
+/* Draw in OpenGL where the finger has touched on screen (for touch-screen devices)*/
 void Finger::draw() {
 	if (!(isfinite(x) && isfinite(y) && isfinite(size) && size > 0)) return;
 
 	float brush_size = size * 3 / 4.0f;
+	float new_x, new_y;
 
-	glLineWidth(brush_size / 4.0f);
-	Circle circle1(x, y, brush_size, color);
-	Circle circle2(x, y, (brush_size * 2) / 3.0f, color);
-	circle1.draw();
-	circle2.draw();
+	if (circle)
+	{
+		glLineWidth(brush_size / 4.0f);
+		Circle circle1(x, y, brush_size, color);
+		Circle circle2(x, y, (brush_size * 2) / 3.0f, color);
+		circle1.draw();
+		circle2.draw();
+	}
+	else if (trig){
+		GLSpace::getGLScreenCoordinates(x, y, new_x, new_y);
+		TAM::InputMapper input(&mapper, new_x, new_y, 0.5f, 0.0f);
+		TAM::RightTriangle newTriangle(1.0f, 0.0f, 0.0f, 1.0f, 0.25f);
+
+		newTriangle.draw(input);
+
+		TAM::InputMapper newestInput = newTriangle.compound(input, TAM::TOP, false, false);
+		newTriangle.clear();
+		newestInput = newTriangle.compound(newestInput, TAM::TOP, false, false);
+		newTriangle.compound(newestInput, TAM::RIGHT, false, false);
+		newTriangle.compound(newestInput, TAM::LEFT, false, false);
+		newTriangle.compound(newestInput, TAM::RIGHT, false, false);
+		newTriangle.compound(input, TAM::BOT, false, false);
+	}
 }
 
 /* Returns a list of ShapeCoordinates */
@@ -378,22 +210,11 @@ void SimpleCube::draw(){
 	if (!(isfinite(x) && isfinite(y) && isfinite(size))) return;
 
 	float centerX, centerY, centerZ = -(GLSpace::v_near + GLSpace::v_far) / 2.0f;
-	float world_size;
+	float world_size, new_x, new_y;
 	GLSpace::calculateScreenPosition(x, y, centerZ, centerX, centerY);
+	GLSpace::getGLScreenCoordinates(x, y, new_x, new_y);
 	GLSpace::calculateScreenLength(size, -centerZ, world_size);
 	TAM::InputMapper newInput(&mapper, centerX, centerY, centerZ, 0.0f);
-
-	/*TAM::InputMapper cInput;
-	cInput.setXCoordinate(newInput.getXCoordinate() + 0.5);
-	cInput.setYCoordinate(newInput.getYCoordinate() + 0.5);
-	cInput.setZCoordinate(newInput.getZCoordinate() + 0.5);
-	connector.connect(newInput, cInput);*/
-	
-	//TAM::Pyramid newPyra(world_size);
-	//newPyra.draw(newInput);
-	
-	//newPyra.compound(newInput, TAM::TOP, false, 0, 0.0f, 0.0f, 0.0f);
-	//newPyra.compound(newInput, TAM::LEFT, true, 30, 0.0f, 0.0f, 1.0f);
 
 	TAM::ColorStruct *goro = new TAM::ColorStruct();
 	goro->front.r = 1.0f;
@@ -419,303 +240,174 @@ void SimpleCube::draw(){
 	goro->left.r = 1.0f;
 	goro->left.g = 1.0f;
 	goro->left.b = 0.0f;
-	TAM::Pyramid newCube(world_size, goro);
-	newCube.draw(newInput);
+
+	if (sqr)
+	{
+		TAM::InputMapper input(&mapper, new_x, new_y, 0.5f, 0.0f);
+		TAM::Square square(0.0f, 1.0f, 0.0f, transparency, 0.25f);
+		square.draw(input);		
+	}
+	else if (trig)
+	{
+		
+	}
+	else if (pyra)
+	{
+		TAM::Pyramid newPyra(world_size, NULL);
+		newPyra.draw(newInput);
+
+		newPyra.compound(newInput, TAM::TOP, false, 0, 0.0f, 0.0f, 0.0f);
+		newPyra.compound(newInput, TAM::LEFT, true, 30, 0.0f, 0.0f, 1.0f);
+	}
+	else if (comp)
+	{
+		TAM::Cube cube(world_size, goro);
+		cube.draw(newInput);
+
+		TAM::Pyramid newPyra(world_size, NULL);
+		newPyra.draw(newInput);
+
+		newPyra.compound(newInput, TAM::TOP, false, 0, 0.0f, 0.0f, 0.0f);		
+	}
+	else if (simple)
+	{
+		TAM::Cube newCube(world_size, NULL);
+		newCube.draw(newInput);
+	}
+	else if (stru)
+	{
+		TAM::Cube newCube(world_size, NULL);
+		TAM::Cube newCubee(world_size, NULL);
+		newCube.draw(newInput);		
+
+		newCube.compound(TAM::FORW);		
+		newCube.compound(TAM::RIGHT);
+		newCube.set(TAM::RIGHT);
+		newCube.clear(TAM::FORW);
+		newCube.compound(TAM::FORW);
+		newCube.clear();
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+
+		newCube.clear();
+
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+
+		newCube.set(TAM::LEFT);
+
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+
+		newCube.clear();
+
+		newCube.compound(TAM::BACK);
+		newCube.compound(TAM::BACK);
+		newCube.compound(TAM::BACK);
+		newCube.compound(TAM::BACK);
+
+		newCube.set(TAM::BACK);
+
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+
+		newCube.set(TAM::TOP);
+
+		newCube.compound(TAM::FORW);
+		newCube.compound(TAM::FORW);
+		newCube.compound(TAM::FORW);
+
+		newCube.clear(TAM::FORW);
+
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+
+		newCube.set(TAM::LEFT);
+
+		newCube.compound(TAM::FORW);
+		newCube.compound(TAM::FORW);
+		newCube.compound(TAM::FORW);
+
+		newCube.clear(TAM::FORW);
+		newCube.clear(TAM::TOP);
+
+		newCube.compound(TAM::BOT);
+		newCube.compound(TAM::BOT);
+		newCube.compound(TAM::BOT);
+		newCube.compound(TAM::BOT);
+
+		newCube.set(TAM::BOT);
+
+		newCube.compound(TAM::FORW);
+		newCube.compound(TAM::FORW);
+		newCube.compound(TAM::FORW);
+
+		newCube.clear(TAM::FORW);
+
+		newCube.compound(TAM::RIGHT);
+		newCube.compound(TAM::RIGHT);
+
+		newCube.set(TAM::RIGHT);
+
+		newCube.compound(TAM::RIGHT);
+
+		newCube.compound(TAM::FORW);
+		newCube.compound(TAM::FORW);
+
+		newCube.set(TAM::FORW);
+
+		newCube.compound(TAM::FORW);
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+
+		newCube.set(TAM::TOP);
+		newCube.clear(TAM::RIGHT);
+
+		newCube.compound(TAM::RIGHT);
+		newCube.compound(TAM::RIGHT);
+		newCube.compound(TAM::RIGHT);
+		newCube.compound(TAM::RIGHT);
+
+		newCube.clear(TAM::RIGHT);
+
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+		newCube.compound(TAM::LEFT);
+
+		newCube.clear(TAM::LEFT);
+
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+		newCube.compound(TAM::TOP);
+
+		newCube.clear(TAM::TOP);
+
+		newCube.compound(TAM::BOT);
+		newCube.compound(TAM::BOT);
+		newCube.compound(TAM::BOT);
+		newCube.compound(TAM::BOT);
 	
-	/*newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
+		newCube.clear(TAM::BOT);
+	}
 
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-
-	newCube.clear();
-
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-
-	newCube.set(TAM::LEFT);
-
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-
-	newCube.clear();
-
-	newCube.compound(TAM::BACK);
-	newCube.compound(TAM::BACK);
-	newCube.compound(TAM::BACK);
-	newCube.compound(TAM::BACK);
-
-	newCube.set(TAM::BACK);
-
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-
-	newCube.set(TAM::TOP);
-
-	newCube.compound(TAM::FORW);
-	newCube.compound(TAM::FORW);
-	newCube.compound(TAM::FORW);
-
-	newCube.clear(TAM::FORW);
-
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-
-	newCube.set(TAM::LEFT);
-
-	newCube.compound(TAM::FORW);
-	newCube.compound(TAM::FORW);
-	newCube.compound(TAM::FORW);
-
-	newCube.clear(TAM::FORW);
-	newCube.clear(TAM::TOP);
-
-	newCube.compound(TAM::BOT);
-	newCube.compound(TAM::BOT);
-	newCube.compound(TAM::BOT);
-	newCube.compound(TAM::BOT);
-
-	newCube.set(TAM::BOT);
-
-	newCube.compound(TAM::FORW);
-	newCube.compound(TAM::FORW);
-	newCube.compound(TAM::FORW);
-
-	newCube.clear(TAM::FORW);
-
-	newCube.compound(TAM::RIGHT);
-	newCube.compound(TAM::RIGHT);
-
-	newCube.set(TAM::RIGHT);
-
-	newCube.compound(TAM::RIGHT);
-
-	newCube.compound(TAM::FORW);
-	newCube.compound(TAM::FORW);
-
-	newCube.set(TAM::FORW);
-
-	newCube.compound(TAM::FORW);
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-
-	newCube.set(TAM::TOP);
-	newCube.clear(TAM::RIGHT);
-
-	newCube.compound(TAM::RIGHT);
-	newCube.compound(TAM::RIGHT);
-	newCube.compound(TAM::RIGHT);
-	newCube.compound(TAM::RIGHT);
-
-	newCube.clear(TAM::RIGHT);
-
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-	newCube.compound(TAM::LEFT);
-
-	newCube.clear(TAM::LEFT);
-
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-	newCube.compound(TAM::TOP);
-
-	newCube.clear(TAM::TOP);
-
-	newCube.compound(TAM::BOT);
-	newCube.compound(TAM::BOT);
-	newCube.compound(TAM::BOT);
-	newCube.compound(TAM::BOT);
+	delete goro;
 	
-	newCube.clear(TAM::BOT);*/
-
-	/*GLuint VertexArrayID;
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
-
-	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("C:/TransformVertexShader.vertexshader", "C:/ColorFragmentShader.fragmentshader");
-
-	// Get a handle for our "MVP" uniform
-	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-	auto t_now = std::chrono::high_resolution_clock::now();
-	float time = std::chrono::duration_cast<std::chrono::duration<float>>(t_now - t_start).count();
-	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-	glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-	// Camera matrix
-	glm::mat4 View = glm::lookAt(
-		glm::vec3(0, 0, -3), // Camera is at (4,3,-3), in World Space
-		glm::vec3(0, 0, 0), // and looks at the origin
-		glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
-		);
-	// Model matrix : an identity matrix (model will be at the origin)
-	glm::mat4 Model = glm::mat4(1.0f);
-
-	Model = glm::translate(Model, glm::vec3(centerX/3, -centerY/2, 0.0f));
-	Model = glm::rotate(
-		Model,
-		time * glm::radians(180.0f),
-		glm::vec3(centerX, centerY, -GLSpace::v_near)
-		);
-	Model = glm::scale(Model, glm::vec3(world_size / 10, world_size / 10, world_size / 10));
-	// Our ModelViewProjection : multiplication of our 3 matrices
-	glm::mat4 MVP = Projection * View * Model; // Remember, matrix multiplication is the other way around
-
-	// Our vertices. Tree consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
-	// A cube has 6 faces with 2 triangles each, so this makes 6*2=12 triangles, and 12*3 vertices
-	static const GLfloat g_vertex_buffer_data[] = {
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-
-		1.0f, 1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f,
-
-		1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-
-		1.0f, 1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f,
-
-		1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f,
-
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
-
-		1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, 1.0f, -1.0f,
-
-		1.0f, -1.0f, -1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
-
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f,
-
-		1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, 1.0f,
-
-		1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f
-	};
-
-	// One color for each vertex. They were generated randomly.
-	static const GLfloat g_color_buffer_data[] = {
-		0.583f, 0.771f, 0.014f,
-		0.609f, 0.115f, 0.436f,
-		0.327f, 0.483f, 0.844f,
-		0.822f, 0.569f, 0.201f,
-		0.435f, 0.602f, 0.223f,
-		0.310f, 0.747f, 0.185f,
-		0.597f, 0.770f, 0.761f,
-		0.559f, 0.436f, 0.730f,
-		0.359f, 0.583f, 0.152f,
-		0.483f, 0.596f, 0.789f,
-		0.559f, 0.861f, 0.639f,
-		0.195f, 0.548f, 0.859f,
-		0.014f, 0.184f, 0.576f,
-		0.771f, 0.328f, 0.970f,
-		0.406f, 0.615f, 0.116f,
-		0.676f, 0.977f, 0.133f,
-		0.971f, 0.572f, 0.833f,
-		0.140f, 0.616f, 0.489f,
-		0.997f, 0.513f, 0.064f,
-		0.945f, 0.719f, 0.592f,
-		0.543f, 0.021f, 0.978f,
-		0.279f, 0.317f, 0.505f,
-		0.167f, 0.620f, 0.077f,
-		0.347f, 0.857f, 0.137f,
-		0.055f, 0.953f, 0.042f,
-		0.714f, 0.505f, 0.345f,
-		0.783f, 0.290f, 0.734f,
-		0.722f, 0.645f, 0.174f,
-		0.302f, 0.455f, 0.848f,
-		0.225f, 0.587f, 0.040f,
-		0.517f, 0.713f, 0.338f,
-		0.053f, 0.959f, 0.120f,
-		0.393f, 0.621f, 0.362f,
-		0.673f, 0.211f, 0.457f,
-		0.820f, 0.883f, 0.371f,
-		0.982f, 0.099f, 0.879f
-	};
-
-	GLuint vertexbuffer;
-	glGenBuffers(1, &vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-	GLuint colorbuffer;
-	glGenBuffers(1, &colorbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-
-	glUseProgram(programID);
-
-	// Send our transformation to the currently bound shader, 
-	// in the "MVP" uniform
-	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glVertexAttribPointer(
-		0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-		);
-
-	// 2nd attribute buffer : colors
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-	glVertexAttribPointer(
-		1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-		3,                                // size
-		GL_FLOAT,                         // type
-		GL_FALSE,                         // normalized?
-		0,                                // stride
-		(void*)0                          // array buffer offset
-		);
-
-	// Draw the triangle !
-	glDrawArrays(GL_TRIANGLES, 0, 12 * 3); // 12*3 indices starting at 0 -> 12 triangles
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-
-	// Cleanup VBO and shader
-	glDeleteBuffers(1, &vertexbuffer);
-	glDeleteBuffers(1, &colorbuffer);
-	glDeleteProgram(programID);
-	glDeleteVertexArrays(1, &VertexArrayID);*/	
 }
 
 /* Returns a list of ShapeCoordinates */

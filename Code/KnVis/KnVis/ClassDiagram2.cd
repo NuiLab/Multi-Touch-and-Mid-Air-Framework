@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Kinectapp">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABAAAAAAAAAAAAAAAAEAACAAgBAAgAAAgEAAAEAAA=</HashCode>
+      <FileName>Kinectapp.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="myWrapper">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>myWrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="myBody">
+    <Position X="3.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAMAAAIGAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>myWrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KnVis">
+    <Position X="15.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>knvis.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GLWindow">
+    <Position X="6.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAYAAAAAAFAACADIAEAMCAAABAAgAABgEEAAAAAA=</HashCode>
+      <FileName>GLWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_KnVisClass" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAQAAAAAAAAIAAAAQAIAAAgAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_knvis.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::InputMapper">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEQAAAAAAAEAAAAQIAAAAAAAAACACAAAhgAQAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::Shape">
+    <Position X="5.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::Circle" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAIAAAAAAAgAAAAIAQABAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::Triangle" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAIAAAAAAAAAAAAIAQABAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::Square">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAIAQAhAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::RightTriangle" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAIAAACCAAAAAAAIIAAggAAAAIAAAIAQARAAAAgAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::Line">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="TAM::Line::Coordinates" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>api.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <InheritanceLine Type="TAM::Shape" FixedFromPoint="true">
+      <Path>
+        <Point X="6.062" Y="1.603" />
+        <Point X="6.062" Y="1.675" />
+        <Point X="10.5" Y="1.675" />
+        <Point X="10.5" Y="1.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAACAAAAAJAgCIAAggIAACAgAAIAQRhAQABAQA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::DeviceData&lt;K, T&gt;">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::DeviceDataTime&lt;K, T&gt;">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::Algorithms&lt;T&gt;" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAIAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::OBJ&lt;K, T&gt;" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAABAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::Playback&lt;T&gt;" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TAM::VisualizerHandler&lt;T&gt;">
+    <Position X="16" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAACAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::KnVisClass" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_knvis.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="qt_meta_stringdata_KnVis_t">
+    <Position X="14" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAQAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\Debug\moc_knvis.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::initializer">
+    <Position X="12.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAEA=</HashCode>
+      <FileName>GeneratedFiles\qrc_knvis.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="TAM::Position" Collapsed="true">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIIAgAAAQAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>api.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

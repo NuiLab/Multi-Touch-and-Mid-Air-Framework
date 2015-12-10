@@ -214,18 +214,18 @@ bool UnitTest::run(){
 
 		for (float err_val : checks) {
 			// X test
-			if (!testTAMShape(new Finger(err_val, norm_y, norm_size, norm_color))) throw 0;
+			if (!testTAMShape(new Finger(err_val, norm_y, norm_size, norm_color, false, false))) throw 0;
 
 			// Y test
-			if (!testTAMShape(new Finger(norm_x, err_val, norm_size, norm_color))) throw 0;
+			if (!testTAMShape(new Finger(norm_x, err_val, norm_size, norm_color, false, false))) throw 0;
 
 			// Size test
-			if (!testTAMShape(new Finger(norm_x, norm_y, err_val, norm_color))) throw 0;
+			if (!testTAMShape(new Finger(norm_x, norm_y, err_val, norm_color, false, false))) throw 0;
 		}
 
 		// More size test
-		if (!testTAMShape(new Finger(norm_x, norm_y, 0, norm_color))) throw 0;
-		if (!testTAMShape(new Finger(norm_x, norm_y, -50, norm_color))) throw 0;
+		if (!testTAMShape(new Finger(norm_x, norm_y, 0, norm_color, false, false))) throw 0;
+		if (!testTAMShape(new Finger(norm_x, norm_y, -50, norm_color, false, false))) throw 0;
 	}
 
 	// Test SimpleCube Constructor #1 : Basic invalid input checks
@@ -235,18 +235,18 @@ bool UnitTest::run(){
 
 		for (float err_val : checks) {
 			// X test
-			if (!testTAMShape(new SimpleCube(err_val, norm_y, norm_size))) throw 0;
+			if (!testTAMShape(new SimpleCube(err_val, norm_y, norm_size, false, false, false, false, false, false))) throw 0;
 
 			// Y test
-			if (!testTAMShape(new SimpleCube(norm_x, err_val, norm_size))) throw 0;
+			if (!testTAMShape(new SimpleCube(norm_x, err_val, norm_size, false, false, false, false, false, false))) throw 0;
 
 			// Size test
-			if (!testTAMShape(new SimpleCube(norm_x, norm_y, err_val))) throw 0;
+			if (!testTAMShape(new SimpleCube(norm_x, norm_y, err_val, false, false, false, false, false, false))) throw 0;
 		}
 
 		// More size test
-		if (!testTAMShape(new SimpleCube(norm_x, norm_y, 0))) throw 0;
-		if (!testTAMShape(new SimpleCube(norm_x, norm_y, -50))) throw 0;
+		if (!testTAMShape(new SimpleCube(norm_x, norm_y, 0, false, false, false, false, false, false))) throw 0;
+		if (!testTAMShape(new SimpleCube(norm_x, norm_y, -50, false, false, false, false, false, false))) throw 0;
 	}
 
 

@@ -18,13 +18,13 @@ struct touch_data
 	long long x;
 	long long y;
 	int id;
-	long long time;
+	long long time;	
 };
 
 /* Enumerations of the different display settings available currently*/
-enum DisplaySetting { NONE, AVG, MST, CIRCLE, SHP, CUBE };
+enum DisplaySetting { NONE, AVG, MST, CIRCLE, SHP, CUBE, PYRA, TRIG, COMP, STRUCT, SQUARE };
 /* Maps a number to the respective enum*/
-static const DisplaySetting toDS[6] = { NONE, AVG, MST, CIRCLE, SHP, CUBE };
+static const DisplaySetting toDS[11] = { NONE, AVG, MST, CIRCLE, SHP, CUBE, PYRA, TRIG, COMP, STRUCT, SQUARE };
 
 /* Algorithm class to store all computationally-expensive calculations 
    It's purpose is to have easy access for quickly updating the method

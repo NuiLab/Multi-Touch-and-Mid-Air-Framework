@@ -378,64 +378,6 @@ namespace TAM {
 	template<class T>
 	void TAM::Playback<T>::start(std::list<T> &list, std::unordered_map<int, int> &hash, void(*function)(), void(T::* glupdate)()) {
 
-		//std::list<touch_data> touch_list = list;
-		//std::unordered_map<int, int> fingers = hash;
-		//int beginTime = clock();
-		//int time;
-		//int index = 0;
-
-		//foreach(touch_data data, touch_list) {
-		//	time = clock();
-		//	if (data.time - (time - beginTime) > 0) {
-		//		cout << " SLEEP FOR " << (data.time - (time - beginTime)) << endl;
-		//		stringstream str;
-
-		//		str << " SLEEP FOR " << (data.time - (time - beginTime));
-
-		//		DebugWindow::println(str);
-
-		//		// Sleep for the duration until the next touch-event happened
-
-		//		QThread::yieldCurrentThread();
-
-		//		qApp->processEvents();
-
-		//		QThread::msleep(data.time - (time - beginTime));
-
-		//	}
-
-		//	// Update Data (without updating the touch_list being read)
-
-		//	if (data.x < 0 || data.y < 0) {
-
-		//		fingers.remove(data.id);
-
-		//	}
-
-		//	else {
-
-		//		fingers[data.id] = index;
-
-		//	}
-
-		//	// Send data to proccess thread for calculation
-
-		//	function();
-
-		//	//sendDataToProcessThread();
-
-		//	// Update current frame
-
-		//	//glupdate();
-
-		//	index++;
-
-		//	// Stop when playback mode closes
-
-		//	//if (!playback_mode) break;
-
-		//}
-
 	}
 
 	/* Contains everything that is to be passed to the GL context */
